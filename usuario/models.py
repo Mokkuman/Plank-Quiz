@@ -19,13 +19,20 @@ class User(AbstractBaseUser):
     
     objects = UserManager()
 
+class Categoria(models.Model):
+    pass
+#   descripcionCat = models.CharField(max_length=100, blank = False)    
 class Flashcard(models.Model):
     pass
 #     user = models.ForeignKey(User, null = True, on_delete=models.SET_NULL)
+#     categoria = models.ForeignKey(Categoria, null = True, on_delete = models.SET_NULL)
 #     titulo = models.CharField(max_length=100, blank=False)
 #     contenido = models.CharField(max_length=1000, blank = False)
 #     visible = models.BooleanField(default = True)
 #     descripcion = models.CharField(max_length=100, blank = False)
     
-    
-# class Pregunta()
+class Practica(models.Model):
+    pass
+    # user = models.ForeignKey(User,null = True, on_delete=models.SET_NULL)
+    # categoria = models.ForeignKey(Categoria, null = True, on_delete = models.SET_NULL)
+    # descripcion = models.CharField(max_length=100, blank= False)
