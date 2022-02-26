@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+/*navBar properties*/
+header{
+    overflow: hidden;
+    box-sizing: border-box;
+}
+#logo{
+    height: 5em;
+    padding: 15px 0 0 30px;
+}
+.menuBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.buttons{
+    margin: 0 2em 0;
+}
+.buttons a{
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    padding: 1em 2em 1em;
+    color: black;
+    text-align: center;
+}
+#btnSUp{
+    background-color:#713995;
+    color:white;
+    border-radius: 12px;
+}
+/*Eslogan tal vez*/
+.frase{
+    margin: 1em auto 15vw;
+    width: 50%;
+    font-size: 4vw;
+    text-align: center;
+}
+
+.infoContenedor{
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+    justify-content: left;
+    text-align: justify;
+    font-size: 2vw;
+    overflow: hidden;
+}
+.aventurate{
+    margin: 6vw 0 6vw 1vw;
+}
+.aventurateImg-container{
+    position: absolute;
+    overflow: hidden;
+    width: 99%;
+    margin: 0 auto;
+}
+#aventurateImg{
+    float: right;
+    height: 20vw;
+}
+.estudia{
+    margin: 30vw 0 6vw 1vw;
+}
+.registrarseContainer{
+    margin: 76vw auto 6vw;
+    width: 50%;
+    text-align: center;
+    font-size: 2vw;
+}
+
+
+
+/*media queries si es menor a 600px entonces cambio a logo pequeño y el bar menu*/
+@media screen and (max-width: 700px){
+    .buttons a:not(:last-child){display: none;} /*solo muestro el sign-up*/
+    .menuBar a{
+        float: right;
+        display: block;
+    }
+    .buttons{
+        margin: 0 1em 0;
+    }
+    .buttons a{
+        font-size: 0.9em;
+        margin: 0 auto;
+    }
+    .frase{
+        font-size: 2em;
+    }
+    #fraseChica{
+        font-size: 0.7em;
+    }
+    #logo{
+        height: 3em;
+        padding: 13px 0 0 20px;
+    }
+   .infoContenedor{
+        max-width: 100%;
+    }
+    .aventurate{
+        max-width: 100%;
+        margin: 3em 1em ;
+        overflow: hidden;
+        font-size: 1.5em;
+        position: unset;
+        float: none;
+        padding: 0 0;
+        /*margin: 0 1em 3em;*/
+    }
+    .aventurateImg-container{
+        position: unset;
+        width: 100%;
+    }
+    #aventurateImg{
+        float: none;
+        height: auto;
+        width: 100%;
+    }
+    .estudia{
+        max-width: 100%;
+        margin: 3em 1em;
+        overflow: hidden;
+        font-size: 1.5em;
+        float: none;
+    }
+}

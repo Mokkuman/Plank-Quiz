@@ -1,0 +1,47 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{%static 'core/stylesheet.css'%}"
+      type="text/css"
+    />
+    {% block cssPath %}{% endblock cssPath %}
+
+    <title>{%block title%} {%endblock title%}</title>
+  </head>
+  <body>
+    <header>
+      <div class="menuBar">
+        <div class="logoContainer">
+          <a href="{%url 'core:home'%}">
+            <img
+              id="logo"
+              srcset="{%static 'core/plank-contraido.png' 364w%}, 
+            {%static 'core/plank-wide.png' 1280w%}"
+              sizes="(max-width:600px) 3em,800px"
+              src="{%static 'core/plank-wide.png'%}"
+              alt="logo"
+            />
+          </a>
+        </div>
+        <div class="navButtons"> 
+          {%if user.is_authenticated %}
+          <a class="item" href="#Documentos"> Documentos</a>
+          <a class="item" href="#Práctica"> Prácticas </a>
+          <a class="item" href="#MiPerfil"> Mi perfil </a>
+          {% endif %}
+        </div>
+        <div class="buttons">
+          <a id="sIn" href="signIn"> Sign in </a>
+          <a id="btnSUp" href="signUp"> Sign up </a>
+        </div>
+      </div>
+    </header>
+    {% block body %} {% endblock body %} 
+  </body>
+</html>

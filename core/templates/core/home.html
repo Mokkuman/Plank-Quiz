@@ -1,0 +1,46 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}
+    HOME
+{% endblock title %}
+
+{% block body %}
+    <div class="frase">
+        CREA, PRÁCTICA, APRENDE<br>
+        <span id="fraseChica">¡PLANK!</span>
+        
+        <!--Crea. práctica y aprende-->
+    </div>
+    <div class="aventurateImg-container">
+        <img id="aventurateImg" srcset="
+                {% static 'core/estudiando-460w.png' 460w%},
+                {% static 'core/estudiando-800w.png' 800w%},
+                {% static 'core/estudiando-1366w.png' 1366w%}" 
+                sizes="(max-width:600px) 400px,
+                        (max-width: 800px) 800px,100%", 
+                src="{% static 'estudiando-1366w.png'%}" alt="estudiando"/>
+    </div>
+
+    <div class="infoContenedor">
+        <div class="aventurate">
+            <div id="aventurateTit">
+                Aventurate a nuevos temas
+                <!--tema-->
+            </div>
+            <div di="aventurateCont">
+                Puedes encontrar varias notas de estudio creadas por varios usuarios
+            </div>
+        </div>
+        <div class="estudia">
+            <div id="estudiaTit">
+                Prepar&aacutete para ese examen!
+                <!--tema-->
+            </div>
+            <div id="estudiaCont">
+                Con la opción de práctica no solo podrás crear tu propio cuestionario de
+                estudio puedes responder uno ya creado por algun otro usuario
+            </div>
+        </div>
+    </div>
+{% endblock body %} 
