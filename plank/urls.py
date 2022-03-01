@@ -22,6 +22,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("core.urls")),
+    path('',include("usuario.urls")),
     
 ]
 #Para el modo de produccion aka debug=true
