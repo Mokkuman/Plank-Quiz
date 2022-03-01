@@ -3,6 +3,9 @@
 *{
     font-family: 'Roboto', sans-serif;
 }
+body, html{
+    height: 2000px;
+}
 /*navBar properties*/
 header{
     overflow: hidden;
@@ -28,20 +31,48 @@ header{
     padding: 1em 2em 1em;
     color: black;
     text-align: center;
+    cursor: pointer;
 }
 #btnSUp{
     background-color:#713995;
     color:white;
     border-radius: 12px;
+    margin: 15px 0 0;
 }
-/*Eslogan tal vez*/
+.navButtons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.navButtons a{
+    padding: 30px 30px;
+}
+/*Eslogan*/
 .frase{
     margin: 1em auto 15vw;
     width: 50%;
     font-size: 4vw;
     text-align: center;
+    align-items: center;
 }
-
+/* #eslogan{
+    list-style: none;
+}
+#eslogan li{
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 8vw;
+    margin-bottom: 3em;
+} */
+/*INFORMACION*/
+.informacion{
+    position: relative;
+    padding: 48px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+}
 .infoContenedor{
     display: flex;
     flex-direction: column;
@@ -50,22 +81,35 @@ header{
     text-align: justify;
     font-size: 2vw;
     overflow: hidden;
+    align-items: center;
 }
 .aventurate{
-    margin: 6vw 0 6vw 1vw;
+    margin: 8vw 6em 6vw 1vw;
+}
+#aventurateTit{
+    font-weight: 700;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+}
+#estudiaTit{
+    font-weight: 700;
+    font-size: 1.2em;
+    padding-bottom: 10px;
 }
 .aventurateImg-container{
-    position: absolute;
+    position: sticky;
     overflow: hidden;
-    width: 99%;
+    width: 50%;
     margin: 0 auto;
+    display: flex;
+    top: 4.2em;
 }
 #aventurateImg{
     float: right;
     height: 20vw;
 }
 .estudia{
-    margin: 30vw 0 6vw 1vw;
+    margin: 38vw 6em 30vw 1vw;
 }
 .registrarseContainer{
     margin: 76vw auto 6vw;
@@ -78,29 +122,48 @@ header{
 
 /*media queries si es menor a 600px entonces cambio a logo pequeño y el bar menu*/
 @media screen and (max-width: 700px){
-    .buttons a:not(:last-child){display: none;} /*solo muestro el sign-up*/
+    /*.buttons a:not(:last-child){display: none;}*/ /*solo muestro el sign-up*/
     .menuBar a{
         float: right;
         display: block;
     }
     .buttons{
         margin: 0 1em 0;
+        align-items: center;
     }
     .buttons a{
-        font-size: 0.9em;
-        margin: 0 auto;
-    }
-    .frase{
-        font-size: 2em;
-    }
-    #fraseChica{
         font-size: 0.7em;
+        margin: 0 auto;
     }
     #logo{
         height: 3em;
         padding: 13px 0 0 20px;
     }
-   .infoContenedor{
+    /*ESLOGAN*/
+    .frase{
+        font-size: 2em;
+        margin: 1.5em auto;
+        width: 100%;
+    }
+    #eslogan{
+        text-align: center;
+        padding: 0 0;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    #eslogan li{
+        font-weight: 600;
+        font-size: 0.5em;
+    }
+    /*INFORMACION*/
+   .informacion{
+        max-width: 100%;
+        position: unset;
+        display: inline;
+        flex: none;
+    }
+    .infoContenedor{
         max-width: 100%;
     }
     .aventurate{
