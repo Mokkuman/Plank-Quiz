@@ -39,8 +39,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'tinymce',  #app editor de texto
 ]
+
+#Configuración del editor de texto
+TINYMCE_DEFAULT_CONFIG = {
+    'selector': 'textarea',  
+    'language': 'es_419',
+    'heigh':360,
+    'width':1120,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels':20,
+    'plugins': '''
+                textcolor save link image media preview codesample contextmenu
+                table code lists fullscrean insertdatetime nonbreaking
+                contextmenu directionality searchreplace wordcount visualblocks
+                visualchars fullscreen autolink lists charmap print hr
+                anchor pagebreak
+                ''',
+    'contextmenu':'formats | link image',
+    'menubar': True,
+    'statusbar':True,
+} 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
