@@ -10,18 +10,41 @@ body, html{
 header{
     overflow: hidden;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 #logo{
     height: 5em;
-    padding: 15px 0 0 30px;
+    padding: 10px 0 10px 30px;
 }
 .menuBar{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    min-height: 8vh;
 }
+.burguer{
+    display: none;
+    cursor: pointer;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+.burguer span{
+    display: block;
+    background-color: grey;
+    height: 0.5em;
+    width: 2.8em;
+    margin: 0.5em 30px;
+    border-radius: 4px;
+}
+
 .buttons{
     margin: 0 2em 0;
+    display: flex;
 }
 .buttons a{
     font-size: 16px;
@@ -37,16 +60,25 @@ header{
     background-color:#713995;
     color:white;
     border-radius: 12px;
-    margin: 15px 0 0;
+    margin: 0;
 }
 .navButtons{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    list-style: none;
+    width: auto;
 }
-.navButtons a{
-    padding: 30px 30px;
+.navButtons li{
+    padding: 2em 3em 1em;
 }
+.navButtons li a{
+    text-decoration: none;
+    font-size: 1.2em;
+    color: black;
+    font-weight: 600;
+}
+
 /*Eslogan*/
 .frase{
     margin: 1em auto 15vw;
@@ -120,25 +152,89 @@ header{
 
 
 
-/*media queries si es menor a 600px entonces cambio a logo pequeño y el bar menu*/
-@media screen and (max-width: 700px){
-    /*.buttons a:not(:last-child){display: none;}*/ /*solo muestro el sign-up*/
-    .menuBar a{
-        float: right;
-        display: block;
-    }
-    .buttons{
-        margin: 0 1em 0;
-        align-items: center;
-    }
-    .buttons a{
-        font-size: 0.7em;
-        margin: 0 auto;
+/*media queries si es menor a 768px entonces cambio a logo pequeño y el bar menu*/
+@media screen and (max-width: 768px){
+
+    .menuBar{
+        overflow: hidden;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.3em 0;
     }
     #logo{
-        height: 3em;
-        padding: 13px 0 0 20px;
+        height: 3.8em;
+        padding: 0 0 0 30px;
     }
+    .burguer{
+        display: block;
+        position: absolute;
+        top: 1.5em;
+        right: 1.2em;
+        /* overflow: hidden; */
+    }
+    .burguer span{
+        transition: transform 0.65s;
+    }
+    /*ANIMACION MENU*/
+    .br-1{
+        top: 0;
+        transform-origin: bottom left;
+    }
+    .br-3{
+        bottom: 0;
+        transform-origin: bottom left;
+    }
+
+    .br-1.abrir{
+        transform: rotate(45deg);
+    }
+    .br-2.abrir{
+        transform: translate(-1.875em);
+        background: transparent;
+        box-shadow: none;
+    }
+    .br-3.abrir{
+        transform: translate(0.312em,-0.1em) rotate(-45deg);
+    }
+    /*toggle menu*/
+    .navButtons{
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 80vh;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        display: none;
+    }
+    .navButtons li{
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .buttons{
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0 1em 0;
+        width: 90%;
+        display: none;
+    }
+    .buttons a{
+        font-size: 0.9em;
+        margin: 1em auto;
+        width: 100%;
+        text-align: center;
+    }
+    /*cuando le de click*/
+    .navButtons.activado{
+        display: flex;
+    }
+    .buttons.abrir{
+        display: flex;
+    }
+    
     /*ESLOGAN*/
     .frase{
         font-size: 2em;
