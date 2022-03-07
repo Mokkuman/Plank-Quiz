@@ -46,23 +46,45 @@ ELECCION_TEMAS = (
     )
 )
 
-#class Tema(models.Model):
-
-# class Filtro(models.Model):
-#     tema = models.CharField(choices=ELECCION_TEMAS)
-#     descripcionTema = models.CharField(max_length=100, blank = False)    
-
-class Flashcard(models.Model):
-    user = models.ForeignKey(User, null = True, on_delete=models.SET_NULL)
-    #tema = models.ForeignKey(Tema, null = True, on_delete = models.SET_NULL)
-    filtro = models.CharField(choices = ELECCION_TEMAS, max_length=50, default=('Matemáticas',('Álgebra','Álgebra')))
-    titulo = models.CharField(max_length=100, blank=False)
-    contenido = tinymce_models.HTMLField()  #Para el editor de texto
-    visible = models.BooleanField(default = True)
-    descripcion = models.CharField(max_length=100, blank = False)
-    
-class Practica(models.Model):
+#Para no repetir los atributos comunes entre Flashcard y Práctica
+class Herramienta(models.Model):
     user = models.ForeignKey(User,null = True, on_delete=models.SET_NULL)
-    #tema = models.ForeignKey(Tema, null = True, on_delete = models.SET_NULL)
     filtro = models.CharField(choices = ELECCION_TEMAS, max_length=50, default=('Matemáticas',('Álgebra','Álgebra')))
+    titulo = models.CharField(max_length=100, blank=False,default='')
     descripcion = models.CharField(max_length=100, blank= False)
+    visible = models.BooleanField(default=True)
+    
+    class Meta:
+        abstract = True
+
+#Comparte los atributos de herramienta, solo se añade el editor de texto
+class Flashcard(Herramienta):
+    contenido = tinymce_models.HTMLField()  #Para el editor de texto
+
+#Comparte los atributos de Herramienta, también sirve para tener la llave primaria 
+#para relacionar las preguntas
+class Practica(Herramienta):
+    pass
+
+#Clase abstracta para los diferentes tipos de preguntas
+class Pregunta(models.Model):
+    practica = models.ForeignKey(Practica,null=True,on_delete=models.SET_NULL)
+    planteamiento = models.CharField(blank=False, max_length=100)    
+    
+    class Meta:
+        abstract = True
+
+#Clase para definir las preguntas abiertas
+class Abierta(Pregunta):
+    respuesta = models.CharField(max_length=100,blank=False)
+
+#Clase solo para tener una primarykey para asociar las respuestas cerradas
+class Cerrada(Pregunta):
+    pass
+
+#Clase para definir las respuestas cerradas de una pregunta de tipo Cerrada
+#Se hace de esta forma para que el usuario pueda definir "n" respuestas
+#Cuenta con la llave foránea de la clase Cerrada para identificar a la clase que pertenecen
+class RespuestaCerrada(models.Model):
+    id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.SET_NULL)
+    respuesta = models.CharField(blank=False, max_length=100)
