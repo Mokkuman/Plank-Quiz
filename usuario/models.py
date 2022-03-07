@@ -53,6 +53,7 @@ class Herramienta(models.Model):
     titulo = models.CharField(max_length=100, blank=False,default='')
     descripcion = models.CharField(max_length=100, blank= False)
     visible = models.BooleanField(default=True)
+    voto = models.IntegerField(default=0)
     
     class Meta:
         abstract = True
