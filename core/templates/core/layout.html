@@ -117,19 +117,7 @@
           </div>
         </div>
       </div>
-      <script>
-        $(document).ready(function(){
-          //checa si existe la clase errorlist dentro de un <ul> dentro del elemento con id static...
-          //es para que se muestre el modal si fuera a existir un error de validación
-          if($('#staticBackdropSignup').find('ul.errorlist').length !== 0){
-            $("#staticBackdropSignup").modal('show');
-          }
-
-          if($('#staticBackdropSignin').find('ul.form-errors').length !== 0){
-            $("#staticBackdropSignin").modal('show');
-          }
-        });
-      </script>
+      <script src="{% static 'core/modalActions.js' %}" defer></script>
     {% endif %}
   </body>
 </html>

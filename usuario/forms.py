@@ -37,5 +37,5 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password')
         user = authenticate(email=email, password=password)
         if not user or not user.is_active:
-            raise forms.ValidationError("No existe el usuario")
+            raise forms.ValidationError("No existe el usuario. Checa que los datos estén bien.")
         return self.cleaned_data
