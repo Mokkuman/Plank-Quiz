@@ -89,3 +89,19 @@ class Cerrada(Pregunta):
 class RespuestaCerrada(models.Model):
     id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.SET_NULL)
     respuesta = models.CharField(blank=False, max_length=100)
+    
+#Cuando se realice un voto, se creará el objeto Voto para registrarlo correctamente y así evitar que vote multiples veces
+class Voto(models.Model):
+    positivo = models.BooleanField(default=False)
+    negativo = models.BooleanField(default=False)
+    neutro = models.BooleanField(default=True)
+    usuario = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)#Atributo para identificar el usuario que realizó el voto
+    
+    class Meta:
+        abstract = True
+        
+class VotoPract(Voto):
+    id_practica = models.ForeignKey(Practica,null=True,on_delete=models.SET_NULL)
+    
+class VotoFlash(Voto):
+    id_flashcard = models.ForeignKey(Flashcard,null=True,on_delete=models.SET_NULL)

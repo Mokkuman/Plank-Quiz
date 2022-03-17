@@ -1,0 +1,36 @@
+.lab-container{
+    border: solid  #E5E5E5;
+    border-radius: 20PX;
+    margin-right: 650px;
+    margin-left: 650px;
+    background-color: #FEFAE0;
+    text-align:center;
+    padding-bottom: 35px;
+}
+
+.lab-container #title{
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 20px;
+}
+
+.lab-container .lista{
+    overflow: hidden;
+    background-color: #333;
+    color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+}
+
+.lab-container .lista option{
+    background-color: white;
+    color: black;
+}
+
+.lab-container button{
+    background-color:#713995;
+    color:white;
+    margin: 0;
+    border-radius: 12px;
+}

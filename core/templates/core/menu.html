@@ -1,0 +1,31 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{%block cssPath%}
+<link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
+{%endblock cssPath%}
+
+{%block title %}
+Menu
+{% endblock title%}
+
+{%block body%}
+<div class = "lab-container">
+    <p id="title">Selecciona tus filtros</p>
+    <p id="instruccion">Selecciona una materia</p>
+    <select class = "lista" name="Materia" id='Materias' placeholder = "Materia">
+        <option class="op" hidden selected>Selecciona una opcion</option>
+        <option class="op" value="Matemáticas" id='Mat'>Matemáticas</option>
+        <option class="op" value="Español" id='esp'>Español</option>
+        <option class="op" value="Ciencias Naturales" id='ciencia'>Ciencias Naturales</option>
+        <option class="op" value="Humanidades" id='hum'>Humanidades</option>
+    </select>
+    <br>
+    <p id="instruccion">Selecciona un tema específico</p>
+    <select class = "lista" name="Tema" id="Tema">
+    </select>
+    <br>
+    <button>Buscar</button>
+</div>
+<script src="{% static 'core/menu.js' %}" defer></script>
+{%endblock body%}

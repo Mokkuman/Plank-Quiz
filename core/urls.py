@@ -5,5 +5,6 @@ app_name = 'core'
 
 urlpatterns = [
     path("",views.home,name="home"),
+    path("menu/",views.menu,name="menu"),
     path('tinymce/',include('tinymce.urls')),#Editor de texto
 ]
