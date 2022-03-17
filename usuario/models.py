@@ -92,9 +92,9 @@ class RespuestaCerrada(models.Model):
     
 #Cuando se realice un voto, se creará el objeto Voto para registrarlo correctamente y así evitar que vote multiples veces
 class Voto(models.Model):
+    #Si ambos son False, entonces es un voto neutro (No ha votado)
     positivo = models.BooleanField(default=False)
     negativo = models.BooleanField(default=False)
-    neutro = models.BooleanField(default=True)
     usuario = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)#Atributo para identificar el usuario que realizó el voto
     
     class Meta:
