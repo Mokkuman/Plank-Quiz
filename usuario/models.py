@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 from tinymce import models as tinymce_models
-
 from .managers import UserManager
+from django.urls import reverse
 
 class User(AbstractBaseUser,PermissionsMixin):
     #ID annadida por django por defecto
@@ -57,15 +57,60 @@ class Herramienta(models.Model):
     
     class Meta:
         abstract = True
+    
+    def __str__(self):
+        return self.titulo
 
 #Comparte los atributos de herramienta, solo se añade el editor de texto
 class Flashcard(Herramienta):
     contenido = tinymce_models.HTMLField()  #Para el editor de texto
 
+    def give_vote(self, usuario, voto_usuario):
+        try:
+            voto = VotoFlash.objects.get(usuario = usuario, id_flashcard = self)
+        except:
+            voto = None
+
+        if voto is None:
+            if voto_usuario == -1:
+                voto = VotoFlash.objects.create(usuario = usuario, id_flashcard = self, negativo = True)
+            elif voto_usuario == 1:
+                voto = VotoFlash.objects.create(usuario = usuario, id_flashcard = self, positivo = True)
+
+    def get_voto(self):
+        voto_final = 0
+        try:
+            votos = VotoFlash.objects.filter(id_flashcard = self) # retorna lista votos de este flashcard
+        except:
+            return voto_final
+        
+        for voto in votos:
+            if voto.positivo:
+                voto_final += 1
+            elif voto.negativo:
+                voto_final -= 1
+        return voto_final
+    
+    #def get_absolute_url(self):
+    #   return reverse("view_flashcard", kwargs={"id" : self.id})
+            
+    
 #Comparte los atributos de Herramienta, también sirve para tener la llave primaria 
 #para relacionar las preguntas
 class Practica(Herramienta):
-    pass
+    #def get_absolute_url(self):
+    #    return reverse("view_practica", kwargs={"id" : self.id})
+
+    def get_preguntas_abiertas(self):
+        preguntas_abiertas = Abierta.objects.filter(practica = self)
+        return preguntas_abiertas
+    
+    def get_preguntas_cerradas(self):
+        preguntas_cerradas = Cerrada.objects.filter(practica = self)
+        return preguntas_cerradas
+    
+    def calificar(self):
+        pass
 
 #Clase abstracta para los diferentes tipos de preguntas
 class Pregunta(models.Model):
@@ -79,20 +124,38 @@ class Pregunta(models.Model):
 class Abierta(Pregunta):
     respuesta = models.CharField(max_length=100,blank=False)
 
+    def calificar_pregunta(self, respuesta_usuario):
+        if respuesta_usuario == self.respuesta:
+            return 1
+        else:
+            return 0
+
+
 #Clase solo para tener una primarykey para asociar las respuestas cerradas
 class Cerrada(Pregunta):
-    pass
+    def get_respuestas(self):
+        respuestas = RespuestaCerrada.objects.filter(id_pregunta = self)
+        # inside template
+        # for PreguntaCerrada in PreguntaCerradas
+        #     print(PreguntaCerrada.enunciado)
+        #     for RespuestaCerrada PreguntaCerrada.getRespuestasCerradas
+        return respuestas
+
+    def calificar_pregunta(self):
+        pass
+        
 
 #Clase para definir las respuestas cerradas de una pregunta de tipo Cerrada
 #Se hace de esta forma para que el usuario pueda definir "n" respuestas
 #Cuenta con la llave foránea de la clase Cerrada para identificar a la clase que pertenecen
 class RespuestaCerrada(models.Model):
+    es_correcta = models.BooleanField(default=False)
     id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.SET_NULL)
     respuesta = models.CharField(blank=False, max_length=100)
     
 #Cuando se realice un voto, se creará el objeto Voto para registrarlo correctamente y así evitar que vote multiples veces
 class Voto(models.Model):
-    #Si ambos son False, entonces es un voto neutro (No ha votado)
+    #Si ambos son False, entonces es un voto  (No ha votado)
     positivo = models.BooleanField(default=False)
     negativo = models.BooleanField(default=False)
     usuario = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)#Atributo para identificar el usuario que realizó el voto
