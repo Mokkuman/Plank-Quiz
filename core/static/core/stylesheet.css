@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Asap&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
 *{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Asap', sans-serif;
 }
 body, html{
     height: 2000px;
+    color: #fbfaff;
 }
 /*navBar properties*/
 header{
@@ -21,7 +22,8 @@ header{
 .menuBar{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
+    align-items: baseline;
     width: 100%;
     min-height: 8vh;
 }
@@ -43,49 +45,64 @@ header{
 }
 
 .buttons{
-    margin: 0 2em 0;
+    /* margin: 0 2em 0; */
+    margin: 0.8em 2em 0 0;
     display: flex;
+    align-items: baseline;
 }
 .buttons a{
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 600;
     text-decoration: none;
     display: inline-block;
     padding: 1em 2em 1em;
     color: black;
     text-align: center;
     cursor: pointer;
+    margin: 0 2em 0 0;
+}
+#sIn{
+    background-color: #e6e6ea;
+    color: black;
+    border-radius: 12px;
 }
 #btnSUp{
     background-color:#713995;
     color:white;
     border-radius: 12px;
-    margin: 0;
 }
 .navButtons{
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     list-style: none;
+    padding: 0;
+    margin: 0;
     width: auto;
 }
 .navButtons li{
-    padding: 2em 3em 1em;
+    padding: 2em 4em 1em;
+    display: inline-block;
 }
 .navButtons li a{
     text-decoration: none;
     font-size: 1.2em;
     color: black;
-    font-weight: 600;
+    font-weight: 550;
 }
-
+.navButtons li a:hover{
+    border-bottom: 3px solid black;
+    transition: all 0.2s ease 0s;
+}
 /*Eslogan*/
 .frase{
+    font-family: 'Montserrat', sans-serif;
     margin: 1em auto 15vw;
     width: 50%;
-    font-size: 4vw;
+    font-size: 6vw;
     text-align: center;
     align-items: center;
+    font-weight: 900;
 }
 /* #eslogan{
     list-style: none;
@@ -97,64 +114,10 @@ header{
     margin-bottom: 3em;
 } */
 /*INFORMACION*/
-.informacion{
-    position: relative;
-    padding: 48px 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    width: 100%;
-}
-.infoContenedor{
-    display: flex;
-    flex-direction: column;
-    max-width: 40%;
-    justify-content: left;
-    text-align: justify;
-    font-size: 2vw;
-    overflow: hidden;
-    align-items: center;
-}
-.aventurate{
-    margin: 8vw 6em 6vw 1vw;
-}
-#aventurateTit{
-    font-weight: 700;
-    font-size: 1.2em;
-    padding-bottom: 10px;
-}
-#estudiaTit{
-    font-weight: 700;
-    font-size: 1.2em;
-    padding-bottom: 10px;
-}
-.aventurateImg-container{
-    position: sticky;
-    overflow: hidden;
-    width: 50%;
-    margin: 0 auto;
-    display: flex;
-    top: 4.2em;
-}
-#aventurateImg{
-    float: right;
-    height: 20vw;
-}
-.estudia{
-    margin: 38vw 6em 30vw 1vw;
-}
-.registrarseContainer{
-    margin: 76vw auto 6vw;
-    width: 50%;
-    text-align: center;
-    font-size: 2vw;
-}
-
 
 
 /*media queries si es menor a 768px entonces cambio a logo pequeño y el bar menu*/
 @media screen and (max-width: 768px){
-
     .menuBar{
         overflow: hidden;
         flex-direction: column;
@@ -163,7 +126,7 @@ header{
     }
     #logo{
         height: 3.8em;
-        padding: 0 0 0 30px;
+        padding: 0 0 0 15px;
     }
     .burguer{
         display: block;
@@ -253,39 +216,6 @@ header{
         font-size: 0.5em;
     }
     /*INFORMACION*/
-   .informacion{
-        max-width: 100%;
-        position: unset;
-        display: inline;
-        flex: none;
-    }
-    .infoContenedor{
-        max-width: 100%;
-    }
-    .aventurate{
-        max-width: 100%;
-        margin: 3em 1em ;
-        overflow: hidden;
-        font-size: 1.5em;
-        position: unset;
-        float: none;
-        padding: 0 0;
-        /*margin: 0 1em 3em;*/
-    }
-    .aventurateImg-container{
-        position: unset;
-        width: 100%;
-    }
-    #aventurateImg{
-        float: none;
-        height: auto;
-        width: 100%;
-    }
-    .estudia{
-        max-width: 100%;
-        margin: 3em 1em;
-        overflow: hidden;
-        font-size: 1.5em;
-        float: none;
-    }
+
+    
 }

@@ -18,16 +18,12 @@
   <body>
     <header>
       <div class="menuBar">
-        <div class="logoContainer">
+        <div id="logoContainer">
           <a href="{%url 'core:home'%}">
-            <img
-              id="logo"
-              srcset="{%static 'core/plank-contraido.png' 364w%}, 
-            {%static 'core/plank-wide.png' 1280w%}"
-              sizes="(max-width:600px) 3em,800px"
-              src="{%static 'core/plank-wide.png'%}"
-              alt="logo"
-            />
+            <picture>
+              <source media="(min-width: 1100px)" srcset="{% static 'core/plank-wide.png' %}" id="logo">
+              <img id="logo" src="{% static 'core/plank-contraido.png' %}">
+            </picture>
           </a>
         </div>
 
