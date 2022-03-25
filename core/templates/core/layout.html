@@ -29,9 +29,9 @@
 
           {%if user.is_authenticated %}
           <ul class="navButtons">
-            <li><a class="item" href="#Documentos"> Documentos</a></li>
-            <li><a class="item" href="#Práctica"> Prácticas </a></li>
-            <li><a class="item" href="#MiPerfil"> Mi perfil </a></li>
+            <li><a class="item" href="{%url 'core:documentos'%}"> Documentos</a></li>
+            <li><a class="item" href="{%url 'core:practicas'%}"> Prácticas </a></li>
+            <li><a class="item" href="{%url 'core:perfil'%}"> Mi perfil </a></li>
           </ul>
           {% endif %}
 

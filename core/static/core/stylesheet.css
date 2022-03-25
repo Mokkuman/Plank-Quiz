@@ -215,7 +215,11 @@ header{
         font-weight: 600;
         font-size: 0.5em;
     }
-    /*INFORMACION*/
+    /*INFORMACION*/   
+}
 
-    
+/*OVERRIDING BOOTSTRAP!*/
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #713995 !important;
+    border: none !important;
 }
