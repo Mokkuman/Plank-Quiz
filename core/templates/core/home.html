@@ -6,35 +6,44 @@
 {% endblock title %}
 
 {% block body %}
-    <section class="frase">
-        {% comment %} <ul id="eslogan">
-            <li><span id="es1"> Crea </span></li>
-            <li><span id="es2"> Práctica </span></li>
-            <li><span id="es3"> Aprende </span></li>
-            <li><span id="es4"> PLANK </span></li>
-        </ul> {% endcomment %}
-        Crea, aprende y práctica con Plank 
+    <section id="frase">
+        <div id="eslogan">Crea, aprende y práctica con Plank </div>
+        {% comment %} <div id="probarBtn">boton tal vez</div> {% endcomment %}
+        <div id="imgnCentral">
+            <img id="cntral" src="{% static 'core/estudiando-portada.png' %}">
+        </div>
     </section>
-    <section class="informacion">
-        <div class="infoContenedor">
-            <div class="aventurate">
-                <div id="aventurateTit">
-                    Aventurate a nuevos temas
-                    <!--tema-->
-                </div>
-                <div di="aventurateCont">
-                    Puedes encontrar varias notas de estudio creadas por varios usuarios
+    <section id="persuadirInfo">
+        <div id="persuadirInfoTit"> La web para estudiantes creada por estudiantes </div>
+        <div id="persuConts">
+            <div id="persuCont1">
+                <!--poner tal vez aquí una imagen por cada tarjetita-->
+                <div id="persuTit1">Explora nuevos temas</div>
+                <div id="persuInfo1">
+                    Podrás acceder a distintos apuntes de usuarios.
                 </div>
             </div>
-            <div class="estudia">
-                <div id="estudiaTit">
-                    Prepar&aacutete para ese examen!
-                    <!--tema-->
+            <div id="persuCont2">
+                <div id="persuTit2">Prepárate para ese examen</div>
+                <div id="persuInfo2">
+                    Evalúa tus conocimientos con examenes práctica 🤯.
                 </div>
-                <div id="estudiaCont">
-                    Con la opción de práctica no solo podrás crear tu propio cuestionario de
-                    estudio puedes responder uno ya creado por algun otro usuario
+            </div>
+        </div>
+    </section>
+    <section id="queHacerInfo">
+        <!--imagen tal vez -->
+        <div id="queHacerInfoTit"> Modos de estudio</div>
+        <div id="queHacerCont">
+            <div id="hacerCont1">
+                <div id="hacerTit1"> Práctica 🦾 </div>
+                <div id="hacerInfo1">
+                    Tendrás un examen al cual responder para evaluar tus conocimientos, y si no existe crear uno 👍
                 </div>
+            </div>
+            <div id="hacerCont2">
+                <div id="hacerTit2">⚡Flashcard⚡</div>
+                <div id="hacerInfo2">Aprendizaje rápido y seguro mediante tarjetitas.</div>
             </div>
         </div>
     </section>

@@ -1,11 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Asap&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+
 *{
     font-family: 'Asap', sans-serif;
-}
-body, html{
-    height: 2000px;
-    color: #fbfaff;
 }
 /*navBar properties*/
 header{
@@ -16,13 +13,12 @@ header{
     justify-content: space-around;
 }
 #logo{
-    height: 5em;
+    height: 5.5em;
     padding: 10px 0 10px 30px;
 }
 .menuBar{
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
     align-items: baseline;
     width: 100%;
     min-height: 8vh;
@@ -45,7 +41,6 @@ header{
 }
 
 .buttons{
-    /* margin: 0 2em 0; */
     margin: 0.8em 2em 0 0;
     display: flex;
     align-items: baseline;
@@ -72,9 +67,6 @@ header{
     border-radius: 12px;
 }
 .navButtons{
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center; */
     list-style: none;
     padding: 0;
     margin: 0;
@@ -94,27 +86,61 @@ header{
     border-bottom: 3px solid black;
     transition: all 0.2s ease 0s;
 }
+    /*=========HOME.HTML=========*/
 /*Eslogan*/
-.frase{
+#eslogan{
     font-family: 'Montserrat', sans-serif;
-    margin: 1em auto 15vw;
-    width: 50%;
-    font-size: 6vw;
+    margin: 1em auto 0;
+    width: 70%;
+    font-size: 5vw;
     text-align: center;
     align-items: center;
     font-weight: 900;
 }
-/* #eslogan{
-    list-style: none;
+#imgnCentral{
+    width: 70%;
+    align-items: baseline;
+    margin: 2vw auto 4vw;
+    text-align: center;
 }
-#eslogan li{
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 8vw;
-    margin-bottom: 3em;
-} */
+#cntral{
+    height: auto;
+    width: 80%;
+}
 /*INFORMACION*/
-
+#persuadirInfo,#queHacerInfo{
+    margin: 6vw;
+}
+#persuadirInfoTit,#queHacerInfoTit{
+    /* width: 80%; */
+    display: flex;
+    justify-content: center;
+    margin: 5vw auto 3vw;
+    font-weight: 700;
+    font-size: 3vw;
+}
+#persuConts,#queHacerCont{
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+#persuCont1, #persuCont2, #hacerCont1,#hacerCont2{
+    width: 40%;
+    margin: 2vw auto 3vw;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 15px 50px;
+}
+#persuTit1, #persuTit2, #hacerTit1, #hacerTit2{
+    font-weight: 600;
+    font-size: 2vw;
+    text-align: center;
+    margin: 0 15px;
+}
+#persuInfo1, #persuInfo2, #hacerInfo1, #hacerInfo2{
+    font-size: 1.5vw;
+    text-align: center;
+    padding: 2.5em 0 1em 0;
+}
 
 /*media queries si es menor a 768px entonces cambio a logo pequeño y el bar menu*/
 @media screen and (max-width: 768px){
@@ -197,25 +223,65 @@ header{
     .buttons.abrir{
         display: flex;
     }
-    
+                /*=========HOME.HTML=========*/
     /*ESLOGAN*/
     .frase{
-        font-size: 2em;
         margin: 1.5em auto;
         width: 100%;
     }
     #eslogan{
-        text-align: center;
-        padding: 0 0;
-        display:flex;
+        width: 80%;
+        font-size: 6.5vw;
+        align-items: baseline;
+        font-weight: 900;
+        display: flex;
         flex-direction: column;
         justify-content: center;
     }
-    #eslogan li{
-        font-weight: 600;
-        font-size: 0.5em;
+    /*imagen central*/
+    #imgnCentral{
+        width: 90%;
     }
-    /*INFORMACION*/   
+    #cntral{
+        height: auto;
+        width: 90%;
+    }
+    /*INFORMACION*/
+    #persuadirInfoTit,#queHacerInfoTit{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 15vw auto 5vw;
+        font-weight: 700;
+        font-size: 4vw;
+        text-align: center;
+    }
+    #persuConts,#queHacerCont{
+        display: inline;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        width: 100%;
+    }
+    #persuCont1, #persuCont2, #hacerCont1,#hacerCont2{
+        width: 90%;
+        margin: 3vw auto 3vw;
+        box-shadow: none;
+        padding:2em auto 1em;
+    }
+    #persuTit1, #persuTit2, #hacerTit1, #hacerTit2{
+        font-weight: 600;
+        font-size: 3.5vw;
+        text-align: center;
+        margin: 0;
+        padding: auto;
+    }
+    #persuInfo1, #persuInfo2, #hacerInfo1, #hacerInfo2{
+        font-size: 3.2vw;
+        text-align: center;
+        align-items: baseline;
+        padding: 20px 0;
+    }
 }
 
 /*OVERRIDING BOOTSTRAP!*/
