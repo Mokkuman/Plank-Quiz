@@ -20,3 +20,26 @@
     align-items: center;
     justify-content: center;
 }
+
+.no-padding {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.numero-votos {
+    padding-left: 1px !important;
+    padding-right: 5px !important;
+    display: inline-block;
+    flex-grow: 3;
+}
+
+.buttonRows {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.buttons1 {
+    display: inline-block;
+    flex-grow: 1;
+}
