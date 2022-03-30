@@ -1,0 +1,22 @@
+#flashcards {
+    padding-top: 10px !important;
+}
+
+#container-flashcards {
+    padding-left: 0px !important;
+}
+
+/*.container {
+    background-color: rebeccapurple;
+}*/
+
+.card-img-top {
+    height: 60% !important;
+    width: 60% !important;
+}
+
+.img-container {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}

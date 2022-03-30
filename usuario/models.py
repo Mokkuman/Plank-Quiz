@@ -19,6 +19,11 @@ class User(AbstractBaseUser,PermissionsMixin):
     REQUIRED_FIELDS = ['nombre'] #email & password estan por default
     
     objects = UserManager()
+    
+    @property
+    def nombreCompleto(self):
+        return '%s %s' % (self.nombre, self.apellido) 
+
 
 ELECCION_TEMAS = (
     ('Matemáticas',(
@@ -60,6 +65,8 @@ class Herramienta(models.Model):
     
     def __str__(self):
         return self.titulo
+    
+
 
 #Comparte los atributos de herramienta, solo se añade el editor de texto
 class Flashcard(Herramienta):

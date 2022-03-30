@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import UserForm, LoginForm
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
@@ -12,7 +14,7 @@ def signup(request):
             newUser = signupForm.save(commit=False)
             newUser.save()
             login(request,newUser)
-            return redirect('core:home')
+            return redirect('usuario:userHome')
     else:
         signupForm = UserForm()
     return render(request, "core/home.html", {"signupForm":signupForm, "signinForm":signinForm})
@@ -28,7 +30,7 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request,user)
-                return redirect('core:home')
+                return redirect('usuario:userHome')
         else: #User doesn't exist
             signinForm = LoginForm()
             return render(request,"core/home.html",{"signinForm":signinForm, "signupForm": signupForm})  
@@ -37,3 +39,7 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect("core:home")
+
+@login_required()
+def Home(request):
+    return render(request, "users/userHome.html")
