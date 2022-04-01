@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',  #app editor de texto
+    'storages' #app para archivos media/static (actualmente solo para media)
 ]
 
 #Configuración del editor de texto
@@ -143,8 +144,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -152,3 +153,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'usuario.User'
+
+# AZURE MEDIA/STATIC STORAGE
+# Por el momento solo permitaremos a MEDIA_ROOT
+# Esto es porque cada actualización al código static se tendrá 
+# que subir a Azure con "collect static" pero sería mejor hacer
+# esto al final del proyecto.
+
+DEFAULT_FILE_STORAGE = 'plank.custom_azure.AzureMediaStorage'
+# STATICFILES_STORAGE = 'plank.custom_azure.AzureStaticStorage'
+
+# STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
+
+AZURE_ACCOUNT_NAME = "plank"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
