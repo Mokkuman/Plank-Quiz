@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import UserForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from usuario.models import Flashcard, Practica
 
 # Create your views here.
 
@@ -42,7 +43,9 @@ def signout(request):
 
 @login_required()
 def Home(request):
-    return render(request, "users/userHome.html")
+    flash = Flashcard.objects.filter(visible=True).order_by('-voto')[:9]   #Ordena por voto los primeros nueve
+    pract = Practica.objects.filter(visible=True).order_by('-voto')[:9]
+    return render(request, "users/userHome.html",{'flashcard':flash,'practica':pract})
 
 @login_required()
 def modificarPerfil(request):
