@@ -43,3 +43,7 @@ def signout(request):
 @login_required()
 def Home(request):
     return render(request, "users/userHome.html")
+
+@login_required()
+def modificarPerfil(request):
+    return render(request, "users/modificarPerfil.html")
