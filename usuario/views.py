@@ -31,7 +31,8 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request,user)
-                return redirect('usuario:userHome')
+                #return redirect('usuario:userHome')
+                return redirect('core:home')
         else: #User doesn't exist
             signinForm = LoginForm()
             return render(request,"core/home.html",{"signinForm":signinForm, "signupForm": signupForm})  
@@ -41,11 +42,14 @@ def signout(request):
     logout(request)
     return redirect("core:home")
 
-@login_required()
-def Home(request):
-    flash = Flashcard.objects.filter(visible=True).order_by('-voto')[:9]   #Ordena por voto los primeros nueve
-    pract = Practica.objects.filter(visible=True).order_by('-voto')[:9]
-    return render(request, "users/userHome.html",{'flashcard':flash,'practica':pract})
+def perfil(request):
+    return render(request, "users/perfil.html")
+
+# @login_required()
+# def Home(request):
+#     flash = Flashcard.objects.filter(visible=True).order_by('-voto')[:9]   #Ordena por voto los primeros nueve
+#     pract = Practica.objects.filter(visible=True).order_by('-voto')[:9]
+#     return render(request, "users/userHome.html",{'flashcard':flash,'practica':pract})
 
 @login_required()
 def modificarPerfil(request):

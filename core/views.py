@@ -4,14 +4,19 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views import View
 from plank.settings import LOGIN_URL # globally declared variable for the login page
-#prueba, first commit
+
+from usuario.models import Flashcard, Practica
 from usuario.forms import UserForm, LoginForm
 # Create your views here.
 def home(request):
-    signupForm = UserForm()
-    signinForm = LoginForm()
-
-    return render(request, "core/home.html", {"signupForm":signupForm, "signinForm": signinForm})
+    if request.user.is_authenticated:
+        flash = Flashcard.objects.filter(visible = True).order_by('-voto')[:9]  #Ordena por voto los primeros nueve
+        pract = Practica.objects.filter(visible=True).order_by('-voto')[:9]
+        return render(request, "users/userHome.html",{'flashcard':flash,'practica':pract})
+    else:
+        signupForm = UserForm()
+        signinForm = LoginForm()
+        return render(request, "core/home.html", {"signupForm":signupForm, "signinForm": signinForm})
 
 @login_required()
 def menu(request):
@@ -22,6 +27,3 @@ def documentos(request):
 
 def practicas(request):
     return render(request,"core/practicas.html")
-
-def perfil(request):
-    return render(request, "core/perfil.html")
