@@ -1,0 +1,58 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{%block cssPath%}
+<link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
+{%endblock cssPath%}
+
+{% block title %}
+    {{documento.titulo}}
+{% endblock title %}
+
+{% block body %}
+<script src="https://cdn.tiny.cloud/1/tlb2vvjgok8d0upf68i3g01f0zqf8sj6a929e80kxqsj6shm/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+    selector: 'textarea',  
+    plugins: 'save print preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+    menubar: 'file edit view insert format tools table help',
+    toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+    //toolbar_sticky: true,
+    image_advtab: true,
+    width: 1024,
+    height: 720,
+    image_title: true,    
+    });        
+</script>
+<div class="form-container">
+    <div class="form">
+        <form method='POST' action="{% url 'core:nuevoDocumento' %}">
+            {%csrf_token%}
+            <div class="field-container">
+                <label class="field" id="tema">Tema</label><br>
+                {{form.filtro}}
+            </div>
+            <div class="field-container">
+                <label class="field" id="titulo">Título</label><br>
+                <div class="text-field">
+                    {{form.titulo}}
+                </div>
+            </div>
+            <div class="field-container">
+                <label class="field" id="descripcion">Descripción</label><br>
+                <div class="text-field">
+                    {{form.descripcion}}
+                </div>
+            </div>
+            <div class="field-container">
+                <label class="field" id="contenido">Contenido</label><br>
+                <div id="tinymce">
+                    {{form.contenido}}
+                </div>
+            </div>
+            <!--{{form.as_p}}-->
+            <button class="form-button" type="submit">Subir!</button>
+        </form>
+    </div>
+</div>
+{% endblock body %} 

@@ -47,23 +47,18 @@ INSTALLED_APPS = [
 ]
 
 #Configuración del editor de texto
+#Por alguna razón esto solo afecta en el admin, pero se dejará por si se desea realizar alguna modificación en la DB
 TINYMCE_DEFAULT_CONFIG = {
     'selector': 'textarea',  
     'language': 'es_419',
-    'heigh':360,
-    'width':1120,
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels':20,
-    'plugins': '''
-                textcolor save link image media preview codesample contextmenu
-                table code lists fullscrean insertdatetime nonbreaking
-                contextmenu directionality searchreplace wordcount visualblocks
-                visualchars fullscreen autolink lists charmap print hr
-                anchor pagebreak
-                ''',
-    'contextmenu':'formats | link image',
-    'menubar': True,
-    'statusbar':True,
+    'plugins': 'save print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+    'menubar': 'file edit view insert format tools table help',
+    'toolbar': 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+    #'toolbar_sticky': True,
+    'image_advtab': True,
+    'width': 1024,
+    'height': 720,
+    'image_title': True,
 } 
 
 MIDDLEWARE = [

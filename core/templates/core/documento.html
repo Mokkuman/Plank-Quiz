@@ -1,0 +1,23 @@
+{% extends 'core/layout.html' %}
+{%include 'core/tiny.js'%}
+{% load static %}
+
+{%block cssPath%}
+<link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
+{%endblock cssPath%}
+
+{% block title %}
+    {{documento.titulo}}
+{% endblock title %}
+
+{% block body %}
+<div class="document-container">
+    <h1 id="titulo">{{documento.titulo}}</h1>
+    <br>
+    <h3>{{documento.filtro}}</h3>
+    <div>{{documento.descripcion}}</div>
+    <br>
+    <div class="document-content">{{documento.contenido|safe}}</div>
+    <br>
+</div>
+{% endblock body %} 

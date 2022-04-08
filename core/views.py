@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.views import View
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 
 from usuario.models import Flashcard, Practica
+from plank.settings import LOGIN_URL
+import usuario # globally declared variable for the login page
+#prueba, first commit
 from usuario.forms import UserForm, LoginForm
+from core.forms import DocumentForm
+from usuario.models import Flashcard,User
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
@@ -27,3 +32,23 @@ def documentos(request):
 
 def practicas(request):
     return render(request,"core/practicas.html")
+
+@login_required
+def documento(request,id):
+    documento = Flashcard.objects.get(id=id)
+    return render(request,"core/documento.html",{"documento":documento})
+    
+
+@login_required
+def nuevoDocumento(request):
+    if request.method == "POST":
+        form = DocumentForm(request.POST)
+        if form.is_valid():
+            doc = form.save(commit=False)
+            doc.user = User.objects.get(id = request.user.id)
+            doc.save()
+            return redirect('core:documento',id=doc.id)
+        else:
+            return render(request,'core/nuevoDocumento.html',{'form':DocumentForm()})
+    form = DocumentForm()
+    return render(request,'core/nuevoDocumento.html',{'form':form})
