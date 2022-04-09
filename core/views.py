@@ -10,7 +10,7 @@ from plank.settings import LOGIN_URL
 import usuario # globally declared variable for the login page
 #prueba, first commit
 from usuario.forms import UserForm, LoginForm
-from core.forms import DocumentForm
+from core.forms import DocumentForm, PracticaForm, PregAbiertaForm,PregCerradaForm
 from usuario.models import Flashcard,User
 # Create your views here.
 def home(request):
@@ -33,6 +33,24 @@ def documentos(request):
 def practicas(request):
     return render(request,"core/practicas.html")
 
+@login_required
+def nuevaPractica(request):
+    if request.method == "POST":
+        pracForm = PracticaForm(request.POST or None)
+        pregAbierta = PregAbiertaForm(request.POST)
+        pregCerrada = PregCerradaForm(request.POST)
+        if pracForm.is_valid():
+            prac = pracForm.save(commit=False)
+            prac.user = User.objects.get(id = request.user.id)
+            prac.save()
+            return redirect('core:practicas',id=prac.id)
+        else:
+            return render(request, 'core/nuevaPractica.html',{'form': PracticaForm(),'pregA':PregAbiertaForm,'pregC':PregCerradaForm})
+    pracForm = PracticaForm()
+    pregAbierta = PregAbiertaForm()
+    pregCerrada = PregCerradaForm()
+    return render(request,'core/nuevaPractica.html',{'form':pracForm,'pregA':pregAbierta,'pregC':pregCerrada})
+        
 @login_required
 def documento(request,id):
     documento = Flashcard.objects.get(id=id)

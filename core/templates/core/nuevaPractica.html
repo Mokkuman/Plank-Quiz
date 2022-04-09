@@ -1,0 +1,73 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+{% block cssPath %}
+<link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
+{% endblock cssPath %}
+
+{% block title %}
+    idk xd
+{% endblock title %}
+
+{% block body %}
+    <div class="form-container"> 
+        <div class="form">
+            <form method = 'POST' action="{% url 'core:nuevaPractica' %}">
+                {% csrf_token %}
+                <div class="field-container">
+                    <label class="field" id="titulo">Título </label><br/>
+                    <div class="text-field">
+                        {{form.titulo}}
+                    </div>
+                </div>
+                <div class="field-container">
+                    <label class="field" id="descripcion">Descripción</label><br/>
+                    <div class="text-field">
+                        {{form.descripcion}}
+                    </div>
+                </div>
+                <div class="field-container">
+                    <label class="field" id="tema">Tema</label><br/>
+                    {{form.filtro}}
+                </div>
+
+                <input type="hidden" name="form-TOTAL_FORMS" value="0" id="idTotalForms">
+
+                <div class="field-container" id="preguntas-container">
+                    <div class="field-container-pregs" id="pregunta">
+                        <label class="field"> Pregunta</label><br/>
+                        <div class="text-field">
+                            {{pregA.planteamiento}}
+                        </div>
+                        <label class="field" >Respuesta</label><br/>
+                        <div class="text-field">
+                            {{pregA.respuesta}}
+                        </div> 
+                    </div>
+                </div>
+                
+                <button id="add-more" type="button">+</button>
+                <button class="form-button" type="submit">Subir!</button>
+        </div>
+    </div>
+    {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}
+    <script>
+        const btnMas = document.getElementById('add-more');
+        const totalForms = document.getElementById('idTotalForms');
+        btnMas.addEventListener('click',(event)=>{
+            if(event){ //para que no se actualice mientras escribes
+                event.preventDefault();
+            }
+            const numFormsPreguntas = document.getElementsByClassName('field-container-pregs');
+            let numActualPreguntas = numFormsPreguntas.length;
+
+            const preguntasContainer = document.getElementById('preguntas-container');
+            const preguntaForm = document.getElementById('pregunta').cloneNode(true);
+            preguntaForm.setAttribute('class','field-container-pregs');
+            preguntaForm.setAttribute('id',`preg-${numActualPreguntas}`);
+            totalForms.setAttribute('value',numActualPreguntas+1);
+
+            //añadiendo el formulario al html
+            preguntasContainer.append(preguntaForm);
+        })
+    </script>
+{% endblock body %}

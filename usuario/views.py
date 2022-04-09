@@ -15,7 +15,7 @@ def signup(request):
             newUser = signupForm.save(commit=False)
             newUser.save()
             login(request,newUser)
-            return redirect('usuario:userHome')
+            return redirect('core:home')
     else:
         signupForm = UserForm()
     return render(request, "core/home.html", {"signupForm":signupForm, "signinForm":signinForm})
