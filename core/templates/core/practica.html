@@ -1,0 +1,33 @@
+{% extends 'core/layout.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    {{practica.titulo}}
+{% endblock title %}
+
+{% block body %}
+
+    <h1>{{ practica.titulo }}</h1>
+    <h1>Voto: {{ practica.voto }}</h1>
+    <h1>{{ practica.filtro }}</h1>
+    <h1>{{ practica.descripcion }}</h1>
+    <div>
+        {{ abiertas }}
+    </div>
+    <div>
+        {% for cerrada in cerradas %}
+            <div>
+                <h1>PREGUNTA: {{ cerrada }} </h1>
+                {% for respuesta in cerrada.get_respuestas %}
+                    <div>
+                       <h1>RESPUESTA: {{ respuesta.respuesta }}</h1>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    
+
+{% endblock body %} 

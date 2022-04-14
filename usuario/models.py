@@ -72,6 +72,9 @@ class Herramienta(models.Model):
 class Flashcard(Herramienta):
     contenido = tinymce_models.HTMLField()  #Para el editor de texto
 
+    def get_absolute_url(self):
+       return reverse("core:documento", kwargs={"id" : self.id})
+
     def give_vote(self, usuario, voto_usuario):
         try:
             voto = VotoFlash.objects.get(usuario = usuario, id_flashcard = self)
@@ -98,15 +101,14 @@ class Flashcard(Herramienta):
                 voto_final -= 1
         return voto_final
     
-    #def get_absolute_url(self):
-    #   return reverse("view_flashcard", kwargs={"id" : self.id})
-            
-    
 #Comparte los atributos de Herramienta, también sirve para tener la llave primaria 
 #para relacionar las preguntas
 class Practica(Herramienta):
-    #def get_absolute_url(self):
-    #    return reverse("view_practica", kwargs={"id" : self.id})
+    def __str__(self):
+        return self.titulo
+
+    def get_absolute_url(self):
+        return reverse("core:practica", kwargs={"id" : self.id})
 
     def get_preguntas_abiertas(self):
         preguntas_abiertas = Abierta.objects.filter(practica = self)
@@ -122,7 +124,10 @@ class Practica(Herramienta):
 #Clase abstracta para los diferentes tipos de preguntas
 class Pregunta(models.Model):
     practica = models.ForeignKey(Practica,null=True,on_delete=models.SET_NULL)
-    planteamiento = models.CharField(blank=False, max_length=100)    
+    planteamiento = models.CharField(blank=False, max_length=100) 
+
+    def __str__(self) -> str:
+        return self.planteamiento   
     
     class Meta:
         abstract = True

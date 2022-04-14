@@ -52,6 +52,18 @@ def nuevaPractica(request):
     return render(request,'core/nuevaPractica.html',{'form':pracForm,'pregA':pregAbierta,'pregC':pregCerrada})
         
 @login_required
+def practica(request, id):
+    practica = Practica.objects.get(id=id)
+    preguntasAbiertas = practica.get_preguntas_abiertas()
+    preguntasCerradas = practica.get_preguntas_cerradas()
+
+    return render(request, "core/practica.html", {
+        'practica':practica,
+        'abiertas':preguntasAbiertas,
+        'cerradas':preguntasCerradas,
+        })
+
+@login_required
 def documento(request,id):
     documento = Flashcard.objects.get(id=id)
     return render(request,"core/documento.html",{"documento":documento})

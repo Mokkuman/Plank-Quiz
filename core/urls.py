@@ -12,6 +12,7 @@ urlpatterns = [
     path('nuevoDocumento/',views.nuevoDocumento,name='nuevoDocumento'),
     path("documentos/",views.documentos,name="documentos"),
     path("practicas/",views.practicas,name="practicas"),
+    path("practica/<int:id>/", views.practica, name="practica"),
     path("nuevaPractica/",views.nuevaPractica,name="nuevaPractica"),
     path('tinymce/',include('tinymce.urls')),#Editor de texto
 ]
