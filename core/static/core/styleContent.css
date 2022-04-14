@@ -99,3 +99,24 @@ h1#titulo{
 .document-content{
     width: 90%;
 }
+
+/*Estilo de botones positivo-negativo*/
+.like-dislike{
+    white-space: nowrap;
+}
+.votos, .voto{
+    display: inline-block;
+}
+
+.voto{
+    border: 0;
+    margin: 0px 2px;
+}
+
+#positivo[value='selected']{
+    color: #70e000;
+}
+
+#negativo[value='selected']{
+    color: red;
+}

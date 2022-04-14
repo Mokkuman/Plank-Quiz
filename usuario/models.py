@@ -78,14 +78,20 @@ class Flashcard(Herramienta):
     def give_vote(self, usuario, voto_usuario):
         try:
             voto = VotoFlash.objects.get(usuario = usuario, id_flashcard = self)
+            if (voto.positivo and voto_usuario == 1) or (voto.negativo and voto_usuario==-1):
+                voto.delete()
+            else:
+                voto.positivo = not voto.positivo
+                voto.negativo = not voto.negativo
+                voto.save()
         except:
-            voto = None
-
-        if voto is None:
             if voto_usuario == -1:
                 voto = VotoFlash.objects.create(usuario = usuario, id_flashcard = self, negativo = True)
             elif voto_usuario == 1:
                 voto = VotoFlash.objects.create(usuario = usuario, id_flashcard = self, positivo = True)
+        finally:
+            self.voto = self.get_voto()
+            self.save()
 
     def get_voto(self):
         voto_final = 0
@@ -180,3 +186,13 @@ class VotoPract(Voto):
     
 class VotoFlash(Voto):
     id_flashcard = models.ForeignKey(Flashcard,null=True,on_delete=models.SET_NULL)
+    
+    def voted(self,usuario):
+        voto = VotoFlash.objects.get(id_flashcard=self.id_flashcard,usuario = usuario)
+        if voto != None:
+            if voto.positivo:
+                return 1
+            else:
+                return 0
+        else:
+            return -1

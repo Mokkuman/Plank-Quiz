@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("core.urls")),
     path('',include("usuario.urls")),
+    path('voto/',include("voto.urls")),
 ]
 #Para el modo de produccion aka debug=true
 urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

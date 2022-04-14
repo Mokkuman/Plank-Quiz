@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'core',     #app que pertenence al home
     'usuario',  #app para la creación del objeto usuario
+    'voto',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
