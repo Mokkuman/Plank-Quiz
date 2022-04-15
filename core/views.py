@@ -5,7 +5,8 @@ from django.http import Http404, HttpResponse
 from django.views import View
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 
-from usuario.models import Flashcard, Practica,VotoFlash
+from usuario.models import Flashcard, Practica
+from voto.models import VotoFlash, VotoPract
 from plank.settings import LOGIN_URL
 import usuario # globally declared variable for the login page
 #prueba, first commit
@@ -57,22 +58,19 @@ def practica(request, id):
     preguntasAbiertas = practica.get_preguntas_abiertas()
     preguntasCerradas = practica.get_preguntas_cerradas()
 
+    voto = VotoPract.voted(practica,request.user)
     return render(request, "core/practica.html", {
-        'practica':practica,
-        'abiertas':preguntasAbiertas,
-        'cerradas':preguntasCerradas,
-        })
+            'practica':practica,
+            'abiertas':preguntasAbiertas,
+            'cerradas':preguntasCerradas,
+            'voto':voto,
+            })
 
 @login_required
 def documento(request,id):
     documento = Flashcard.objects.get(id=id)
-    try:
-        votoFlash = VotoFlash.objects.get(usuario = request.user, id_flashcard = id)
-        voto = VotoFlash.voted(votoFlash,request.user)
-    except:
-        voto = -1
-    finally:
-        return render(request,"core/documento.html",{"documento":documento,"voto":voto})
+    voto = VotoFlash.voted(documento,request.user)
+    return render(request,"core/documento.html",{"documento":documento,"voto":voto})
     
 
 @login_required

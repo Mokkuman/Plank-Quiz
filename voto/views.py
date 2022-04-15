@@ -1,21 +1,23 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from usuario.models import User,Flashcard,Practica
+from voto.models import VotoFlash,VotoPract
 
 # Create your views here.
 def votoDoc(request):
     if request.POST.get('action')=='post':
         doc_id = int(request.POST.get('id'))
         doc = get_object_or_404(Flashcard,id=doc_id)
-        doc.give_vote(User.objects.get(id = request.user.id),int(request.POST.get('tipo')))
-        response = {'voto':doc.get_voto()}
+        user = request.user
+        VotoFlash.give_vote(user,doc,int(request.POST.get('tipo')))
+        response = {'voto':VotoFlash.get_voto(doc)}
         return JsonResponse(response)
     
 def votoPract(request):
-    pass
-    # if request.POST.get('action')=='post':
-    #     doc_id = int(request.POST.get('id'))
-    #     doc = get_object_or_404(Practica,id=doc_id)
-    #     doc.give_vote(User.objects.get(id = request.user.id),int(request.POST.get('tipo')))
-    #     response = {'voto':doc.get_voto()}
-    #     return JsonResponse(response)
+    if request.POST.get('action')=='post':
+        pract_id = int(request.POST.get('id'))
+        pract = get_object_or_404(Practica,id=pract_id)
+        user = request.user
+        VotoPract.give_vote(user,pract,int(request.POST.get('tipo')))
+        response = {'voto':VotoPract.get_voto(pract)}
+        return JsonResponse(response)

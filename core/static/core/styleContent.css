@@ -121,6 +121,10 @@ h1#titulo{
     color: red;
 }
 
+.voto :hover{
+    background-color: #333;
+}
+
 .container-center {
     height: 6rem;
     position: relative;

@@ -59,7 +59,69 @@
             </div>
         
         </div>
-        
+
+        <div class="like-dislike">
+            <p class="votos" id="votos">{{practica.voto}}</p>
+            <!--Verifica si previamente el usuario había votado positivo(1), negativo(0) o no ha votado (-1)-->
+            <button class="voto" id="positivo" data-catid="{{practica.id}}" {% if voto == 1%} value="selected" {%else%} value="unselected" {%endif%}>Me gusta :D</button>
+            <button class="voto" id="negativo" data-catid="{{practica.id}}" {% if voto == 0%} value="selected" {%else%} value="unselected" {%endif%}>No me gusta >:(</button>
+        </div>
+
     </div>
+
+    <script>
+        $('#positivo').click(function(){
+            var catid;
+            catid = $(this).attr('data-catid');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "voto:votoPract" %}',
+                data:{
+                    id : catid,
+                    tipo : 1,
+                    csrfmiddlewaretoken:"{{csrf_token}}",
+                    action: 'post',
+                },
+                success: function(json){
+                    document.getElementById("votos").innerHTML = json.voto
+                    if( document.getElementById('positivo').getAttribute('value') == 'selected'){   /*Si se selecciona Positivo y estaba "Selected", cambia a "Unselected"*/
+                        document.getElementById('positivo').setAttribute('value','unselected');
+                    }else{                                                                          /*Si se selecciona Positivo y estaba "Unselected" cambia a "Selected"*/
+                        document.getElementById('positivo').setAttribute('value','selected');
+                        if(document.getElementById('negativo').getAttribute('value') == 'selected'){/*Si estaba seleccionado Negativo, Negativo cambia a "Unselected"*/
+                            document.getElementById('negativo').setAttribute('value','unselected');
+                        }
+                    }
+                },
+                error: function(xhr,errmsg,err){}
+            })
+        });
+        $('#negativo').click(function(){
+            var catid;
+            catid = $(this).attr('data-catid');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "voto:votoPract" %}',
+                data:{
+                    id : catid,
+                    tipo: -1,
+                    csrfmiddlewaretoken:"{{csrf_token}}",
+                    action: 'post',
+                },
+                success: function(json){
+                    document.getElementById("votos").innerHTML = json.voto
+                    if( document.getElementById('negativo').getAttribute('value') == 'selected'){/*Si se selecciona Negativo y estaba"Selected", cambia a "Unselected"*/
+                        document.getElementById('negativo').setAttribute('value','unselected');
+                    }else{                                                                      /*Si se selecciona Negativo y estaba "Unselected" cambia a "Selected"*/
+                        document.getElementById('negativo').setAttribute('value','selected');
+                        if(document.getElementById('positivo').getAttribute('value') == 'selected'){/*Si estaba seleccionado Negativo, Positivo cambia a "Unselected"*/
+                            document.getElementById('positivo').setAttribute('value','unselected');
+                        }
+                    }
+                },
+                error: function(xhr,errmsg,err){}
+            })
+        });
+        </script>
 
 {% endblock body %} 
