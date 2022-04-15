@@ -120,3 +120,55 @@ h1#titulo{
 #negativo[value='selected']{
     color: red;
 }
+
+.container-center {
+    height: 6rem;
+    position: relative;
+    border-radius: 15px;
+    background-color: #f8f8f8;
+    margin-bottom: 1rem;
+}
+  
+.center-xy {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.title{
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+@media screen and (max-width: 600px){
+    .title{
+        font-size: large;
+    }
+}
+
+.enunciado{
+    font-size: large;
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.practica-pregunta{
+    margin-bottom: 2em;
+}
+
+.form-box{
+    margin-top: 1rem;
+}
+
+.input-box {
+    width: 100%;
+    height: 3em;
+}
+
+.practica-contenido{
+    margin-top: 2rem;
+}

@@ -2,6 +2,9 @@
 
 {% load static %}
 
+{%block cssPath%}
+    <link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
+{%endblock cssPath%}
 
 {% block title %}
     {{practica.titulo}}
@@ -9,25 +12,54 @@
 
 {% block body %}
 
-    <h1>{{ practica.titulo }}</h1>
-    <h1>Voto: {{ practica.voto }}</h1>
-    <h1>{{ practica.filtro }}</h1>
-    <h1>{{ practica.descripcion }}</h1>
-    <div>
-        {{ abiertas }}
-    </div>
-    <div>
-        {% for cerrada in cerradas %}
+    <div class="document-container">
+        <div class="container-center">
+            <div class="center-xy">
+                <p class="title">Práctica: {{ practica.titulo }}</p>
+            </div>
+        </div>
+        
+
+        <h3>Tema: {{ practica.filtro }}</h3>
+        <h3>Voto: {{ practica.voto }}</h3>
+        
+        <h5>Descripción: {{ practica.descripcion }}</h5>
+        <h5>Responda las siguientes preguntas:</h5>
+
+        <div class="practica-contenido">
             <div>
-                <h1>PREGUNTA: {{ cerrada }} </h1>
-                {% for respuesta in cerrada.get_respuestas %}
-                    <div>
-                       <h1>RESPUESTA: {{ respuesta.respuesta }}</h1>
+                {% for abierta in abiertas %}
+                    <div class="practica-pregunta">
+                        <div class="enunciado">
+                            Pregunta: {{ abierta }}
+                            <div class="form-box">
+                                <input class="input-box" type="text" id="{{ abierta.id }}" name="pregA{{ abierta.id }}" placeholder="respuesta">
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
-        {% endfor %}
+            <div>
+                {% for cerrada in cerradas %}
+                    <div class="practica-pregunta">
+                        <div class="enunciado">
+                            Pregunta: {{ cerrada }}
+                        </div>
+                        {% for respuesta in cerrada.get_respuestas %}
+                            <div>
+                                <div>
+                                  <input type="radio" id="{{ respuesta.id }}" name="pregC{{respuesta.id}}" value="">
+                                  <label for="pregunta">{{ respuesta.respuesta }}</label>
+                                </div>
+                            
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        
+        </div>
+        
     </div>
-    
 
 {% endblock body %} 
