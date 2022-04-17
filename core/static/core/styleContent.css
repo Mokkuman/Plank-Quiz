@@ -34,6 +34,14 @@
     border-radius: 8px;
 }
 
+#buscar:disabled,#buscar[disabled]{
+    background-color: grey;
+}
+
+#buscar:hover:enabled{
+    background-color:#9647c7;
+}
+
 select {
     width: 30%;
     padding: 16px 20px;

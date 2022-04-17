@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'core',     #app que pertenence al home
     'usuario',  #app para la creación del objeto usuario
     'voto',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',  #app editor de texto
-    'storages' #app para archivos media/static (actualmente solo para media)
+    'storages', #app para archivos media/static (actualmente solo para media)
 ]
 
 #Configuración del editor de texto

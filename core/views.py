@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.views import View
 from plank.settings import LOGIN_URL # globally declared variable for the login page
+from django.core.paginator import Paginator,EmptyPage
+from .filter import FlashcardFilter, PracticaFilter
 
 from usuario.models import Flashcard, Practica
 from voto.models import VotoFlash, VotoPract
@@ -13,6 +15,7 @@ import usuario # globally declared variable for the login page
 from usuario.forms import UserForm, LoginForm
 from core.forms import DocumentForm, PracticaForm, PregAbiertaForm,PregCerradaForm
 from usuario.models import Flashcard,User
+from voto.models import VotoFlash,VotoPract
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
@@ -24,16 +27,38 @@ def home(request):
         signinForm = LoginForm()
         return render(request, "core/home.html", {"signupForm":signupForm, "signinForm": signinForm})
 
-@login_required()
-def menu(request):
-    return render(request,"core/menu.html")
-
+@login_required
 def documentos(request):
-    return render(request,"core/documentos.html")
+    context ={}
+    filtered_flash = FlashcardFilter(
+        request.GET,
+        queryset=Flashcard.objects.all().order_by('-voto')
+    )
+    
+    context['filtered_flash'] = filtered_flash
+    paginated_filtered_flash = Paginator(filtered_flash.qs,9)   #Cambiar el valor numérico por uno menor para visualizar mejor las paginas
+    page_number = request.GET.get('page')
+    flash_page_obj = paginated_filtered_flash.get_page(page_number)
+    context['flash_page_obj'] = flash_page_obj
+    
+    return render(request,'core/documentos.html',context=context)
 
+@login_required
 def practicas(request):
-    return render(request,"core/practicas.html")
-
+    context ={}
+    filtered_pract = PracticaFilter(
+        request.GET,
+        queryset=Practica.objects.all().order_by('-voto')
+    )
+    
+    context['filtered_pract'] = filtered_pract
+    paginated_filtered_pract = Paginator(filtered_pract.qs,9)
+    page_number = request.GET.get('page')
+    pract_page_obj = paginated_filtered_pract.get_page(page_number)
+    context['pract_page_obj'] = pract_page_obj
+    
+    return render(request,'core/practicas.html',context=context)
+    
 @login_required
 def nuevaPractica(request):
     if request.method == "POST":

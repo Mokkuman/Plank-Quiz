@@ -45,12 +45,6 @@ def signout(request):
 def perfil(request):
     return render(request, "users/perfil.html")
 
-# @login_required()
-# def Home(request):
-#     flash = Flashcard.objects.filter(visible=True).order_by('-voto')[:9]   #Ordena por voto los primeros nueve
-#     pract = Practica.objects.filter(visible=True).order_by('-voto')[:9]
-#     return render(request, "users/userHome.html",{'flashcard':flash,'practica':pract})
-
 @login_required()
 def modificarPerfil(request):
     return render(request, "users/modificarPerfil.html")

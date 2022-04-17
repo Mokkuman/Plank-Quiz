@@ -30,18 +30,21 @@ class VotoPract(Voto):
                 return -1
     
     def get_voto(id_practica):
-        voto_final = 0
         try:
+            voto_final = 0
             votos = VotoPract.objects.filter(id_practica = id_practica) # retorna lista votos de este flashcard
+            for voto in votos:
+                if voto.positivo:
+                    voto_final += 1
+                elif voto.negativo:
+                    voto_final -= 1
         except:
-            return voto_final
+            pass
+        finally:
+            id_practica.voto = voto_final
+            id_practica.save()
+            return voto_final   
         
-        for voto in votos:
-            if voto.positivo:
-                voto_final += 1
-            elif voto.negativo:
-                voto_final -= 1
-        return voto_final
     
     def give_vote(usuario,id_practica, voto_usuario):
         try:

@@ -7,7 +7,6 @@ app_name = 'core'
 
 urlpatterns = [
     path("",views.home,name="home"),
-    path("menu/",views.menu,name="menu"),
     path("documento/<int:id>/",views.documento,name="documento"),
     path('nuevoDocumento/',views.nuevoDocumento,name='nuevoDocumento'),
     path("documentos/",views.documentos,name="documentos"),
