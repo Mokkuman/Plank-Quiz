@@ -1,78 +1,55 @@
+
 {% load static %}
+
+
 
 {%if user.is_authenticated %}
 
-{%block cssPath%}
-<link rel="stylesheet" href="{% static 'user/perfil.css' %}"  type="text/css"/>
-{%endblock cssPath%}
+{% block cssPath %} 
+    <link rel="stylesheet" href="{% static 'user/perfil.css' %}"  type="text/css"/>
+{% endblock cssPath %}
 
 {%block title %}
-Modificar perfil
+&nbsp
 {% endblock title%}
+ 
 
-{%block body%}
-<div class = "lab-container">
     
-    <div id="columna1">
-        <div id="logoContainer">
-              <picture>
-                <!--<source media="(min-width: 1100px)" srcset="{% static 'core/plank-wide.png' %}" id="logo">Modal SIGNIN Button-->
-                <img id="logo" src="{{request.user.imagenPerfil.url}}"
-              </picture>
-            </a>
-          </div>
-          <div id="nombres">
-            {{request.user.nombre}}
-          </div>
-        <div class="buttons">
-            <a id="btnSUp" data-bs-toggle="modal" data-bs-target="#staticBackdropSignup"> Cambiar foto de perfil </a>
-        </div> 
-        <div class="buttons">
-            <a id="btnSUp" data-bs-toggle="modal" data-bs-target="#staticBackdropSignup"> Cambiar nombre </a>
-        </div> 
-    </div>
+{% block body %}
 
+<div class="lab-container">
 
-    <div id="columna2">       
-        <form action="ejemplo.php" method="get">
-            <div id="nombres">
-                <H1><p>Modifica tu Perfil </p></H1>
-                <p>_______________</p>
-            <H3><p>Apellido: </p></H3>
-            <p>{{request.user.apellido}}
-
-            <button> Modificar</button></p>
-            Nuevo apellido: <input type="text" name="nombre" size="40"  placeholder="Escriba sus apellidos">
-            <H3><p>Correo: </p></H3>
-            <p>{{request.user.email}} </p>
-            <H3><p>Contraseña: </p></H3>
-            <p>contraseña <!--{{request.user.password}}-->
-
-            <button> Modificar</button></p>
-            Nueva contraseña: <input type="text" name="nombre" size="40"  placeholder="Escriba sus contraseña">
-            <p>Nuevo nombre: <input type="text" name="nombre" size="40" placeholder="Escriba su nombre"></p>
-        </div>
-        <H1>*los formularios se van a mostrar solo si el usuario hace clic en "modificar" del campo correspondiente</H1>
-          </form>
-    </div>
-
-    <div id="columna3">
-        <div id="logoContainer">
-            <picture>
-              <!--<"{% static 'users/plank-Banner.png' %}"     usuario\static\user\Banner.png-->
-              <img id="publicidad" src="{% static '\user\Banner.png' %}">
-            </picture>
-          </a>
-        </div>
-        Espacio publicitario
+    <div align="center" class="form">
+      <div id="nombres">
+      <H1><p>Modifica tu Perfil </p>
+      _________________</H1>
+        <form method="POST" >
+          {% comment %}
+          <form method="POST" action="{% url 'users:modificarPerfil' %}" >
+          {% endcomment %}
+            {% csrf_token %}
+            {{form.as_p}}
+            <p> &nbsp</p>
+            <button id="btnSUp" style='width:120px; height:30px;' type="submit" name="Update">Aplicar cambios</button>
+          
+            <button id="btnSUp" style='width:120px; height:30px;' type="submit" name="Cancel">Cancelar</button>
+      </div> 
+        </form>
     </div>
 
 </div>
+<div id="logoContainer">
+  <picture>
+    <img id="publicidad" src="{% static '\user\adidas.jpg' %}">
+  </picture>
+</a>
+</div>
+<center>Espacio publicitario</center>
+{% endblock body %}
 
-{%endblock body%}
+
 {% else %}
-<!--<div id="nombres">-->
+
   <H1>Repámpanos! Parece que tu sesión no está iniciada, buen intento, querido tramposo.</H1>
-<!--</div>-->
-<script src="{% static 'core/menu.js' %}" defer></script>
+
 {% endif %}

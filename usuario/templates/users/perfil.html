@@ -1,11 +1,68 @@
 {% extends 'core/layout.html' %}
 {% load static %}
 
+{%if user.is_authenticated %}
+
+{%block cssPath%}
+<link rel="stylesheet" href="{% static 'user/tarjetaPerfil.css' %}"  type="text/css" />
+{%endblock cssPath%}
+
 {% block title %}
     PERFIL
 {% endblock title %}
 
 {% block body %}
-    <h1>hello perfil</h1>
-    <img src="{{request.user.imagenPerfil.url}}"/>
+    <h1>Hola, {{request.user.nombre}}!</h1>
+              
+    <div class = "lab-container">
+    
+        <div id="columnaUNO">
+            <img  style="width: 300px; height: 300px; border-radius: 400px;" src="{{request.user.imagenPerfil.url}}"/>
+              
+        </div>
+    
+    
+        <div id="columnaDOS">       
+            <form action="ejemplo.php" method="get">
+                <div id="nombres">
+                    <p><b>{{request.user.nombre}} {{request.user.apellido}}</b></p>
+                    __________________
+                    <p><h2>{{request.user.email}}</h2></p>
+                </div>
+            </form>
+        </div>
+    
+    
+    </div>
+
+    <p style="color:white";>Red paragraph text </p>
+
+
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+    <a class="btn btn-outline-secondary" href="{%url 'usuario:modificarPerfil'%}" style='width:250px; height:50px;' >
+        <h3>Mis Tarjetas</h3></a> 
+
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+      <a class="btn btn-outline-secondary" href="{%url 'usuario:modificarPerfil'%}" style='width:250px; height:50px;' >
+        <h3>Mis Prácticas</h3></a> 
+
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+
+
+
+      
+      
+        <a class="btn btn-outline-danger" href="{%url 'usuario:modificarPerfil'%}" style='width:250px; height:50px;' >
+            <h3>Modificar perfil</h3></a> 
+
 {% endblock body %} 
+
+{% else %}
+<H1>Repámpanos! Parece que tu sesión no está iniciada, buen intento, querido tramposo.</H1>
+{% endif %}

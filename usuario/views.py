@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from .forms import UserForm, LoginForm
+from .forms import UserForm, LoginForm, modificarPerfilForm
 from django.contrib.auth.decorators import login_required
 from usuario.models import Flashcard, Practica
 
@@ -47,4 +47,14 @@ def perfil(request):
 
 @login_required()
 def modificarPerfil(request):
-    return render(request, "users/modificarPerfil.html")
+
+    if request.method=="POST":
+             theForm = modificarPerfilForm(request.POST,instance=request.user)
+             if theForm.is_valid():
+                theForm.save()
+             return redirect('core:home')
+    else:
+         #  return redirect('users:perfil')
+
+         theForm = modificarPerfilForm()
+    return render(request,"users/modificarPerfil.html",{"form":theForm})

@@ -39,3 +39,14 @@ class LoginForm(forms.Form):
         if not user or not user.is_active:
             raise forms.ValidationError("No existe el usuario. Checa que los datos estén bien.")
         return self.cleaned_data
+    
+class modificarPerfilForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('nombre','apellido','email')
+        widgets = {
+        'nombre': forms.TextInput(attrs = {'class': 'form-control my-3'}),
+        'apellido': forms.TextInput(attrs = {'class': 'form-control my-3'}),
+        'email': forms.TextInput(attrs = {'class': 'form-control my-3', 'id':'signup_email'}),
+        }
+

@@ -13,7 +13,7 @@
     margin-left: 20px;
     background-color: #FEFAE0;
     text-align:center;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
 }
 
 .lab-container #title{
@@ -96,28 +96,27 @@ margin-top:10px;
 }
 
 #nombres {
-    font-size: 70px;
+    font-size: 30px;
     }
 
 #columna3 {
     position:absolute;
-    top:200px;
-    left:30px;
-    width:600px;
+    top:60px;
+    left:230px;
+    width:300px;
     margin-top:10px;
-    margin-left:2000px;
+    margin-left:770px;
     margin-right:20px;
-    margin-top:30px;
     /* background-color:#ffffbb;*/
     }
 
 #logo{
-    height: 30em;
+    height: 10em;
     padding: 10px 0 10px 30px;
 }
 
 #publicidad{
-    width: 600px;
-    height: 50em;
-    padding: 50px 0 10px 30px;
+    width: 1300px;/* era 600*/
+    height: 10em;/* era 50*/
+    padding: 20px 0 10px 30px;
 }
