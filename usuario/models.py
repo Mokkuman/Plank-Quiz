@@ -100,16 +100,13 @@ class Practica(Herramienta):
 class Pregunta(models.Model):
     practica = models.ForeignKey(Practica,null=True,on_delete=models.SET_NULL)
     planteamiento = models.CharField(blank=False, max_length=100) 
+    respuesta = models.CharField(max_length=100,blank=False)
 
     def __str__(self) -> str:
-        return self.planteamiento   
-    
-    class Meta:
-        abstract = True
+        return self.planteamiento
 
-#Clase para definir las preguntas abiertas
-class Abierta(Pregunta):
-    respuesta = models.CharField(max_length=100,blank=False)
+    def classname(obj):
+        return obj.__class__.__name__   
 
     def calificar_pregunta(self, respuesta_usuario):
         if respuesta_usuario == self.respuesta:
@@ -117,21 +114,19 @@ class Abierta(Pregunta):
         else:
             return 0
 
+    class Meta:
+        abstract = True
+
+#Clase para definir las preguntas abiertas
+class Abierta(Pregunta):
+    pass
 
 #Clase solo para tener una primarykey para asociar las respuestas cerradas
 class Cerrada(Pregunta):
     def get_respuestas(self):
         respuestas = RespuestaCerrada.objects.filter(id_pregunta = self)
-        # inside template
-        # for PreguntaCerrada in PreguntaCerradas
-        #     print(PreguntaCerrada.enunciado)
-        #     for RespuestaCerrada PreguntaCerrada.getRespuestasCerradas
         return respuestas
-
-    def calificar_pregunta(self):
-        pass
         
-
 #Clase para definir las respuestas cerradas de una pregunta de tipo Cerrada
 #Se hace de esta forma para que el usuario pueda definir "n" respuestas
 #Cuenta con la llave foránea de la clase Cerrada para identificar a la clase que pertenecen
@@ -139,4 +134,3 @@ class RespuestaCerrada(models.Model):
     es_correcta = models.BooleanField(default=False)
     id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.SET_NULL)
     respuesta = models.CharField(blank=False, max_length=100)
-    

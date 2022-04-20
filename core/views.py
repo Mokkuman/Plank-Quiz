@@ -6,12 +6,14 @@ from django.views import View
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 from django.core.paginator import Paginator,EmptyPage
 from .filter import FlashcardFilter, PracticaFilter
+from django.http import JsonResponse
 
 from usuario.models import Flashcard, Practica
 from voto.models import VotoFlash, VotoPract
 from plank.settings import LOGIN_URL
 import usuario # globally declared variable for the login page
 #prueba, first commit
+import json
 from usuario.forms import UserForm, LoginForm
 from core.forms import DocumentForm, PracticaForm, PregAbiertaForm,PregCerradaForm
 from usuario.models import Flashcard,User
@@ -82,6 +84,32 @@ def practica(request, id):
     practica = Practica.objects.get(id=id)
     preguntasAbiertas = practica.get_preguntas_abiertas()
     preguntasCerradas = practica.get_preguntas_cerradas()
+
+    if request.method == "POST":
+        grade = 0 # calificacion del usuario
+        total = len(preguntasAbiertas) + len(preguntasCerradas)
+        answers = request.POST # todo dentro del POST
+        
+        #print(answers['answers']) # solo el JSON del POST con nombrePreg:respuesta
+        answers = json.loads(answers['answers']) # convierte json en diccionario
+        # califica preguntasAbiertas
+        for preguntaAbierta in preguntasAbiertas:
+            # crea un nombre para la pregunta que es igual a la del documento (response.POST)
+            respId = f'pregA{preguntaAbierta.id}'
+            # accede a la respuesta que eligió el usuario (guardado dentro del diccionario)
+            if(respId in answers):
+                respuesta_usuario = answers[respId]
+                grade += preguntaAbierta.calificar_pregunta(respuesta_usuario)
+
+        # califica preguntasCerradas
+        for preguntaCerrada in preguntasCerradas:
+            # crea un nombre para la pregunta que es igual a la del documento (response.POST)
+            respId = f'pregC{preguntaCerrada.id}'
+            if(respId in answers):
+                respuesta_usuario = answers[respId]
+                grade += preguntaCerrada.calificar_pregunta(respuesta_usuario)
+        response = {'grade':grade, 'total':total}
+        return JsonResponse(response)
 
     voto = VotoPract.voted(practica,request.user)
     return render(request, "core/practica.html", {

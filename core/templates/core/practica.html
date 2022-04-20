@@ -25,41 +25,52 @@
         
         <h5>Descripción: {{ practica.descripcion }}</h5>
         <h5>Responda las siguientes preguntas:</h5>
-
+<!--{%url 'core:practica' id=practica.id%}-->
         <div class="practica-contenido">
-            <div>
-                {% for abierta in abiertas %}
-                    <div class="practica-pregunta">
-                        <div class="enunciado">
-                            Pregunta: {{ abierta }}
-                            <div class="form-box">
-                                <input class="input-box" type="text" id="{{ abierta.id }}" name="pregA{{ abierta.id }}" placeholder="respuesta">
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div>
-                {% for cerrada in cerradas %}
-                    <div class="practica-pregunta">
-                        <div class="enunciado">
-                            Pregunta: {{ cerrada }}
-                        </div>
-                        {% for respuesta in cerrada.get_respuestas %}
-                            <div>
-                                <div>
-                                  <input type="radio" id="{{ respuesta.id }}" name="pregC{{respuesta.id}}" value="">
-                                  <label for="pregunta">{{ respuesta.respuesta }}</label>
+            <form action="" id="exam-form" data-url="{%url 'core:practica' id=practica.id%}" method="post">
+                {% csrf_token %}
+                <div>
+                    {% for abierta in abiertas %}
+                        <div class="practica-pregunta">
+                            <div class="enunciado">
+                                Pregunta {{ forloop.counter }} : {{ abierta }}
+                                <div class="form-box">
+                                    <input class="input-box" type="text" id="{{ abierta.id }}" name="pregA{{ abierta.id }}" placeholder="respuesta">
                                 </div>
-                            
                             </div>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            </div>
-        
-        </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    {% for cerrada in cerradas %}
+                        <div class="practica-pregunta">
+                            <div class="enunciado">
+                               
+                                Pregunta 
+                                {% with lenAbiertas=abiertas|length %}
+                                    {{ forloop.counter|add:lenAbiertas }}
+                                {% endwith %}: {{ cerrada }}
+                            </div>
+                            {% for respuesta in cerrada.get_respuestas %}
+                                <div>
+                                    <div>
+                                    <input type="radio" id="{{ respuesta.id }}" name="pregC{{cerrada.id}}" value="{{ respuesta.respuesta }}">
+                                    <label for="{{ respuesta.respuesta }}">{{ respuesta.respuesta }}</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
 
+                <div class="grade" id="grade">
+                
+                </div>
+
+                <button id="grade-button" type="submit" class="btn btn-primary" name="submit" value="submit">¡Calificar!</button>
+            </form>
+        </div>
+        <br>
         <div class="like-dislike">
             <p class="votos" id="votos">{{practica.voto}}</p>
             <!--Verifica si previamente el usuario había votado positivo(1), negativo(0) o no ha votado (-1)-->
@@ -122,6 +133,58 @@
                 error: function(xhr,errmsg,err){}
             })
         });
-        </script>
+        $(document).ready(function(){
+            var $form = $("#exam-form"); //agarra el formulario
+            $form.submit(function(event){
+                event.preventDefault(); //para que no se refresque la página
+                let inputs = document.getElementsByTagName("input"); //obtiene todos los inputs
+                let answers = {}; //objecto JSON que será convertido en diccionario python en el view
+                for(let i = 0; i < inputs.length; i++){
+                    if(inputs[i].name.includes('pregC')){ // para las preguntas cerradas
+                        if(inputs[i].checked){ // solo agrega la que escogió el usuario
+                            answers[inputs[i].name] = inputs[i].value;
+                        }
+                    }else if(inputs[i].name.includes('pregA')){ // para preguntas abiertas
+                        answers[inputs[i].name] = inputs[i].value;
+                    }    
+                }
+
+                let $endpoint = $form.attr("data-url"); //url del view
+                $.ajax({
+                    method:"POST",
+                    data: {
+                        url: $endpoint,
+                        answers: JSON.stringify(answers),
+                        csrfmiddlewaretoken:"{{csrf_token}}",
+                        dataType: 'json'
+                    },
+                    success: function(json){
+                        agregarCalificacion(json);
+                    },
+                    error: function(xhr,errmsg,err){
+                    }
+                })
+            })
+        })   
+        const agregarCalificacion = (json) =>{
+            let porcentaje = (json.grade / json.total) * 100; // califcacion en porcentaje
+
+            gradeContainer = document.getElementById("grade"); //div que contiene la calificacion
+            gradeContainer.innerHTML = `<p><b>Calificación: ${json.grade}/${json.total}: ${porcentaje}%<b></p>`
+            gradeContainer.classList.add('enunciado', 'my-3');
+            if(porcentaje < 60){
+                // Calificación reprobatoria, fondo rojo
+                if(gradeContainer.classList.contains('bg-success'))
+                    gradeContainer.classList.remove('bg-success')
+                gradeContainer.classList.add('bg-danger');
+            }
+            else{
+                // calificación apbrobatoria, fondo verde
+                if(gradeContainer.classList.contains('bg-danger'))
+                    gradeContainer.classList.remove('bg-danger')
+                gradeContainer.classList.add('bg-success');
+            }
+        } 
+    </script>
 
 {% endblock body %} 
