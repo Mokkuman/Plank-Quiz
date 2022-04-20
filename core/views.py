@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.views import View
+from numpy import gradient
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 from django.core.paginator import Paginator,EmptyPage
 from .filter import FlashcardFilter, PracticaFilter
@@ -86,28 +87,11 @@ def practica(request, id):
     preguntasCerradas = practica.get_preguntas_cerradas()
 
     if request.method == "POST":
-        grade = 0 # calificacion del usuario
         total = len(preguntasAbiertas) + len(preguntasCerradas)
         answers = request.POST # todo dentro del POST
-        
         #print(answers['answers']) # solo el JSON del POST con nombrePreg:respuesta
-        answers = json.loads(answers['answers']) # convierte json en diccionario
-        # califica preguntasAbiertas
-        for preguntaAbierta in preguntasAbiertas:
-            # crea un nombre para la pregunta que es igual a la del documento (response.POST)
-            respId = f'pregA{preguntaAbierta.id}'
-            # accede a la respuesta que eligió el usuario (guardado dentro del diccionario)
-            if(respId in answers):
-                respuesta_usuario = answers[respId]
-                grade += preguntaAbierta.calificar_pregunta(respuesta_usuario)
-
-        # califica preguntasCerradas
-        for preguntaCerrada in preguntasCerradas:
-            # crea un nombre para la pregunta que es igual a la del documento (response.POST)
-            respId = f'pregC{preguntaCerrada.id}'
-            if(respId in answers):
-                respuesta_usuario = answers[respId]
-                grade += preguntaCerrada.calificar_pregunta(respuesta_usuario)
+        answers = json.loads(answers['answers']) # convierte json en diccionar
+        grade = practica.calificar(answers)
         response = {'grade':grade, 'total':total}
         return JsonResponse(response)
 

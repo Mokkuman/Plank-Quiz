@@ -93,8 +93,29 @@ class Practica(Herramienta):
         preguntas_cerradas = Cerrada.objects.filter(practica = self)
         return preguntas_cerradas
     
-    def calificar(self):
-        pass
+    #answers es un diccionario
+    def calificar(self, answers):
+        preguntasAbiertas = self.get_preguntas_abiertas()
+        preguntasCerradas = self.get_preguntas_cerradas()
+
+        grade = 0 # calificacion del usuario
+        # califica preguntasAbiertas
+        for preguntaAbierta in preguntasAbiertas:
+            # crea un nombre para la pregunta que es igual a la del documento (response.POST)
+            respId = f'pregA{preguntaAbierta.id}'
+            # accede a la respuesta que eligió el usuario (guardado dentro del diccionario)
+            if(respId in answers):
+                respuesta_usuario = answers[respId]
+                grade += preguntaAbierta.calificar_pregunta(respuesta_usuario)
+
+        # califica preguntasCerradas
+        for preguntaCerrada in preguntasCerradas:
+            # crea un nombre para la pregunta que es igual a la del documento (response.POST)
+            respId = f'pregC{preguntaCerrada.id}'
+            if(respId in answers):
+                respuesta_usuario = answers[respId]
+                grade += preguntaCerrada.calificar_pregunta(respuesta_usuario)
+        return grade
 
 #Clase abstracta para los diferentes tipos de preguntas
 class Pregunta(models.Model):
