@@ -31,18 +31,26 @@
                 </div>
 
                 <input type="hidden" name="form-TOTAL_FORMS" value="0" id="idTotalForms">
+                <br/>
 
-                <div class="field-container" id="preguntas-container">
-                    <div class="field-container-pregs" id="pregunta">
-                        <label class="field"> Pregunta</label><br/>
-                        <div class="text-field">
-                            {{pregA.planteamiento}}
+                <div id="Preguntas">
+                    <div class="field-container" id="preguntas-container">
+                            <button id="preguntaAbierta" type="button">Pregunta Abierta</button>
+                            <button id="preguntaCerrada" type="button" style="margin-left: 5px;">Pregunta Cerrada</button>
+                            <br>
+                        <div class="field-container-pregs" id="pregunta">
+                            <label class="field"> Pregunta</label><br/>
+                            <div class="text-field">
+                                {{pregA.planteamiento}}
+                            </div>
+                            <label class="field" >Respuesta</label><br/>
+                            <div class="text-field">
+                                {{pregA.respuesta}}
+                            </div> 
                         </div>
-                        <label class="field" >Respuesta</label><br/>
-                        <div class="text-field">
-                            {{pregA.respuesta}}
-                        </div> 
                     </div>
+
+                    
                 </div>
                 
                 <button id="add-more" type="button">+</button>
@@ -50,6 +58,7 @@
         </div>
     </div>
     {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}
+    <script type="text/javascript" src={% static 'core/ctmManu.js' %}> </script>  {%comment%} Script para agregar las preguntas {%endcomment%}
     <script>
         const btnMas = document.getElementById('add-more');
         const totalForms = document.getElementById('idTotalForms');
