@@ -1,5 +1,6 @@
 from xml.dom.minidom import Document
 from django import forms
+from django.forms import inlineformset_factory
 from usuario.models import Flashcard,Practica,Abierta,Cerrada
 
 class FlashcardForm(forms.ModelForm):
@@ -21,3 +22,11 @@ class PregCerradaForm(forms.ModelForm):
     class Meta:
         model = Cerrada
         fields = ['planteamiento']
+
+PregAbiertaFormset = inlineformset_factory(
+    Practica,
+    Abierta,
+    form = PregAbiertaForm,
+    extra = 1, #por defecto solo aparece una pregunta abierta
+    #mas fields extras
+)

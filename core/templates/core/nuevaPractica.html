@@ -29,12 +29,10 @@
                     <label class="field" id="tema">Tema</label><br/>
                     {{form.filtro}}
                 </div>
-
-                <input type="hidden" name="form-TOTAL_FORMS" value="0" id="idTotalForms">
                 <br/>
 
                 <div id="Preguntas">
-                    <div class="field-container" id="preguntas-container">
+                    <!--<div class="field-container" id="preguntas-container">
                             <button id="preguntaAbierta" type="button">Pregunta Abierta</button>
                             <button id="preguntaCerrada" type="button" style="margin-left: 5px;">Pregunta Cerrada</button>
                             <br>
@@ -48,9 +46,22 @@
                                 {{pregA.respuesta}}
                             </div> 
                         </div>
-                    </div>
+                    </div>-->
+                    <div id="titPreguntas">Preguntas </div>
+                    {{abiertaFormset.non_form_errors}}
+                    {{abiertaFormset.management_form}}
+                    <table class="table">
+                        {% for abierta in abiertaFormset %}
+                        <tr>
+                            <td>{{abierta.id}}</td>
+                            <td>{{abierta.planteamiento}}</td>
+                            <td>{{abierta.respuesta}}</td>
 
-                    
+                        <!--<div class="inline {{abiertaFormset.prefix}}">
+                        </div>-->
+                        </tr>
+                    {% endfor %}    
+                    </table>     
                 </div>
                 
                 <button id="add-more" type="button">+</button>
@@ -58,25 +69,29 @@
         </div>
     </div>
     {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}
-    <script type="text/javascript" src={% static 'core/ctmManu.js' %}> </script>  {%comment%} Script para agregar las preguntas {%endcomment%}
-    <script>
-        const btnMas = document.getElementById('add-more');
-        const totalForms = document.getElementById('idTotalForms');
-        btnMas.addEventListener('click',(event)=>{
-            if(event){ //para que no se actualice mientras escribes
-                event.preventDefault();
-            }
-            const numFormsPreguntas = document.getElementsByClassName('field-container-pregs');
-            let numActualPreguntas = numFormsPreguntas.length;
 
-            const preguntasContainer = document.getElementById('preguntas-container');
-            const preguntaForm = document.getElementById('pregunta').cloneNode(true);
-            preguntaForm.setAttribute('class','field-container-pregs');
-            preguntaForm.setAttribute('id',`preg-${numActualPreguntas}`);
-            totalForms.setAttribute('value',numActualPreguntas+1);
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#add-more").on("click",addItem);
+        });
+        function addItem(){
+            let newElement = $(".table tr:last").clone(true); //Clonando la ultima fila
+            //Obteniendo el total de forms, esto se saca con propiedad del inline_formset
+            //con TOTAL_FORMS, por defecto el valor actual debe ser 1
+            let total = $("#id_abiertas-TOTAL_FORMS").val();
+            console.log(total); //prueba
+            newElement.find(":input").each(function(){
+                let name = $(this).attr("name").replace("-" + (total-1)+"-","-"+total+"-");
+                let id = "id_"+name;
+                //set los atributos y limpiando los valores
+                $(this).attr({"name":name,"id":id}).val("");
 
-            //añadiendo el formulario al html
-            preguntasContainer.append(preguntaForm);
-        })
+            });
+            //Aumentando el 1 la cantidad de formsets
+            total++;
+            $("#id_abiertas-TOTAL_FORMS").val(total);
+            $(".table tr:last").after(newElement); //Añadiendo al final
+            
+        }
     </script>
 {% endblock body %}

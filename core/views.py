@@ -3,21 +3,22 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.views import View
+from django.views.generic import CreateView
 #from numpy import gradient
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 from django.core.paginator import Paginator,EmptyPage
 from .filter import FlashcardFilter, PracticaFilter
 from django.http import JsonResponse
 
-from usuario.models import Flashcard, Practica
+from usuario.models import Flashcard, Practica, User
 from voto.models import VotoFlash, VotoPract
 from plank.settings import LOGIN_URL
 import usuario # globally declared variable for the login page
 #prueba, first commit
 import json
 from usuario.forms import UserForm, LoginForm
-from core.forms import FlashcardForm, PracticaForm, PregAbiertaForm,PregCerradaForm
-from usuario.models import Flashcard,User
+from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset
+#from usuario.models import Flashcard,User repetido alv
 from voto.models import VotoFlash,VotoPract
 # Create your views here.
 def home(request):
@@ -61,25 +62,47 @@ def practicas(request):
     context['pract_page_obj'] = pract_page_obj
     
     return render(request,'core/practicas.html',context=context)
+
+class nuevaPractica(CreateView):
+    form_class = PracticaForm
+    template_name = 'core/NuevaPractica.html'
     
-@login_required
-def nuevaPractica(request):
-    if request.method == "POST":
-        pracForm = PracticaForm(request.POST or None)
-        pregAbierta = PregAbiertaForm(request.POST)
-        pregCerrada = PregCerradaForm(request.POST)
-        if pracForm.is_valid():
-            prac = pracForm.save(commit=False)
-            prac.user = User.objects.get(id = request.user.id)
-            prac.save()
-            return redirect('core:practicas',id=prac.id)
+    def get_context_data(self, **kwargs):
+        context = super(nuevaPractica,self).get_context_data(**kwargs)
+        context['abiertaFormset'] = PregAbiertaFormset(prefix='abiertas')
+        print('get_context_data')
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        abiertaFormset = PregAbiertaFormset(request.POST, prefix='abiertas')
+        if(form.is_valid() and abiertaFormset.is_valid()):
+            return self.form_valid(form,abiertaFormset)
         else:
-            return render(request, 'core/nuevaPractica.html',{'form': PracticaForm(),'pregA':PregAbiertaForm,'pregC':PregCerradaForm})
-    pracForm = PracticaForm()
-    pregAbierta = PregAbiertaForm()
-    pregCerrada = PregCerradaForm()
-    return render(request,'core/nuevaPractica.html',{'form':pracForm,'pregA':pregAbierta,'pregC':pregCerrada})
+            return self.form_invalid(form,abiertaFormset)
         
+    def form_valid(self,form,abiertaFormset):
+        self.object = form.save(commit = False)
+        #Guardando el usuario
+        self.object.user = User.objects.get(id = self.request.user.id)
+        self.object.save()
+        #Guardando abiertaFormset instances
+        abiertasSet = abiertaFormset.save(commit=False)
+        for ab in abiertasSet:
+            ab.practica = self.object
+            ab.save()
+        return redirect('core:practica',id=self.object.id)
+    
+    def form_invalid(self,form,abiertaFormset):
+        print("Error en los formularios")
+        return self.render_to_response(
+            self.get_context_data(form = form,
+                                  abiertaFormset = abiertaFormset)
+        )
+
+
 @login_required
 def practica(request, id):
     practica = Practica.objects.get(id=id)
