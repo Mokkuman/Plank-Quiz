@@ -24,7 +24,7 @@
       <i class="fa-solid fa-user"></i>  <!--Para qué es esto? xd TE VALGA VERGA .i.-->
     </p>
     <p>
-      <a href="{%url 'core:nuevoDocumento' %}" class="btn btn-primary my-2">Crear Flashcards</a>
+      <a href="{%url 'core:nuevaFlashcard' %}" class="btn btn-primary my-2">Crear Flashcards</a>
       <a href="{%url 'core:nuevaPractica' %}" class="btn btn-primary my-2">Crear Practicas</a>
     </p>
   </div>
@@ -33,7 +33,7 @@
 
 <div class="container">
   <div class="encabezado">
-    <h2>Flashcards Trending</h2>
+    <h2>Flashcards Populares</h2>
   </div>
   <div class="album py-5 bg-light" id="flashcards">
     <div class="container" id="container-flashcards">
@@ -86,13 +86,16 @@
         </div>
         {%endfor%}
       </div>
+      <div class="See-more">
+        <a href="{%url 'core:flashcards' %}" class="btn btn-primary my-2" width: 70%; >Ver más Flashcards</a>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="container">
   <div class="encabezado">
-    <h2>Prácticas Trending</h2>
+    <h2>Prácticas Populares</h2>
   </div>
   <div class="album py-5 bg-light" id="flashcards">
     <div class="container" id="container-flashcards">
@@ -144,6 +147,9 @@
           </div>
         </div>
         {%endfor%}
+      </div>
+      <div class="See-more">
+        <a href="{%url 'core:practicas' %}" class="btn btn-primary my-2" width: 70%; >Ver más Prácticas</a>
       </div>
     </div>    
   </div>

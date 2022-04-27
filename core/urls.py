@@ -7,9 +7,9 @@ app_name = 'core'
 
 urlpatterns = [
     path("",views.home,name="home"),
-    path("documento/<int:id>/",views.documento,name="documento"),
-    path('nuevoDocumento/',views.nuevoDocumento,name='nuevoDocumento'),
-    path("documentos/",views.documentos,name="documentos"),
+    path("flashcard/<int:id>/",views.flashcard,name="flashcard"),
+    path('nuevaFlashcard/',views.nuevaFlashcard,name='nuevaFlashcard'),
+    path("flashcards/",views.flashcards,name="flashcards"),
     path("practicas/",views.practicas,name="practicas"),
     path("practica/<int:id>/", views.practica, name="practica"),
     path("nuevaPractica/",views.nuevaPractica,name="nuevaPractica"),

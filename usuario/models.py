@@ -73,7 +73,7 @@ class Flashcard(Herramienta):
     contenido = tinymce_models.HTMLField()  #Para el editor de texto
 
     def get_absolute_url(self):
-       return reverse("core:documento", kwargs={"id" : self.id})
+       return reverse("core:flashcard", kwargs={"id" : self.id})
 
     
 #Comparte los atributos de Herramienta, también sirve para tener la llave primaria 

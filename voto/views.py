@@ -4,13 +4,13 @@ from usuario.models import User,Flashcard,Practica
 from voto.models import VotoFlash,VotoPract
 
 # Create your views here.
-def votoDoc(request):
+def votoFlash(request):
     if request.POST.get('action')=='post':
-        doc_id = int(request.POST.get('id'))
-        doc = get_object_or_404(Flashcard,id=doc_id)
+        flash_id = int(request.POST.get('id'))
+        flash = get_object_or_404(Flashcard,id=flash_id)
         user = request.user
-        VotoFlash.give_vote(user,doc,int(request.POST.get('tipo')))
-        response = {'voto':VotoFlash.get_voto(doc)}
+        VotoFlash.give_vote(user,flash,int(request.POST.get('tipo')))
+        response = {'voto':VotoFlash.get_voto(flash)}
         return JsonResponse(response)
     
 def votoPract(request):

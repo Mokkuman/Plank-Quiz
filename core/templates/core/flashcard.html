@@ -7,23 +7,23 @@
 {%endblock cssPath%}
 
 {% block title %}
-    {{documento.titulo}}
+    {{flash.titulo}}
 {% endblock title %}
 
 {% block body %}
 <div class="document-container">
-    <h1 id="titulo">{{documento.titulo}}</h1>
+    <h1 id="titulo">{{flash.titulo}}</h1>
     <br>
-    <h3>{{documento.filtro}}</h3>
-    <div>{{documento.descripcion}}</div>
+    <h3>{{flash.filtro}}</h3>
+    <div>{{flash.descripcion}}</div>
     <br>
-    <div class="document-content">{{documento.contenido|safe}}</div>
+    <div class="document-content">{{flash.contenido|safe}}</div>
     <br>
     <div class="like-dislike">
-        <p class="votos" id="votos">{{documento.voto}}</p>
+        <p class="votos" id="votos">{{flash.voto}}</p>
         <!--Verifica si previamente el usuario había votado positivo(1), negativo(0) o no ha votado (-1)-->
-        <button class="voto" id="positivo" data-catid="{{documento.id}}" {% if voto == 1%} value="selected" {%else%} value="unselected" {%endif%}>Me gusta :D</button>
-        <button class="voto" id="negativo" data-catid="{{documento.id}}" {% if voto == 0%} value="selected" {%else%} value="unselected" {%endif%}>No me gusta >:(</button>
+        <button class="voto" id="positivo" data-catid="{{flash.id}}" {% if voto == 1%} value="selected" {%else%} value="unselected" {%endif%}>Me gusta :D</button>
+        <button class="voto" id="negativo" data-catid="{{flash.id}}" {% if voto == 0%} value="selected" {%else%} value="unselected" {%endif%}>No me gusta >:(</button>
     </div>    
 </div>
 
@@ -33,7 +33,7 @@ $('#positivo').click(function(){
     catid = $(this).attr('data-catid');
     $.ajax({
         type: 'POST',
-        url: '{% url "voto:votoDoc" %}',
+        url: '{% url "voto:votoFlash" %}',
         data:{
             id : catid,
             tipo : 1,
@@ -59,7 +59,7 @@ $('#negativo').click(function(){
     catid = $(this).attr('data-catid');
     $.ajax({
         type: 'POST',
-        url: '{% url "voto:votoDoc" %}',
+        url: '{% url "voto:votoFlash" %}',
         data:{
             id : catid,
             tipo: -1,

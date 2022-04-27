@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.views import View
-from numpy import gradient
+#from numpy import gradient
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 from django.core.paginator import Paginator,EmptyPage
 from .filter import FlashcardFilter, PracticaFilter
@@ -16,7 +16,7 @@ import usuario # globally declared variable for the login page
 #prueba, first commit
 import json
 from usuario.forms import UserForm, LoginForm
-from core.forms import DocumentForm, PracticaForm, PregAbiertaForm,PregCerradaForm
+from core.forms import FlashcardForm, PracticaForm, PregAbiertaForm,PregCerradaForm
 from usuario.models import Flashcard,User
 from voto.models import VotoFlash,VotoPract
 # Create your views here.
@@ -31,7 +31,7 @@ def home(request):
         return render(request, "core/home.html", {"signupForm":signupForm, "signinForm": signinForm})
 
 @login_required
-def documentos(request):
+def flashcards(request):
     context ={}
     filtered_flash = FlashcardFilter(
         request.GET,
@@ -44,7 +44,7 @@ def documentos(request):
     flash_page_obj = paginated_filtered_flash.get_page(page_number)
     context['flash_page_obj'] = flash_page_obj
     
-    return render(request,'core/documentos.html',context=context)
+    return render(request,'core/flashcards.html',context=context)
 
 @login_required
 def practicas(request):
@@ -104,22 +104,22 @@ def practica(request, id):
             })
 
 @login_required
-def documento(request,id):
-    documento = Flashcard.objects.get(id=id)
-    voto = VotoFlash.voted(documento,request.user)
-    return render(request,"core/documento.html",{"documento":documento,"voto":voto})
+def flashcard(request,id):
+    flashcard = Flashcard.objects.get(id=id)
+    voto = VotoFlash.voted(flashcard,request.user)
+    return render(request,"core/flashcard.html",{"flash":flashcard,"voto":voto})
     
 
 @login_required
-def nuevoDocumento(request):
+def nuevaFlashcard(request):
     if request.method == "POST":
-        form = DocumentForm(request.POST)
+        form = FlashcardForm(request.POST)
         if form.is_valid():
             doc = form.save(commit=False)
             doc.user = User.objects.get(id = request.user.id)
             doc.save()
-            return redirect('core:documento',id=doc.id)
+            return redirect('core:flashcard',id=doc.id)
         else:
-            return render(request,'core/nuevoDocumento.html',{'form':DocumentForm()})
-    form = DocumentForm()
-    return render(request,'core/nuevoDocumento.html',{'form':form})
+            return render(request,'core/nuevaFlashcard.html',{'form':FlashcardForm()})
+    form = FlashcardForm()
+    return render(request,'core/nuevaFlashcard.html',{'form':form})
