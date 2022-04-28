@@ -6,5 +6,4 @@ app_name = 'voto'
 urlpatterns=[
     path('votoPract/',views.votoPract,name='votoPract'),
     path('votoFlash/',views.votoFlash,name="votoFlash"),
-    #Poner acá el views que manejará los votos de Practica
 ]

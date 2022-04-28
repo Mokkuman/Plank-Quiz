@@ -31,7 +31,6 @@ def home(request):
         signinForm = LoginForm()
         return render(request, "core/home.html", {"signupForm":signupForm, "signinForm": signinForm})
 
-@login_required
 def flashcards(request):
     context ={}
     filtered_flash = FlashcardFilter(
@@ -47,7 +46,6 @@ def flashcards(request):
     
     return render(request,'core/flashcards.html',context=context)
 
-@login_required
 def practicas(request):
     context ={}
     filtered_pract = PracticaFilter(
@@ -103,7 +101,6 @@ class nuevaPractica(CreateView):
         )
 
 
-@login_required
 def practica(request, id):
     practica = Practica.objects.get(id=id)
     preguntasAbiertas = practica.get_preguntas_abiertas()
@@ -126,14 +123,12 @@ def practica(request, id):
             'voto':voto,
             })
 
-@login_required
 def flashcard(request,id):
     flashcard = Flashcard.objects.get(id=id)
     voto = VotoFlash.voted(flashcard,request.user)
     return render(request,"core/flashcard.html",{"flash":flashcard,"voto":voto})
     
 
-@login_required
 def nuevaFlashcard(request):
     if request.method == "POST":
         form = FlashcardForm(request.POST)

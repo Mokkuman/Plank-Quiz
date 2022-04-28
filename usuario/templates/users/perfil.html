@@ -1,8 +1,6 @@
 {% extends 'core/layout.html' %}
 {% load static %}
 
-{%if user.is_authenticated %}
-
 {%block cssPath%}
 <link rel="stylesheet" href="{% static 'user/tarjetaPerfil.css' %}"  type="text/css" />
 {%endblock cssPath%}
@@ -40,12 +38,12 @@
 
     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-    <a class="btn btn-outline-secondary" href="{%url 'usuario:modificarPerfil'%}" style='width:250px; height:50px;' >
+    <a class="btn btn-outline-secondary" href="{%url 'usuario:misFlashcards'%}" style='width:250px; height:50px;' >
         <h3>Mis Tarjetas</h3></a> 
 
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-      <a class="btn btn-outline-secondary" href="{%url 'usuario:modificarPerfil'%}" style='width:250px; height:50px;' >
+      <a class="btn btn-outline-secondary" href="{%url 'usuario:misPracticas'%}" style='width:250px; height:50px;' >
         <h3>Mis Prácticas</h3></a> 
 
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -62,7 +60,3 @@
             <h3>Modificar perfil</h3></a> 
 
 {% endblock body %} 
-
-{% else %}
-<H1>Repámpanos! Parece que tu sesión no está iniciada, buen intento, querido tramposo.</H1>
-{% endif %}

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import UserForm, LoginForm, modificarPerfilForm
-from django.contrib.auth.decorators import login_required
 from usuario.models import Flashcard, Practica
 
 # Create your views here.
@@ -45,7 +44,6 @@ def signout(request):
 def perfil(request):
     return render(request, "users/perfil.html")
 
-@login_required()
 def modificarPerfil(request):
 
     if request.method=="POST":
@@ -58,3 +56,13 @@ def modificarPerfil(request):
 
          theForm = modificarPerfilForm()
     return render(request,"users/modificarPerfil.html",{"form":theForm})
+
+def misFlashcards(request):
+    user = request.user
+    flashcards = Flashcard.objects.filter(user = user)
+    return render(request,'users/misFlashcards.html',{'flashcards':flashcards})
+
+def misPracticas(request):
+    user = request.user
+    practicas = Practica.objects.filter(user=user)
+    return render(request,'users/misPracticas.html',{'practicas':practicas})
