@@ -1,5 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from numpy import positive
+from core.views import flashcards
+import usuario
+
+from voto.models import VotoFlash, VotoPract
 from .forms import UserForm, LoginForm, modificarPerfilForm
 from usuario.models import Flashcard, Practica
 
@@ -67,3 +72,22 @@ def misPracticas(request):
     user = request.user
     practicas = Practica.objects.filter(user=user)
     return render(request,'users/misPracticas.html',{'practicas':practicas})
+
+def misLikes(request):
+    user = request.user
+    # filtro de todos los votos positivos de practicas
+    votosPositivos = VotoPract.objects.filter(usuario = user, positivo = True)
+    practicas = [] # arreglo para juntar practicas
+    for votoPositivo in votosPositivos:
+        # agrega las practicas gustadas al arreglo
+        practica = Practica.objects.get(pk = votoPositivo.id_practica.pk) # sin .pk retorna el titulo de la prac... WHY?
+        practicas.append(practica)
+
+    # filtro de todos los votos positivos de flashcards
+    votosPositivos = VotoFlash.objects.filter(usuario = user, positivo = True)
+    flashcards = [] # arreglo para juntar flashcards
+    for votoPositivo in votosPositivos:
+        # agrega las practicas gustadas al arreglo
+        flashcard = Flashcard.objects.get(pk = votoPositivo.id_flashcard.pk)
+        flashcards.append(flashcard)
+    return render(request,'users/misLikes.html',{'practicas':practicas, 'flashcards':flashcards})

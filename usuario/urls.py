@@ -15,4 +15,5 @@ urlpatterns = [
     path('modificarPerfil/', login_required(views.modificarPerfil), name="modificarPerfil"),
     path('perfil/misFlashcards',login_required(views.misFlashcards),name='misFlashcards'),
     path('perfil/misPracticas',login_required(views.misPracticas),name='misPracticas'),
+    path('perfil/misLikes',login_required(views.misLikes),name='misLikes'),
 ]
