@@ -43,10 +43,10 @@ class LoginForm(forms.Form):
 class modificarPerfilForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('nombre','apellido','email')
+        fields = ('nombre','apellido','imagenPerfil')
         widgets = {
-        'nombre': forms.TextInput(attrs = {'class': 'form-control my-3'}),
+        'nombre': forms.TextInput(attrs = {'class': 'form-control my-3','placeholder':'s'}),
         'apellido': forms.TextInput(attrs = {'class': 'form-control my-3'}),
-        'email': forms.TextInput(attrs = {'class': 'form-control my-3', 'id':'signup_email'}),
+  
         }
 

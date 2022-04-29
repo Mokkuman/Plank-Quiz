@@ -23,12 +23,9 @@
       <div id="nombres">
       <H1><p>Modifica tu Perfil </p>
       _________________</H1>
-        <form method="POST" >
-          {% comment %}
-          <form method="POST" action="{% url 'users:modificarPerfil' %}" >
-          {% endcomment %}
+        <form method="POST" enctype="multipart/form-data" instance="request.user.imagenPerfil">
             {% csrf_token %}
-            {{form.as_p}}
+            {{form.as_p | safe }}
             <p> &nbsp</p>
             <button id="btnSUp" style='width:120px; height:30px;' type="submit" name="Update">Aplicar cambios</button>
           

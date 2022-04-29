@@ -47,14 +47,15 @@ def perfil(request):
 def modificarPerfil(request):
 
     if request.method=="POST":
-             theForm = modificarPerfilForm(request.POST,instance=request.user)
+             theForm = modificarPerfilForm(request.POST,request.FILES,instance=request.user)
+             theForm.actual_user = request.user
              if theForm.is_valid():
                 theForm.save()
              return redirect('core:home')
     else:
          #  return redirect('users:perfil')
-
-         theForm = modificarPerfilForm()
+         data ={'nombre':request.user.nombre,'apellido':request.user.apellido}
+         theForm = modificarPerfilForm(None,initial=data)
     return render(request,"users/modificarPerfil.html",{"form":theForm})
 
 def misFlashcards(request):
