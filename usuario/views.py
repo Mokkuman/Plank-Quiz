@@ -56,7 +56,7 @@ def modificarPerfil(request):
              theForm.actual_user = request.user
              if theForm.is_valid():
                 theForm.save()
-             return redirect('core:home')
+             return redirect('usuario:perfil')
     else:
          #  return redirect('users:perfil')
          data ={'nombre':request.user.nombre,'apellido':request.user.apellido}

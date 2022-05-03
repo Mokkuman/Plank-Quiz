@@ -1,4 +1,5 @@
 {%load static%}
+{% load crispy_forms_tags %} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -115,7 +116,7 @@
             <div class="modal-body">
                 <form action="{% url 'usuario:signup' %}" method="POST" >
                     {% csrf_token %}
-                    {{ signupForm.as_p  }}
+                    {{ signupForm | crispy }}
                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

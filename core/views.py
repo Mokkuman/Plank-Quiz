@@ -63,7 +63,7 @@ def practicas(request):
 
 class nuevaPractica(CreateView):
     form_class = PracticaForm
-    template_name = 'core/NuevaPractica.html'
+    template_name = 'core/nuevaPractica.html'
     
     def get_context_data(self, **kwargs):
         context = super(nuevaPractica,self).get_context_data(**kwargs)

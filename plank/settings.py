@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-!4&q^8d%g8%c_p7u*k8%fj(g=5#p2ia&wh9332z^n%!90jk@2b
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = ['https://plankquiz.azurewebsites.net', 'https://plankquizx.azurewebsites.net']
 
 # Application definition
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tinymce',  #app editor de texto
     'storages', #app para archivos media/static (actualmente solo para media)
+    'crispy_forms',
 ]
 
 #Configuración del editor de texto
@@ -65,6 +66,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,6 +143,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# Uncomment the two lines bellow to point to Azure Web App Static Storage
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -148,6 +154,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CRISPY_TEMPLATE_PACK="bootstrap4"
 
 AUTH_USER_MODEL = 'usuario.User'
 

@@ -130,7 +130,8 @@ class Pregunta(models.Model):
         return obj.__class__.__name__   
 
     def calificar_pregunta(self, respuesta_usuario):
-        if respuesta_usuario == self.respuesta:
+        respuesta_usuario = respuesta_usuario.strip()
+        if respuesta_usuario.upper() == self.respuesta.upper():
             return 1
         else:
             return 0
