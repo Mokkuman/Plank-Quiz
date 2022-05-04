@@ -60,6 +60,7 @@ class Herramienta(models.Model):
     visible = models.BooleanField(default=True)
     voto = models.IntegerField(default=0)
     
+    thumbnail = models.ImageField(default="planky.png",null=True,blank=True)
     class Meta:
         abstract = True
     

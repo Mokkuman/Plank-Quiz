@@ -30,22 +30,8 @@ def home(request):
         signupForm = UserForm()
         signinForm = LoginForm()
         return render(request, "core/home.html", {"signupForm":signupForm, "signinForm": signinForm})
-
-def flashcards(request):
-    context ={}
-    filtered_flash = FlashcardFilter(
-        request.GET,
-        queryset=Flashcard.objects.all().order_by('-voto')
-    )
-    
-    context['filtered_flash'] = filtered_flash
-    paginated_filtered_flash = Paginator(filtered_flash.qs,9)   #Cambiar el valor numérico por uno menor para visualizar mejor las paginas
-    page_number = request.GET.get('page')
-    flash_page_obj = paginated_filtered_flash.get_page(page_number)
-    context['flash_page_obj'] = flash_page_obj
-    
-    return render(request,'core/flashcards.html',context=context)
-
+#Funcion para poner la imagen por defecto dependiendo del filtro
+#def defaultThumbnail(self,form)
 def practicas(request):
     context ={}
     filtered_pract = PracticaFilter(
@@ -85,6 +71,15 @@ class nuevaPractica(CreateView):
         self.object = form.save(commit = False)
         #Guardando el usuario
         self.object.user = User.objects.get(id = self.request.user.id)
+        #Guardando una img dependiendo del filtro
+        # if self.object.filtro == ("Álgebra" or "Geometría" or "Cálculo"):
+        #     self.object.thumbnail = "core/static/core/mates.png"
+        # elif self.object.filtro == ("Lectura y Redacción" or "Literatura"):
+        #     self.object.thumbnail = "core/static/core/espa.png"
+        # elif self.object.filtro == ("Biología" or "Química" or "Medicina"):
+        #     self.object.thumbnail = "core/static/core/ciencias.png"
+        # elif self.object.filtro == ("Historia" or "Filosofía" or "Psicología"):
+        #     self.object.thumbnail = "core/static/core/humani.png"
         self.object.save()
         #Guardando abiertaFormset instances
         abiertasSet = abiertaFormset.save(commit=False)
@@ -128,6 +123,20 @@ def flashcard(request,id):
     voto = VotoFlash.voted(flashcard,request.user)
     return render(request,"core/flashcard.html",{"flash":flashcard,"voto":voto})
     
+def flashcards(request):
+    context ={}
+    filtered_flash = FlashcardFilter(
+        request.GET,
+        queryset=Flashcard.objects.all().order_by('-voto')
+    )
+    
+    context['filtered_flash'] = filtered_flash
+    paginated_filtered_flash = Paginator(filtered_flash.qs,9)   #Cambiar el valor numérico por uno menor para visualizar mejor las paginas
+    page_number = request.GET.get('page')
+    flash_page_obj = paginated_filtered_flash.get_page(page_number)
+    context['flash_page_obj'] = flash_page_obj
+    
+    return render(request,'core/flashcards.html',context=context)
 
 def nuevaFlashcard(request):
     if request.method == "POST":
@@ -135,6 +144,15 @@ def nuevaFlashcard(request):
         if form.is_valid():
             doc = form.save(commit=False)
             doc.user = User.objects.get(id = request.user.id)
+            #Guardando una img respectiva al filtro
+            # if form.filtro == ("Álgebra" or "Geometría" or "Cálculo"):
+            #     form.thumbnail = "core/static/core/mates.png"
+            # elif form.filtro == ("Lectura y Redacción" or "Literatura"):
+            #     form.thumbnail = "core/static/core/espa.png"
+            # elif form.filtro == ("Biología" or "Química" or "Medicina"):
+            #     form.thumbnail = "core/static/core/ciencias.png"
+            # elif form.filtro == ("Historia" or "Filosofía" or "Psicología"):
+            #     form.thumbnail = "core/static/core/humani.png"
             doc.save()
             return redirect('core:flashcard',id=doc.id)
         else:
