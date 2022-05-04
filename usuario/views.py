@@ -79,15 +79,21 @@ def misLikes(request):
     votosPositivos = VotoPract.objects.filter(usuario = user, positivo = True)
     practicas = [] # arreglo para juntar practicas
     for votoPositivo in votosPositivos:
-        # agrega las practicas gustadas al arreglo
-        practica = Practica.objects.get(pk = votoPositivo.id_practica.pk) # sin .pk retorna el titulo de la prac... WHY?
-        practicas.append(practica)
+        try:
+            # agrega las practicas gustadas al arreglo
+            practica = Practica.objects.get(pk = votoPositivo.id_practica.pk) # sin .pk retorna el titulo de la prac... WHY?
+            practicas.append(practica)
+        except:
+            print("No existe Práctica")
 
     # filtro de todos los votos positivos de flashcards
     votosPositivos = VotoFlash.objects.filter(usuario = user, positivo = True)
     flashcards = [] # arreglo para juntar flashcards
     for votoPositivo in votosPositivos:
-        # agrega las practicas gustadas al arreglo
-        flashcard = Flashcard.objects.get(pk = votoPositivo.id_flashcard.pk)
-        flashcards.append(flashcard)
+        try:
+            # agrega las practicas gustadas al arreglo
+            flashcard = Flashcard.objects.get(pk = votoPositivo.id_flashcard.pk)
+            flashcards.append(flashcard)
+        except:
+            print("No existe Flashcard")
     return render(request,'users/misLikes.html',{'practicas':practicas, 'flashcards':flashcards})
