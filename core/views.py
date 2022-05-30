@@ -14,13 +14,13 @@ from usuario.models import Flashcard, Practica, User
 from voto.models import VotoFlash, VotoPract
 from plank.settings import LOGIN_URL
 import usuario # globally declared variable for the login page
-#prueba, first commit
+
 import json
 from usuario.forms import UserForm, LoginForm
-from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset
-#from usuario.models import Flashcard,User repetido alv
+from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset,PregCerradaFormset
+
 from voto.models import VotoFlash,VotoPract
-# Create your views here.
+
 def home(request):
     if request.user.is_authenticated:
         flash = Flashcard.objects.filter(visible = True).order_by('-voto')[:9]  #Ordena por voto los primeros nueve
@@ -54,7 +54,8 @@ class nuevaPractica(CreateView):
     def get_context_data(self, **kwargs):
         context = super(nuevaPractica,self).get_context_data(**kwargs)
         context['abiertaFormset'] = PregAbiertaFormset(prefix='abiertas')
-        print('get_context_data')
+        context['cerradaFormset'] = PregCerradaFormset(prefix="cerradas")
+        print('get_context_data') #debug xd
         return context
     
     def post(self, request, *args, **kwargs):
@@ -62,12 +63,13 @@ class nuevaPractica(CreateView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         abiertaFormset = PregAbiertaFormset(request.POST, prefix='abiertas')
-        if(form.is_valid() and abiertaFormset.is_valid()):
-            return self.form_valid(form,abiertaFormset)
+        cerradaFormset = PregCerradaFormset(request.POST, prefix="cerradas")
+        if(form.is_valid() and abiertaFormset.is_valid() and cerradaFormset.is_valid()):
+            return self.form_valid(form,abiertaFormset,cerradaFormset)
         else:
-            return self.form_invalid(form,abiertaFormset)
+            return self.form_invalid(form,abiertaFormset,cerradaFormset)
         
-    def form_valid(self,form,abiertaFormset):
+    def form_valid(self,form,abiertaFormset,cerradaFormset):
         self.object = form.save(commit = False)
         #Guardando el usuario
         self.object.user = User.objects.get(id = self.request.user.id)
@@ -86,13 +88,18 @@ class nuevaPractica(CreateView):
         for ab in abiertasSet:
             ab.practica = self.object
             ab.save()
+        #Guardando cerradaFormset instances
+        cerradasSet = cerradaFormset.save(commit=False)
+        for ce in cerradasSet:
+            ce.practica = self.object
+            ce.save()
         return redirect('core:practica',id=self.object.id)
     
-    def form_invalid(self,form,abiertaFormset):
+    def form_invalid(self,form,abiertaFormset,cerradaFormset):
         print("Error en los formularios")
         return self.render_to_response(
             self.get_context_data(form = form,
-                                  abiertaFormset = abiertaFormset)
+                                  abiertaFormset = abiertaFormset,cerradaFormset = cerradaFormset)
         )
 
 
