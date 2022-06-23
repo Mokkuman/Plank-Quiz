@@ -51,13 +51,31 @@ select {
   }
 
 div.form-container, div.document-container{
-    border:0;
+    /* border:0; */
     margin-left: 10%;
-    margin-right: 5%;
+    margin-right: 10%;
     margin-top: 3%;
     padding: 2%;
-}
 
+}
+.formHeader{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto 4em;
+    width: 100%;
+}
+.formField{
+    margin: 2em auto;
+}
+.formField-title{
+    font-size: 3em;
+    margin: 0 auto;
+    align-content: center;
+    width: 40%;
+}
+/*quitar el border-box del input*/
+/*style="width: 40%;/*! align-content: center; *//*margin: 0 auto;font-size: 3em;"*/
 .field-container select{
     background-color: #f1f1f1;
     color: black;

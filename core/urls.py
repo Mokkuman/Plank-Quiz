@@ -16,5 +16,6 @@ urlpatterns = [
     path("practica/<int:id>/", login_required(views.practica), name="practica"),
     #path("nuevaPractica/",views.nuevaPractica,name="nuevaPractica"),
     path("nuevaPractica/",login_required(views.nuevaPractica.as_view()),name="nuevaPractica"),
+    path("editPractica/<int:pk>/",login_required(views.editPractica.as_view()),name="editPractica"),
     path('tinymce/',include('tinymce.urls')),#Editor de texto
 ]

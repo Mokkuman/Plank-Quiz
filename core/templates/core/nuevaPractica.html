@@ -1,11 +1,11 @@
 {% extends 'core/layout.html' %}
 {% load static %}
 {% block cssPath %}
-<link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
+    <link rel="stylesheet" href="{% static 'core/styleContent.css' %}"  type="text/css"/>
 {% endblock cssPath %}
 
 {% block title %}
-    idk xd
+    Nueva Practica
 {% endblock title %}
 
 {% block body %}
@@ -13,18 +13,21 @@
         <div class="form">
             <form method = 'POST' action="{% url 'core:nuevaPractica' %}">
                 {% csrf_token %}
-                <div class="field-container">
-                    <label class="field" id="titulo">Título </label><br/>
-                    <div class="text-field">
-                        {{form.titulo}}
+                <div class="formHeader">
+                    <div class="formField-title">
+                        {% comment %} <label class="field" id="titulo">Título </label><br/> {% endcomment %}
+                        <div class="text-field">
+                            {{form.titulo}}
+                        </div>
+                    </div>
+                    <div class="formField">
+                        {% comment %} <label class="field" id="descripcion">Descripción</label><br/> {% endcomment %}
+                        <div class="text-field">
+                            {{form.descripcion}}
+                        </div>
                     </div>
                 </div>
-                <div class="field-container">
-                    <label class="field" id="descripcion">Descripción</label><br/>
-                    <div class="text-field">
-                        {{form.descripcion}}
-                    </div>
-                </div>
+                
                 <div class="field-container">
                     <label class="field" id="tema">Tema</label><br/>
                     {{form.filtro}}
@@ -65,7 +68,6 @@
                 </div>
                 
                 <button id="add-more" type="button">+Abierta</button>
-                <button id="add-Cerr" type="button">+Cerrada</button>
                 <button class="form-button" type="submit">Subir!</button>
         </div>
     </div>
