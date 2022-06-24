@@ -1,2 +1,7 @@
 # Plank-Quiz
-Project where a bunch of CS Students code for passing the Project Administration subject ✌
+Project where a better learning approach is intended.
+
+🛠On development stage🛠
+
+
+[Imgur](https://imgur.com/MoweEri)
