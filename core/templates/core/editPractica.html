@@ -19,10 +19,12 @@
 {% endblock title %}
 
 {% block body %}
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        {% comment %} editar, poner las weas de las preguntas abiertas {% endcomment %}
-        <input type="submit" value="Update">
-    </form>
+    {% if user.is_authenticated %}
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            {% comment %} editar, poner las weas de las preguntas abiertas {% endcomment %}
+            <input type="submit" value="Update">
+        </form>
+    {% endif %}
 {% endblock body %}

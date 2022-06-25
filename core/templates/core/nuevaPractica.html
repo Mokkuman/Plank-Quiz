@@ -16,23 +16,24 @@
                 <div class="formHeader">
                     <div class="formField-title">
                         {% comment %} <label class="field" id="titulo">Título </label><br/> {% endcomment %}
-                        <div class="text-field">
+                        <div class="textField">
                             {{form.titulo}}
                         </div>
                     </div>
                     <div class="formField">
                         {% comment %} <label class="field" id="descripcion">Descripción</label><br/> {% endcomment %}
-                        <div class="text-field">
+                        <div class="textField">
                             {{form.descripcion}}
                         </div>
                     </div>
+                    <div class="field-container" style="width: 100%;text-align: center;">
+                        <label class="field" id="tema">Tema</label>
+                        {{form.filtro}}
+                    </div>
+                    <br/>
                 </div>
                 
-                <div class="field-container">
-                    <label class="field" id="tema">Tema</label><br/>
-                    {{form.filtro}}
-                </div>
-                <br/>
+                
 
                 <div id="Preguntas">
                     <!--<div class="field-container" id="preguntas-container">
@@ -69,6 +70,7 @@
                 
                 <button id="add-more" type="button">+Abierta</button>
                 <button class="form-button" type="submit">Subir!</button>
+            </form>
         </div>
     </div>
     {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}

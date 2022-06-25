@@ -1,10 +1,11 @@
 from asyncio.format_helpers import _format_callback_source
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.views import View
-from django.views.generic import CreateView,UpdateView
+from django.views.generic import CreateView,DetailView,UpdateView
 #from numpy import gradient
 from plank.settings import LOGIN_URL # globally declared variable for the login page
 from django.core.paginator import Paginator,EmptyPage
@@ -52,8 +53,33 @@ class editPractica(UpdateView):
     model = Practica
     form_class = PracticaForm
     template_name = 'core/editPractica.html'
-    template_name_suffix: '_edit'
     
+    def get_context_data(self, **kwargs):
+        context = super(editPractica,self).get_context_data(**kwargs)
+        # context[]
+        if(self.object.user == self.request.user):
+            # poner luego las preguntas aca
+            #si el usuario del request es el mismo del objeto
+            return context
+        else:
+            return HttpResponseNotAllowed("Not allowed")
+        
+    def post(self,request,*args,**kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if(form.is_valid() ):
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+    
+    def form_valid(self,form):
+        self.object = form.save(commit=False)
+        self.object.user = User.objects.get(id=self.request.user.id)
+        self.object.save()
+        return redirect('core:practica',id=self.object.id)
+    def form_invalid(self,form):
+        return self.render_to_response(form=form)
     
 
 class nuevaPractica(CreateView):
