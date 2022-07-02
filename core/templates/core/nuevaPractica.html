@@ -9,19 +9,19 @@
 {% endblock title %}
 
 {% block body %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <div class="form-container"> 
         <div class="form">
             <form method = 'POST' action="{% url 'core:nuevaPractica' %}">
                 {% csrf_token %}
                 <div class="formHeader">
                     <div class="formField-title">
-                        {% comment %} <label class="field" id="titulo">Título </label><br/> {% endcomment %}
                         <div class="textField">
                             {{form.titulo}}
                         </div>
                     </div>
                     <div class="formField">
-                        {% comment %} <label class="field" id="descripcion">Descripción</label><br/> {% endcomment %}
                         <div class="textField">
                             {{form.descripcion}}
                         </div>
@@ -35,68 +35,36 @@
                 
                 
 
-                <div id="Preguntas">
-                    <!--<div class="field-container" id="preguntas-container">
-                            <button id="preguntaAbierta" type="button">Pregunta Abierta</button>
-                            <button id="preguntaCerrada" type="button" style="margin-left: 5px;">Pregunta Cerrada</button>
-                            <br>
-                        <div class="field-container-pregs" id="pregunta">
-                            <label class="field"> Pregunta</label><br/>
-                            <div class="text-field">
-                                {{pregA.planteamiento}}
-                            </div>
-                            <label class="field" >Respuesta</label><br/>
-                            <div class="text-field">
-                                {{pregA.respuesta}}
-                            </div> 
-                        </div>
-                    </div>-->
-                    <div id="titPreguntas">Preguntas </div>
-                    {{abiertaFormset.non_form_errors}}
-                    {{abiertaFormset.management_form}}
-                    <table class="table">
-                        {% for abierta in abiertaFormset %}
-                        <tr>
-                            <td>{{abierta.id}}</td>
-                            <td>{{abierta.planteamiento}}</td>
-                            <td>{{abierta.respuesta}}</td>
-
-                        <!--<div class="inline {{abiertaFormset.prefix}}">
-                        </div>-->
-                        </tr>
-                    {% endfor %}    
-                    </table>     
+                <div class="Preguntas">
+                    Preguntas xd
                 </div>
-                
-                <button id="add-more" type="button">+Abierta</button>
+                <div class="addPreguntas">
+                    <div class="btnWrapper">
+                        <button class="addBtn" type="button">
+                            <span class="material-symbols-rounded">
+                                add
+                            </span>
+                        </button>
+                        <button class="addPregAbierta" type="button">
+                            <span class="material-symbols-rounded">
+                                check_box_outline_blank
+                            </span>
+                        </button>
+                        <button class="addPregCerrada" type="button">
+                            <span class="material-symbols-rounded">
+                                check_box
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                {% comment %} <button id="addBtn" type="button">+</button> {% endcomment %}
                 <button class="form-button" type="submit">Subir!</button>
             </form>
+            
         </div>
     </div>
     {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#add-more").on("click",addItem);
-        });
-        function addItem(){
-            let newElement = $(".table tr:last").clone(true); //Clonando la ultima fila
-            //Obteniendo el total de forms, esto se saca con propiedad del inline_formset
-            //con TOTAL_FORMS, por defecto el valor actual debe ser 1
-            let total = $("#id_abiertas-TOTAL_FORMS").val();
-            console.log(total); //prueba
-            newElement.find(":input").each(function(){
-                let name = $(this).attr("name").replace("-" + (total-1)+"-","-"+total+"-");
-                let id = "id_"+name;
-                //set los atributos y limpiando los valores
-                $(this).attr({"name":name,"id":id}).val("");
-
-            });
-            //Aumentando el 1 la cantidad de formsets
-            total++;
-            $("#id_abiertas-TOTAL_FORMS").val(total);
-            $(".table tr:last").after(newElement); //Añadiendo al final
-            
-        }
-    </script>
+    <script src={% static 'core/animacion.js' %}></script>
+    <script src={% static 'core/addPreguntas.js' %}></script>
 {% endblock body %}

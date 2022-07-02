@@ -49,16 +49,15 @@ select {
     border-radius: 4px;
     /*background-color: #f1f1f1;*/
   }
-
+/*       ESTILOS DE NUEVA PRACTICA     */
 div.form-container, div.document-container{
     /* border:0; */
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 3%;
     padding: 2%;
-
 }
-/*ESTILOS DE NUEVA PRACTICA */
+
 .formHeader{
     display: flex;
     align-items: center;
@@ -77,16 +76,65 @@ div.form-container, div.document-container{
     font-size: 3em;
     width: 100%;
 }
-.formField-desc{
-    font-size: 1.5em;
+
+/*  ESTILOS PARA BOTON ADD */
+.addPreguntas{
+    display: grid;
+    width: 0%;
+    margin: 3em 0 2em auto;
 }
-.textField-desc input{
+.btnWrapper{
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1.2em;
+}
+.btnWrapper button{
+    font-family: inherit;
     outline: none;
-    border: 1px solid white;
+    border: none;
+    background-color: white;
+    padding-top: 3px;
+    /* height: auto; */
+    box-shadow:0px 0px 10px rgb(65, 65, 65);
+    border-radius: 50%;
+    cursor: pointer;
 }
-.textField-desc input:focus{
-    border-bottom:1px solid grey;
+.material-symbols-rounded{
+    vertical-align: text-bottom;
+    color: rgb(91, 91, 91);
+    transition: 500ms all cubic-bezier(0.785,0.18,0.415,1.65);
 }
+.addBtn:hover, .addPregAbierta:hover, .addPregCerrada:hover{
+    transform: scale(1.1);
+}
+.addBtn{
+    z-index:99;
+    transition: 500ms all cubic-bezier(0.785,0.18,0.415,1.65);
+}
+.addPregAbierta, .addPregCerrada{
+    position: relative;
+    bottom: 3em;
+    opacity: 0;
+    transform: rotatez(-45deg);
+    transition: 500ms all cubic-bezier(0.785,0.18,0.415,1.65);
+    pointer-events: none;
+}
+.addPregAbierta.open,
+.addPregCerrada.open{
+    opacity: 1;
+    bottom:0;
+    transform: rotatez(0deg);
+    pointer-events: auto;
+}
+.addBtn.open span{
+    transform: rotateZ(135deg);
+}
+/* .btnWrapper button span{
+ vertical-align: text-bottom;
+} */
+/*Aca termina nuevaPractica style*/
+
 .textField input{
     border: 1px solid white;
     outline: none;
@@ -96,7 +144,6 @@ div.form-container, div.document-container{
     border-bottom:1px solid grey;
 }
 /*quitar el border-box del input*/
-/*style="width: 40%;/*! align-content: center; *//*margin: 0 auto;font-size: 3em;"*/
 .field-container select{
     background-color: #f1f1f1;
     color: black;

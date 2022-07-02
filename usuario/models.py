@@ -53,7 +53,7 @@ ELECCION_TEMAS = (
 
 #Para no repetir los atributos comunes entre Flashcard y Práctica
 class Herramienta(models.Model):
-    user = models.ForeignKey(User,null = True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User,null = True, on_delete=models.CASCADE)
     filtro = models.CharField(choices = ELECCION_TEMAS, max_length=50, default=('Matemáticas',('Álgebra','Álgebra')))
     titulo = models.CharField(max_length=100, blank=False,default='')
     descripcion = models.CharField(max_length=100, blank= False)
@@ -81,7 +81,7 @@ class Flashcard(Herramienta):
 #para relacionar las preguntas
 class Practica(Herramienta):
     def __str__(self):
-        return self.titulo
+        return f"{self.titulo}"
 
     def get_absolute_url(self):
         return reverse("core:practica", kwargs={"id" : self.id})
@@ -125,7 +125,7 @@ class Pregunta(models.Model):
     respuesta = models.CharField(max_length=100,blank=False)
 
     def __str__(self) -> str:
-        return self.planteamiento
+        return f"Practica:{self.practica}, {self.planteamiento}"
 
     def classname(obj):
         return obj.__class__.__name__   
@@ -157,3 +157,4 @@ class RespuestaCerrada(models.Model):
     es_correcta = models.BooleanField(default=False)
     id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.SET_NULL)
     respuesta = models.CharField(blank=False, max_length=100)
+    

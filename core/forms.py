@@ -41,7 +41,7 @@ PregAbiertaFormset = inlineformset_factory(
     Practica,
     Abierta,
     form = PregAbiertaForm,
-    extra = 1, #por defecto solo aparece una pregunta abierta
+    extra = 0, #por defecto solo aparece una pregunta abierta
     #mas fields extras
 )
 # PregCerradaFormset = inlineformset_factory(
