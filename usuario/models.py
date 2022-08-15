@@ -122,7 +122,7 @@ class Practica(Herramienta):
 class Pregunta(models.Model):
     practica = models.ForeignKey(Practica,null=True,on_delete=models.SET_NULL)
     planteamiento = models.CharField(blank=False, max_length=100) 
-    #respuesta = models.CharField(max_length=100,blank=False)
+    respuesta = models.CharField(max_length=100,blank=False)
 
     def __str__(self):
         #return f"Practica:{self.practica}, {self.planteamiento}"
@@ -131,19 +131,6 @@ class Pregunta(models.Model):
     def classname(obj):
         return obj.__class__.__name__   
 
-    # def calificar_pregunta(self, respuesta_usuario):
-    #     respuesta_usuario = respuesta_usuario.strip()
-    #     if respuesta_usuario.upper() == self.respuesta.upper():
-    #         return 1
-    #     else:
-    #         return 0
-
-    class Meta:
-        abstract = True
-
-#Clase para definir las preguntas abiertas
-class Abierta(Pregunta):
-    respuesta = models.CharField(max_length=100,blank=False)
     def calificar_pregunta(self, respuesta_usuario):
         respuesta_usuario = respuesta_usuario.strip()
         if respuesta_usuario.upper() == self.respuesta.upper():
@@ -151,13 +138,27 @@ class Abierta(Pregunta):
         else:
             return 0
 
+    class Meta:
+        abstract = True
+
+#Clase para definir las preguntas abiertas
+class Abierta(Pregunta):
+    #respuesta = models.CharField(max_length=100,blank=False)
+    # def calificar_pregunta(self, respuesta_usuario):
+    #     respuesta_usuario = respuesta_usuario.strip()
+    #     if respuesta_usuario.upper() == self.respuesta.upper():
+    #         return 1
+    #     else:
+    #         return 0
+    pass
+
 #Clase solo para tener una primarykey para asociar las respuestas cerradas
 class Cerrada(Pregunta):
     def get_respuestas(self):
         respuestas = RespuestaCerrada.objects.filter(id_pregunta = self)
         return respuestas
-    def calificar_respuesta(self,respuesta_usuario):
-        pass
+    # def calificar_respuesta(self,respuesta_usuario):
+    #     pass
         
 #Clase para definir las respuestas cerradas de una pregunta de tipo Cerrada
 #Se hace de esta forma para que el usuario pueda definir "n" respuestas

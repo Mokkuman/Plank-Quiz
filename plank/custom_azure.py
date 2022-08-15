@@ -1,8 +1,4 @@
 from storages.backends.azure_storage import AzureStorage
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
 BLOB_STORAGE_KEY = '3cIf3GRswWU31ct/sA/vpMexILDsE9CO+MfnimGAd3X/zZcjVFsUD76hQtTJEa0CfhXllzOjhnY6+ASt29/0nw=='
 
 class AzureMediaStorage(AzureStorage):
