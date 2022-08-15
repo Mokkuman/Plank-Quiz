@@ -1,5 +1,6 @@
 from asyncio.format_helpers import _format_callback_source
 from multiprocessing import context
+from pyexpat import model
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -19,7 +20,7 @@ import usuario # globally declared variable for the login page
 
 import json
 from usuario.forms import UserForm, LoginForm
-from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset
+from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset, PregCerradaFormset
 
 from voto.models import VotoFlash,VotoPract
 
@@ -52,34 +53,34 @@ def practicas(request):
 class editPractica(UpdateView):
     model = Practica
     form_class = PracticaForm
-    template_name = 'core/editPractica.html'
+    template_name = 'core/nuevaPractica.html'
     
-    def get_context_data(self, **kwargs):
-        context = super(editPractica,self).get_context_data(**kwargs)
-        # context[]
-        if(self.object.user == self.request.user):
-            # poner luego las preguntas aca
-            #si el usuario del request es el mismo del objeto
-            return context
-        else:
-            return HttpResponseNotAllowed("Not allowed")
+    # def get_context_data(self, **kwargs):
+    #     context = super(editPractica,self).get_context_data(**kwargs)
+    #     # context[]
+    #     if(self.object.user == self.request.user):
+    #         # poner luego las preguntas aca
+    #         #si el usuario del request es el mismo del objeto
+    #         return context
+    #     else:
+    #         return HttpResponseNotAllowed("Not allowed")
         
-    def post(self,request,*args,**kwargs):
-        self.object = None
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        if(form.is_valid() ):
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    # def post(self,request,*args,**kwargs):
+    #     self.object = None
+    #     form_class = self.get_form_class()
+    #     form = self.get_form(form_class)
+    #     if(form.is_valid() ):
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
     
-    def form_valid(self,form):
-        self.object = form.save(commit=False)
-        self.object.user = User.objects.get(id=self.request.user.id)
-        self.object.save()
-        return redirect('core:practica',id=self.object.id)
-    def form_invalid(self,form):
-        return self.render_to_response(form=form)
+    # def form_valid(self,form):
+    #     self.object = form.save(commit=False)
+    #     self.object.user = User.objects.get(id=self.request.user.id)
+    #     self.object.save()
+    #     return redirect('core:practica',id=self.object.id)
+    # def form_invalid(self,form):
+    #     return self.render_to_response(form=form)
     
 
 class nuevaPractica(CreateView):
@@ -89,45 +90,42 @@ class nuevaPractica(CreateView):
     def get_context_data(self, **kwargs):
         context = super(nuevaPractica,self).get_context_data(**kwargs)
         context['abiertaFormset'] = PregAbiertaFormset(prefix='abiertas')
-        print('get_context_data') #debug xd
+        context['cerradaFormset'] = PregCerradaFormset(prefix='cerradas')
+        print(context) #debug xd
         return context
     
     def post(self, request, *args, **kwargs):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        abiertaFormset = PregAbiertaFormset(request.POST, prefix='abiertas')
-        if(form.is_valid() and abiertaFormset.is_valid()):
-            return self.form_valid(form,abiertaFormset)
+        abiertaFormset = PregAbiertaFormset(self.request.POST, prefix='abiertas')
+        cerradaFormset = PregCerradaFormset(self.request.POST,prefix='cerradas')
+        if(form.is_valid() and abiertaFormset.is_valid() and cerradaFormset.is_valid()):
+            return self.form_valid(form,abiertaFormset,cerradaFormset)
         else:
-            return self.form_invalid(form,abiertaFormset)
+            return self.form_invalid(form,abiertaFormset,cerradaFormset)
         
-    def form_valid(self,form,abiertaFormset):
+    def form_valid(self,form,abiertaFormset,cerradaFormset):
         self.object = form.save(commit = False)
         #Guardando el usuario
         self.object.user = User.objects.get(id = self.request.user.id)
-        #Guardando una img dependiendo del filtro
-        # if self.object.filtro == ("Álgebra" or "Geometría" or "Cálculo"):
-        #     self.object.thumbnail = "core/static/core/mates.png"
-        # elif self.object.filtro == ("Lectura y Redacción" or "Literatura"):
-        #     self.object.thumbnail = "core/static/core/espa.png"
-        # elif self.object.filtro == ("Biología" or "Química" or "Medicina"):
-        #     self.object.thumbnail = "core/static/core/ciencias.png"
-        # elif self.object.filtro == ("Historia" or "Filosofía" or "Psicología"):
-        #     self.object.thumbnail = "core/static/core/humani.png"
         self.object.save()
         #Guardando abiertaFormset instances
         abiertasSet = abiertaFormset.save(commit=False)
         for ab in abiertasSet:
-            ab.practica = self.object
+            ab.practica = self.object #antes tenia .practica
             ab.save()
+        #Guardando cerradaFormset instances
+        cerradaFormset.practica = self.object
+        cerradaFormset.save()
         return redirect('core:practica',id=self.object.id)
     
-    def form_invalid(self,form,abiertaFormset):
+    def form_invalid(self,form,abiertaFormset,cerradaFormset):
         print("Error en los formularios")
         return self.render_to_response(
             self.get_context_data(form = form,
-                                  abiertaFormset = abiertaFormset)
+                                  abiertaFormset = abiertaFormset,
+                                  cerradaFormset = cerradaFormset)
         )
 
 

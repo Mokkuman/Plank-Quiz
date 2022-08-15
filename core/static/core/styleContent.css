@@ -76,6 +76,9 @@ div.form-container, div.document-container{
     font-size: 3em;
     width: 100%;
 }
+.hidden{
+    display: none;
+}
 
 /*  ESTILOS PARA BOTON ADD */
 .addPreguntas{

@@ -37,7 +37,54 @@
 
                 <div class="Preguntas">
                     Preguntas xd
+                    <div class="abiertas-list">
+                        {% if abiertaFormset %}
+                            {{abiertaFormset.non_form_errors}}
+                            {{abiertaFormset.management_form}}
+                            
+                            {% for abierta in abiertaFormset %}
+                                <div class="pregAbierta">
+                                    {{abierta}}
+                                </div>
+                            {% endfor %}
+                            
+                        {% endif %}
+                    </div>
+
+                    <div class="cerradas-list">
+                        {% if cerradaFormset %}
+                            {{cerradaFormset.non_form_errors}}
+                            {{cerradaFormset.management_form}}
+            
+                            {% for cerradaForm in cerradaFormset.forms %}
+                                <div class="pregCerrada">
+                                    {{cerradaForm}}
+                                    {% if cerradaForm.nested %}
+                                        {{cerradaForm.nested.management_form}}
+                                        {{cerradaForm.nested.non_form_errors}}
+                
+                                        {% for nested_form in cerradaForm.nested %}
+                                            {{nested_form}}
+                                        {% endfor %}
+
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div id="empty-ab" class ="hidden">
+                        {{abiertaFormset.empty_form}}
+                    </div>
+
+                    <div id="empty-ce" class="hidden">
+                        {{cerradaFormset}}
+                        
+                    </div>
                 </div>
+                
+                
+                <!--Botones para añadir preguntas-->
                 <div class="addPreguntas">
                     <div class="btnWrapper">
                         <button class="addBtn" type="button">
@@ -65,6 +112,6 @@
     </div>
     {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}
 
-    <script src={% static 'core/animacion.js' %}></script>
+    {% comment %} <script src={% static 'core/animacion.js' %}></script> {% endcomment %}
     <script src={% static 'core/addPreguntas.js' %}></script>
 {% endblock body %}

@@ -122,14 +122,28 @@ class Practica(Herramienta):
 class Pregunta(models.Model):
     practica = models.ForeignKey(Practica,null=True,on_delete=models.SET_NULL)
     planteamiento = models.CharField(blank=False, max_length=100) 
-    respuesta = models.CharField(max_length=100,blank=False)
+    #respuesta = models.CharField(max_length=100,blank=False)
 
-    def __str__(self) -> str:
-        return f"Practica:{self.practica}, {self.planteamiento}"
+    def __str__(self):
+        #return f"Practica:{self.practica}, {self.planteamiento}"
+        return self.planteamiento
 
     def classname(obj):
         return obj.__class__.__name__   
 
+    # def calificar_pregunta(self, respuesta_usuario):
+    #     respuesta_usuario = respuesta_usuario.strip()
+    #     if respuesta_usuario.upper() == self.respuesta.upper():
+    #         return 1
+    #     else:
+    #         return 0
+
+    class Meta:
+        abstract = True
+
+#Clase para definir las preguntas abiertas
+class Abierta(Pregunta):
+    respuesta = models.CharField(max_length=100,blank=False)
     def calificar_pregunta(self, respuesta_usuario):
         respuesta_usuario = respuesta_usuario.strip()
         if respuesta_usuario.upper() == self.respuesta.upper():
@@ -137,24 +151,21 @@ class Pregunta(models.Model):
         else:
             return 0
 
-    class Meta:
-        abstract = True
-
-#Clase para definir las preguntas abiertas
-class Abierta(Pregunta):
-    pass
-
 #Clase solo para tener una primarykey para asociar las respuestas cerradas
 class Cerrada(Pregunta):
     def get_respuestas(self):
         respuestas = RespuestaCerrada.objects.filter(id_pregunta = self)
         return respuestas
+    def calificar_respuesta(self,respuesta_usuario):
+        pass
         
 #Clase para definir las respuestas cerradas de una pregunta de tipo Cerrada
 #Se hace de esta forma para que el usuario pueda definir "n" respuestas
 #Cuenta con la llave foránea de la clase Cerrada para identificar a la clase que pertenecen
 class RespuestaCerrada(models.Model):
     es_correcta = models.BooleanField(default=False)
-    id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.SET_NULL)
+    id_pregunta = models.ForeignKey(Cerrada,null=True,on_delete=models.CASCADE)
     respuesta = models.CharField(blank=False, max_length=100)
+    def __str__(self):
+        return f"{self.id_pregunta.planteamiento}:{self.respuesta}"
     
