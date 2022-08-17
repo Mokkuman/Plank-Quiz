@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 from tinymce import models as tinymce_models
 from .managers import UserManager
 from django.urls import reverse
+from django.templatetags.static import static
 
 class User(AbstractBaseUser,PermissionsMixin):
     #ID annadida por django por defecto
@@ -59,10 +60,32 @@ class Herramienta(models.Model):
     descripcion = models.CharField(max_length=100, blank= False)
     visible = models.BooleanField(default=True)
     voto = models.IntegerField(default=0)
+
+    default_pic_mapping = { 
+        'Álgebra':'mates.png',
+        'Geometría':'mates.png',
+        'Cálculo': 'mates.png',
+
+        'Lectura y Redacción':'espa.png',
+        'Literatura': 'espa.png',
+
+        'Biología':'ciencias.png',
+        'Química':'ciencias.png',
+        'Medicina': 'ciencias.png', 
+
+        'Historia':'humani.png',
+        'Filosofía':'humani.png',
+        'Psicología':'humani.png'
+        }
     
     thumbnail = models.ImageField(default="planky.png",null=True,blank=True)
     class Meta:
         abstract = True
+
+    def get_filtro_pic_url(self):
+        if self.filtro in self.default_pic_mapping:
+            return static('filtros/{}'.format(self.default_pic_mapping[self.filtro]))
+        return self.thumbnail.url
     
     def __str__(self):
         return self.titulo
