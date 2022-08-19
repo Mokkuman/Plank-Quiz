@@ -88,10 +88,12 @@ class editPractica(UpdateView):
 PregCerradaFormset = nestedformset_factory(
     Practica,
     Cerrada,
+    extra = 1,
     nested_formset = inlineformset_factory(
         Cerrada,
         RespuestaCerrada,
-        fields = '__all__'
+        fields = '__all__',
+        extra = 0
     )
 )
 class nuevaPractica(CreateView):

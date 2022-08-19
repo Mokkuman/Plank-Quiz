@@ -11,7 +11,7 @@ const totalAbForms = document.getElementById("id_abiertas-TOTAL_FORMS");
 const currAbiertas = document.getElementsByClassName("pregAbierta");
 
 const addPregCerrada = document.querySelector(".addPregCerrada");
-const totalCeForms = document.getElementById("id_cerradas-TOTAL_FORMS");
+const totalCeForms = document.getElementById("id_cerrada_set-TOTAL_FORMS");
 const currCerradas = document.getElementsByClassName("pregCerrada");
 
 const regex = new RegExp('__prefix__','g');
@@ -29,7 +29,10 @@ function createPregAbierta(){
     //addding the empty form element to the html
     abTarget.append(cpyEmptyAb);
 }
-
+function createRespCerrada(){
+    let respCount;
+    const cpyEmptyResp = document.querySelector("#empty-resp").cloneNode(true);
+}
 function createPregCerrada(){
     let ceCount = currCerradas.length;
     let ceTarget = document.querySelector('.cerradas-list');//cerradaTarget

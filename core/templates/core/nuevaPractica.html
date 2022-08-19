@@ -52,19 +52,31 @@
                     </div>
 
                     <div class="cerradas-list">
-                        {% for pregCerrada in form %}
-                            {% if pregCerrada %}
-                                {{pregCerrada}}
-                            {% endif %}
-                        {% endfor %}
+                        {% if form %}
+                            {{form.nested.nested.management_form}}
+                            {{form.nested.nested.form_errors}}
+                            {{form.management_form}}
+                            {{form.non_form_errors}}
+                        {% endif %}
                     </div>
 
                     <div id="empty-ab" class ="hidden">
                         {{abiertaFormset.empty_form}}
                     </div>
-
                     <div id="empty-ce" class="hidden">
+                        {{form.empty_form}}
+
+                    </div>
+                    <div id="empty-resp" class="hidden">
+                        {% comment %} {{form.empty_form.nested}} {% endcomment %}
                         {{form.empty_form.nested}}
+                        {% comment %} {% for pregCerrada in form %} {% endcomment %}
+                            {% comment %} {{pregCerrada.as_p}} {% endcomment %}
+                            {% comment %} {{pregCerrada.nested.management_form}} {% endcomment %}
+                                {% comment %} {% for respCe in pregCerrada %}
+                                    {{respCe.as_p}}
+                                {% endfor %}
+                        {% endfor %} {% endcomment %}
                     </div>
                 </div>
                 
