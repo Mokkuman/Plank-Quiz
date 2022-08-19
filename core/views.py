@@ -1,4 +1,5 @@
 from asyncio.format_helpers import _format_callback_source
+from msilib import CreateRecord
 from multiprocessing import context
 from pyexpat import model
 from django.shortcuts import render, redirect
@@ -13,16 +14,18 @@ from django.core.paginator import Paginator,EmptyPage
 from .filter import FlashcardFilter, PracticaFilter
 from django.http import JsonResponse
 
-from usuario.models import Flashcard, Practica, User
+from usuario.models import Cerrada, Flashcard, Practica, RespuestaCerrada, User
 from voto.models import VotoFlash, VotoPract
 from plank.settings import LOGIN_URL
 import usuario # globally declared variable for the login page
 
 import json
 from usuario.forms import UserForm, LoginForm
-from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset, PregCerradaFormset
+from core.forms import FlashcardForm, PracticaForm, PregAbiertaFormset
 
 from voto.models import VotoFlash,VotoPract
+from nested_formset import nestedformset_factory
+from django.forms.models import inlineformset_factory
 
 def home(request):
     if request.user.is_authenticated:
@@ -82,15 +85,23 @@ class editPractica(UpdateView):
     # def form_invalid(self,form):
     #     return self.render_to_response(form=form)
     
-
+PregCerradaFormset = nestedformset_factory(
+    Practica,
+    Cerrada,
+    nested_formset = inlineformset_factory(
+        Cerrada,
+        RespuestaCerrada,
+        fields = '__all__'
+    )
+)
 class nuevaPractica(CreateView):
-    form_class = PracticaForm
+    model = Practica
+    form_class = PregCerradaFormset
     template_name = 'core/nuevaPractica.html'
     
     def get_context_data(self, **kwargs):
         context = super(nuevaPractica,self).get_context_data(**kwargs)
         context['abiertaFormset'] = PregAbiertaFormset(prefix='abiertas')
-        context['cerradaFormset'] = PregCerradaFormset(prefix='cerradas')
         print(context) #debug xd
         return context
     
@@ -99,13 +110,12 @@ class nuevaPractica(CreateView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         abiertaFormset = PregAbiertaFormset(self.request.POST, prefix='abiertas')
-        cerradaFormset = PregCerradaFormset(self.request.POST,prefix='cerradas')
-        if(form.is_valid() and abiertaFormset.is_valid() and cerradaFormset.is_valid()):
-            return self.form_valid(form,abiertaFormset,cerradaFormset)
+        if(form.is_valid() and abiertaFormset.is_valid()):
+            return self.form_valid(form,abiertaFormset)
         else:
-            return self.form_invalid(form,abiertaFormset,cerradaFormset)
+            return self.form_invalid(form,abiertaFormset)
         
-    def form_valid(self,form,abiertaFormset,cerradaFormset):
+    def form_valid(self,form,abiertaFormset):
         self.object = form.save(commit = False)
         #Guardando el usuario
         self.object.user = User.objects.get(id = self.request.user.id)
@@ -115,17 +125,13 @@ class nuevaPractica(CreateView):
         for ab in abiertasSet:
             ab.practica = self.object #antes tenia .practica
             ab.save()
-        #Guardando cerradaFormset instances
-        cerradaFormset.practica = self.object
-        cerradaFormset.save()
         return redirect('core:practica',id=self.object.id)
     
-    def form_invalid(self,form,abiertaFormset,cerradaFormset):
+    def form_invalid(self,form,abiertaFormset):
         print("Error en los formularios")
         return self.render_to_response(
             self.get_context_data(form = form,
-                                  abiertaFormset = abiertaFormset,
-                                  cerradaFormset = cerradaFormset)
+                                  abiertaFormset = abiertaFormset)
         )
 
 

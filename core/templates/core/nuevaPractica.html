@@ -52,25 +52,11 @@
                     </div>
 
                     <div class="cerradas-list">
-                        {% if cerradaFormset %}
-                            {{cerradaFormset.non_form_errors}}
-                            {{cerradaFormset.management_form}}
-            
-                            {% for cerradaForm in cerradaFormset.forms %}
-                                <div class="pregCerrada">
-                                    {{cerradaForm}}
-                                    {% if cerradaForm.nested %}
-                                        {{cerradaForm.nested.management_form}}
-                                        {{cerradaForm.nested.non_form_errors}}
-                
-                                        {% for nested_form in cerradaForm.nested %}
-                                            {{nested_form}}
-                                        {% endfor %}
-
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+                        {% for pregCerrada in form %}
+                            {% if pregCerrada %}
+                                {{pregCerrada}}
+                            {% endif %}
+                        {% endfor %}
                     </div>
 
                     <div id="empty-ab" class ="hidden">
@@ -78,8 +64,7 @@
                     </div>
 
                     <div id="empty-ce" class="hidden">
-                        {{cerradaFormset}}
-                        
+                        {{form.empty_form.nested}}
                     </div>
                 </div>
                 
