@@ -12,7 +12,7 @@ ready(() => {
         myModal.show();
     }
     
-    if(document.querySelector(".errorlist") != null){
+    if(document.querySelector(".errorlist") != null || document.querySelector(".invalid-feedback") != null){
         var myModal = new bootstrap.Modal(document.getElementById('staticBackdropSignup'));
         myModal.show();
     }
