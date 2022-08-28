@@ -1,5 +1,5 @@
 *{
-    font-family: 'Asap', sans-serif;
+    --plank-main-color:#713995;
 }
 
 .lab-container{
@@ -21,10 +21,6 @@
     padding-left: 20px;
 }
 
-* {
-    margin:0;
-    padding:0;
-    }
 
 #columnaUNO {
     
@@ -50,3 +46,51 @@ margin-top:10px;
 #nombres {
     font-size: 45px;
     }
+
+.card{
+    width: 65%;
+    height: 750px;
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 5px;
+    position: relative;
+}
+
+.card-top{
+    height: 200px;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+    background-color: var(--plank-main-color);
+    border-radius: inherit;
+    
+}
+
+.card-image{
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;   
+    z-index: 3;
+}
+
+.card-image img{
+    width: auto;
+    height: 250px;
+    border-radius: 10px;
+}
+
+.card-info{
+    text-align: center;
+    margin: 2rem 0;
+}
+
+@media screen and (max-width: 750px){
+    .card{
+        width: 100%;
+    }
+
+    .card-image img{
+        height: 150px;
+    }
+}

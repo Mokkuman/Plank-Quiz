@@ -287,6 +287,11 @@ header{
 
 /*OVERRIDING BOOTSTRAP!*/
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #713995 !important;
+    background-color: var(--plank-main-color) !important;
     border: none !important;
+}
+
+/*GENERAL STYLES FOR ALL PAGES*/
+button a{
+    text-decoration: none;
 }

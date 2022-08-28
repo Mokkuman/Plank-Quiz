@@ -74,8 +74,8 @@
         <div class="like-dislike">
             <p class="votos" id="votos">{{practica.voto}}</p>
             <!--Verifica si previamente el usuario había votado positivo(1), negativo(0) o no ha votado (-1)-->
-            <button class="voto" id="positivo" data-catid="{{practica.id}}" {% if voto == 1%} value="selected" {%else%} value="unselected" {%endif%}>Me gusta :D</button>
-            <button class="voto" id="negativo" data-catid="{{practica.id}}" {% if voto == 0%} value="selected" {%else%} value="unselected" {%endif%}>No me gusta >:(</button>
+            <button class="voto btn btn-success" id="positivo" data-catid="{{practica.id}}" {% if voto == 1%} value="selected" {%else%} value="unselected" {%endif%}>Me gusta :D</button>
+            <button class="voto btn btn-danger" id="negativo" data-catid="{{practica.id}}" {% if voto == 0%} value="selected" {%else%} value="unselected" {%endif%}>No me gusta >:(</button>
         </div>
 
     </div>
