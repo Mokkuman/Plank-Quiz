@@ -1,0 +1,44 @@
+.document-container{
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-container{
+    /*font-size:40px;*/
+    border: solid  #E5E5E5;
+    border-radius: 20PX;
+    margin: 1.5rem;
+    padding: 1.5rem;
+    background-color: #FEFAE0;
+    text-align:center;
+    padding-bottom: 100px;
+    border:none;
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form{
+    text-align: left;
+}
+
+#form-title{
+    border-bottom: 2px solid black;
+    margin: 1.5rem;
+}
+
+@media screen and (max-width: 700px){
+    .form-container{
+        max-width: 90%;
+    }
+}
+
+form button{
+    margin: 1rem;
+}
+
+.button-container{
+    text-align: center;
+}
+

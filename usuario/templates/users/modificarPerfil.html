@@ -1,48 +1,35 @@
-
+{% extends 'core/layout.html' %}
 {% load static %}
-
-
 
 {%if user.is_authenticated %}
 
 {% block cssPath %} 
-    <link rel="stylesheet" href="{% static 'user/perfil.css' %}"  type="text/css"/>
+    <link rel="stylesheet" href="{% static 'user/modificarPerfil.css' %}"  type="text/css"/>
 {% endblock cssPath %}
 
 {%block title %}
-&nbsp
+  Modificar Perfil
 {% endblock title%}
- 
-
-    
+     
 {% block body %}
-
-<div class="lab-container">
-
-    <div align="center" class="form">
+<div class="document-container">
+  <div class="form-container">
+    <div class="form">
       <div id="nombres">
-      <H1><p>Modifica tu Perfil </p>
-      _________________</H1>
-        <form method="POST" enctype="multipart/form-data" instance="request.user.imagenPerfil">
-            {% csrf_token %}
-            {{form.as_p | safe }}
-            <p> &nbsp</p>
-            <button id="btnSUp" style='width:120px; height:30px;' type="submit" name="Update">Aplicar cambios</button>
-          
+          <h1 id="form-title">Modifica tu Perfil</h1>
+          <form method="POST" enctype="multipart/form-data" instance="request.user.imagenPerfil">
+              {% csrf_token %}
+              {{form.as_p | safe }}
+              <div class="button-container">
+                <button class="btn btn-primary" type="submit" name="Update">Aplicar cambios</button>
+              </div>
+          </form>
       </div> 
-        </form>
     </div>
+</div>
+</div>
 
-</div>
-<div id="logoContainer">
-  <picture>
-    <img id="publicidad" src="{% static '\user\adidas.jpg' %}">
-  </picture>
-</a>
-</div>
-<center>Espacio publicitario</center>
 {% endblock body %}
-
 
 {% else %}
 
