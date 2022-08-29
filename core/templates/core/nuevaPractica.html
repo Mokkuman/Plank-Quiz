@@ -52,11 +52,18 @@
                     </div>
 
                     <div class="cerradas-list">
-                        {% if form %}
-                            {{form.nested.nested.management_form}}
+                        {% if cerradaFormset %}
+                            {{cerradaFormset.non_form_errors}}
+                            {{cerradaFormset.management_form}}
+                            {% for cerrada in cerradaFormset %}
+                                <div class="pregCerrada">
+                                    {{cerrada}}
+                                </div>
+                            {% endfor %}
+                            {% comment %} {{form.nested.nested.management_form}}
                             {{form.nested.nested.form_errors}}
                             {{form.management_form}}
-                            {{form.non_form_errors}}
+                            {{form.non_form_errors}} {% endcomment %}
                         {% endif %}
                     </div>
 
@@ -64,12 +71,13 @@
                         {{abiertaFormset.empty_form}}
                     </div>
                     <div id="empty-ce" class="hidden">
-                        {{form.empty_form}}
+                        {{cerradaFormset.empty_form}}
 
                     </div>
                     <div id="empty-resp" class="hidden">
+                        {{cerradaFormset.empty_form.nested}}
                         {% comment %} {{form.empty_form.nested}} {% endcomment %}
-                        {{form.empty_form.nested}}
+                        {% comment %} {{form.empty_form.nested}} ESTE SI {% endcomment %}
                         {% comment %} {% for pregCerrada in form %} {% endcomment %}
                             {% comment %} {{pregCerrada.as_p}} {% endcomment %}
                             {% comment %} {{pregCerrada.nested.management_form}} {% endcomment %}
