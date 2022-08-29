@@ -14,6 +14,9 @@ const addPregCerrada = document.querySelector(".addPregCerrada");
 const totalCeForms = document.getElementById("id_cerradas-TOTAL_FORMS");
 const currCerradas = document.getElementsByClassName("pregCerrada");
 
+const totalResp = document.getElementById("id_cerradas-__prefix__-respuestacerrada_set-TOTAL_FORMS");
+const currRespuestas = document.getElementsByClassName("respCerradas");
+
 const regex = new RegExp('__prefix__','g');
 
 function createPregAbierta(){
@@ -36,6 +39,17 @@ function createRespCerrada(){
 function createPregCerrada(){
     let ceCount = currCerradas.length;
     let ceTarget = document.querySelector('.cerradas-list');//cerradaTarget
+    //boton que agrega una nueva respuesta
+    const btn = document.createElement("button");
+    btn.innerHTML = "Añadir respuesta";
+    btn.type = "button";
+    btn.id = "btnAddRespuesta";
+    btn.addEventListener("click",(event)=>{
+        if(event){
+            event.preventDefault();
+        }
+        createRespCerrada();
+    })
     //copyting the empty form for preguntaCerrada
     const cpyEmptyCe = document.querySelector("#empty-ce").cloneNode(true);
     cpyEmptyCe.setAttribute('class','pregCerrada');
@@ -44,6 +58,8 @@ function createPregCerrada(){
     totalCeForms.setAttribute('value',ceCount+1);
 
     ceTarget.append(cpyEmptyCe);
+    ceTarget.append(btn);
+    
 }
 
 //EVENT LISTENERS

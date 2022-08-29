@@ -65,6 +65,16 @@
                             {{form.management_form}}
                             {{form.non_form_errors}} {% endcomment %}
                         {% endif %}
+                        
+                            {% if cerradaFormset.empty_form.nested %}
+                                {{cerradaFormset.empty_form.nested.non_form_errors}}
+                                {{cerradaFormset.empty_form.nested.management_form}}
+                                {% for resp in cerradaFormset.empty_form.nested %}
+                                    <div class="respCerrada">
+                                        {{resp}}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                     </div>
 
                     <div id="empty-ab" class ="hidden">
@@ -75,7 +85,7 @@
 
                     </div>
                     <div id="empty-resp" class="hidden">
-                        {{cerradaFormset.empty_form.nested}}
+                        {{cerradaFormset.empty_form.nested.empty_form}}
                         {% comment %} {{form.empty_form.nested}} {% endcomment %}
                         {% comment %} {{form.empty_form.nested}} ESTE SI {% endcomment %}
                         {% comment %} {% for pregCerrada in form %} {% endcomment %}
