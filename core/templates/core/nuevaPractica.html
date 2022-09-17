@@ -28,15 +28,13 @@
                     </div>
                     <div class="field-container" style="width: 100%;text-align: center;">
                         <label class="field" id="tema">Tema</label>
-                        {{form.filtro}}
+                            {{form.filtro}}
                     </div>
                     <br/>
-                </div>
-                
-                
+                </div>       
 
                 <div class="Preguntas">
-                    Preguntas xd
+                    Preguntas xd <!--DEBUG-->
                     <div class="abiertas-list">
                         {% if abiertaFormset %}
                             {{abiertaFormset.non_form_errors}}
@@ -52,50 +50,46 @@
                     </div>
 
                     <div class="cerradas-list">
-                        {% if cerradaFormset %}
-                            {{cerradaFormset.non_form_errors}}
-                            {{cerradaFormset.management_form}}
-                            {% for cerrada in cerradaFormset %}
-                                <div class="pregCerrada">
-                                    {{cerrada}}
-                                </div>
-                            {% endfor %}
-                            {% comment %} {{form.nested.nested.management_form}}
-                            {{form.nested.nested.form_errors}}
-                            {{form.management_form}}
-                            {{form.non_form_errors}} {% endcomment %}
-                        {% endif %}
-                        
-                            {% if cerradaFormset.empty_form.nested %}
-                                {{cerradaFormset.empty_form.nested.non_form_errors}}
-                                {{cerradaFormset.empty_form.nested.management_form}}
-                                {% for resp in cerradaFormset.empty_form.nested %}
-                                    <div class="respCerrada">
-                                        {{resp}}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
+                        <input id="id_cerradas-TOTAL_FORMS" type="hidden" name="cerradas-TOTAL_FORMS" value="0">
+                        <input id="id_respCerradas-TOTAL_FORMS" type="hidden" name="respCerradas-TOTAL_FORMS" value="0">
+
                     </div>
 
                     <div id="empty-ab" class ="hidden">
                         {{abiertaFormset.empty_form}}
                     </div>
                     <div id="empty-ce" class="hidden">
-                        {{cerradaFormset.empty_form}}
+                        <label for="id_cerradas-__prefix__-planteamiento">Planteamiento:</label>
+                        <input type="text" name="cerradas-__prefix__-planteamiento" maxlength="100" id="id_cerradas-__prefix__-planteamiento">
+                        <label for="id_cerradas-__prefix__-respuesta">Respuesta correcta:</label>
+                        <input type="text" name="cerradas-__prefix__-respuesta" maxlength="100" id="id_cerradas-__prefix__-respuesta">
+                        <label for="id_cerradas-__prefix__-DELETE">Delete:</label>
+                        <input type="checkbox" name="cerradas-__prefix__-DELETE" id="id_cerradas-__prefix__-DELETE">
+                        <div class="respCerradas-list">
+                            <div id="respCerrada-0" class="respCerrada">
+                                <input type="text" name="respCerradas-_0-respuesta" maxlength="100" id="id_respCerradas-0-respuesta" placeholder="Opción 1">
+                                <label for="id_respCerradas-0-DELETE">Delete:</label>
+                                <input type="checkbox" name="respCerradas-0-DELETE" id="id_respCerradas-0-DELETE">
+                            </div>
+                            <div id="respCerrada-1" class="respCerrada">
+                                <input type="text" name="respCerradas-1-respuesta" maxlength="100" id="id_respCerradas-1-respuesta" placeholder="Opción 2">
+                                <label for="id_respCerradas-1-DELETE">Delete:</label>
+                                <input type="checkbox" name="respCerradas-1-DELETE" id="id_respCerradas-1-DELETE">
+                            </div>
+                            <div id="respCerrada-2" class="respCerrada">
+                                <input type="text" name="respCerradas-2-respuesta" maxlength="100" id="id_respCerradas-2-respuesta" placeholder="Opción 3">
+                                <label for="id_respCerradas-2-DELETE">Delete:</label>
+                                <input type="checkbox" name="respCerradas-2-DELETE" id="id_respCerradas-2-DELETE">
+                            </div>
+                            <div id="respCerrada-3" class="respCerrada">
+                                <input type="text" name="respCerradas-3-respuesta" maxlength="100" id="id_respCerradas-3-respuesta" placeholder="Opción 4">
+                                <label for="id_respCerradas-3-DELETE">Delete:</label>
+                                <input type="checkbox" name="respCerradas-3-DELETE" id="id_respCerradas-3-DELETE">
+                            </div>
+                        </div>
+                    </div>
 
-                    </div>
-                    <div id="empty-resp" class="hidden">
-                        {{cerradaFormset.empty_form.nested.empty_form}}
-                        {% comment %} {{form.empty_form.nested}} {% endcomment %}
-                        {% comment %} {{form.empty_form.nested}} ESTE SI {% endcomment %}
-                        {% comment %} {% for pregCerrada in form %} {% endcomment %}
-                            {% comment %} {{pregCerrada.as_p}} {% endcomment %}
-                            {% comment %} {{pregCerrada.nested.management_form}} {% endcomment %}
-                                {% comment %} {% for respCe in pregCerrada %}
-                                    {{respCe.as_p}}
-                                {% endfor %}
-                        {% endfor %} {% endcomment %}
-                    </div>
+               
                 </div>
                 
                 

@@ -1,8 +1,6 @@
 //variables contadoras para agregar a mi formulario
-// let ab = 1; //pregunta abierta counter
-// let ce = 1; //pregunta cerrada counter
 const LIMITE_OPCIONES = 6;
-
+let op = 2; //opcion counter
 //getting add question buttons and assign them 'onclick' event
 const divPregunta = document.querySelector(".Preguntas");//Padre
 
@@ -14,10 +12,11 @@ const addPregCerrada = document.querySelector(".addPregCerrada");
 const totalCeForms = document.getElementById("id_cerradas-TOTAL_FORMS");
 const currCerradas = document.getElementsByClassName("pregCerrada");
 
-const totalResp = document.getElementById("id_cerradas-__prefix__-respuestacerrada_set-TOTAL_FORMS");
-const currRespuestas = document.getElementsByClassName("respCerradas");
+const totalResp = document.getElementById("id_respCerradas-TOTAL_FORMS");
+const currRespuestas = document.getElementsByClassName("respCerrada");
 
 const regex = new RegExp('__prefix__','g');
+const regOpc = new RegExp('__num__','g');
 
 function createPregAbierta(){
     let abCount = currAbiertas.length;
@@ -32,34 +31,47 @@ function createPregAbierta(){
     //addding the empty form element to the html
     abTarget.append(cpyEmptyAb);
 }
-function createRespCerrada(){
-    let respCount;
-    const cpyEmptyResp = document.querySelector("#empty-resp").cloneNode(true);
-}
+// function createRespCerrada(){
+//     let respCount = currRespuestas.length;
+//     console.log(respCount);
+//     let respTarget = document.querySelector(".respCerradas-list");
+//     if(respCount >= LIMITE_OPCIONES){
+//         alert("Solo puedes ingresar hasta 6 opciones diferentes");
+//     }
+//     const cpyEmptyResp = document.querySelector("#empty-resp").cloneNode(true);
+//     cpyEmptyResp.setAttribute('class','respCerrada');
+//     cpyEmptyResp.setAttribute('id',`respCerrada-${respCount}`);
+//     cpyEmptyResp.innerHTML = cpyEmptyResp.innerHTML.replace(regex,respCount);
+//     cpyEmptyResp.innerHTML = cpyEmptyResp.innerHTML.replace(regOpc,op);
+//     totalResp.setAttribute('value',respCount+1);
+
+//     //appending
+//     respTarget.append(cpyEmptyResp);
+// }
 function createPregCerrada(){
     let ceCount = currCerradas.length;
     let ceTarget = document.querySelector('.cerradas-list');//cerradaTarget
     //boton que agrega una nueva respuesta
-    const btn = document.createElement("button");
-    btn.innerHTML = "Añadir respuesta";
-    btn.type = "button";
-    btn.id = "btnAddRespuesta";
-    btn.addEventListener("click",(event)=>{
-        if(event){
-            event.preventDefault();
-        }
-        createRespCerrada();
-    })
-    //copyting the empty form for preguntaCerrada
+    // const btn = document.createElement("button");
+    // btn.innerHTML = "Añadir respuesta";
+    // btn.type = "button";
+    // btn.id = "btnAddRespuesta";
+    // btn.addEventListener("click",(event)=>{
+    //     if(event){
+    //         event.preventDefault();
+    //     }
+    //     createRespCerrada();
+    // })
+    //copying the empty form for preguntaCerrada
     const cpyEmptyCe = document.querySelector("#empty-ce").cloneNode(true);
     cpyEmptyCe.setAttribute('class','pregCerrada');
     cpyEmptyCe.setAttribute('id',`cerradas-${ceCount}`);
     cpyEmptyCe.innerHTML = cpyEmptyCe.innerHTML.replace(regex,ceCount);
     totalCeForms.setAttribute('value',ceCount+1);
-
-    ceTarget.append(cpyEmptyCe);
-    ceTarget.append(btn);
     
+    //apending all elements
+    ceTarget.append(cpyEmptyCe);
+    // ceTarget.append(btn);
 }
 
 //EVENT LISTENERS
