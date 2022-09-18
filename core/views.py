@@ -1,5 +1,5 @@
 from asyncio.format_helpers import _format_callback_source
-from msilib import CreateRecord
+#from msilib import CreateRecord #this doesnt run on mac or any os that isnt Windows
 from multiprocessing import context
 from pyexpat import model
 from django.shortcuts import render, redirect
@@ -111,12 +111,18 @@ class nuevaPractica(CreateView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         abiertaFormset = PregAbiertaFormset(self.request.POST, prefix="abiertas")
+        
+        thePost = request.POST
+        thePost = thePost.dict()
+        print(thePost)
+
         if(form.is_valid() and abiertaFormset.is_valid()):
-            return self.form_valid(form,abiertaFormset)
+            return self.form_valid(form,abiertaFormset, thePost)
         else:
             return self.form_invalid(form,abiertaFormset)
         
-    def form_valid(self,form,abiertaFormset):
+        
+    def form_valid(self,form,abiertaFormset, thePost):
         self.object = form.save(commit = False)
         #Guardando el usuario
         self.object.user = User.objects.get(id = self.request.user.id)
@@ -125,6 +131,47 @@ class nuevaPractica(CreateView):
         for ab in abiertaSet:
             ab.practica = self.object
             ab.save()
+
+        #Guardando todas las preguntas cerradas y sus respuestas
+        # formatos de preguntas (idk if this is considered a good practice):
+        # pregC{i} es el enunciado donde i es el número de pregunta
+        # pregC{i}RespC es la respuesta correcta de pregC{i}
+        # pregC{i}Resp{j} es una posible opción de la pregunta pregC{i} donde j pertenece a [0,6]
+
+        # Código para generar cada respuesta
+        i = 0
+        my_default = "¡Pregunta Regalada!" #empty string just in case the user didnt fill out the form correctly
+        while True:
+            formatoEnunciado = f"pregC{i}"
+            if formatoEnunciado not in thePost:
+                break # because there are no more preguntas cerradas
+
+            # create pregunta cerrada
+            planteamiento = thePost.get(formatoEnunciado, my_default) or my_default # post[formatoEnunciado] # already verified that this exists
+            respuesta = thePost.get(f"{formatoEnunciado}RespC") or ""
+
+            pregCerrada = Cerrada.objects.create(
+                practica = self.object,
+                planteamiento = planteamiento,
+                respuesta = respuesta
+            )
+
+            # now create all the options submitted by the user
+            j = 0
+            while True:
+                formatoRespuesta = f"{formatoEnunciado}Resp{j}"
+                if formatoRespuesta not in thePost:
+                    break # because there are no more respuestas
+
+                RespuestaCerrada.objects.create(
+                    id_pregunta = pregCerrada,
+                    respuesta = thePost[formatoRespuesta],
+                )
+
+                j += 1
+            i += 1
+
+        
         return redirect('core:practica',id=self.object.id)
 
     def form_invalid(self,form,abiertaFormset):

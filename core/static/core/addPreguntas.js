@@ -49,8 +49,74 @@ function createPregAbierta(){
 //     respTarget.append(cpyEmptyResp);
 // }
 function createPregCerrada(){
-    let ceCount = currCerradas.length;
-    let ceTarget = document.querySelector('.cerradas-list');//cerradaTarget
+    const preguntasCerradasCount = document.getElementsByClassName("pregunta-cerrada").length;
+    const preguntaCerradaDiv = document.createElement("div"); // div for the new Pregunta-Cerrada
+    preguntaCerradaDiv.setAttribute("id",`pregC${preguntasCerradasCount}`);
+    preguntaCerradaDiv.setAttribute("class", "pregunta-cerrada");
+
+    //create input fields and then append to the new div
+    //create enunciado input
+    const enunciado = document.createElement("input");
+    enunciado.setAttribute("name", `pregC${preguntasCerradasCount}`);
+    enunciado.setAttribute("placeholder", `pregC${preguntasCerradasCount}`);
+
+    //create respuesta correcta input
+    const respuestaCorrecta = document.createElement("input");
+    respuestaCorrecta.setAttribute("name", `pregC${preguntasCerradasCount}RespC`);
+    respuestaCorrecta.setAttribute("placeholder", `pregC${preguntasCerradasCount}RespC`);
+
+    //create respuestas (opciones) inputs (default = 2)
+    const respuesta0 = document.createElement("input");
+    respuesta0.setAttribute("name", `pregC${preguntasCerradasCount}Resp0`);
+    respuesta0.setAttribute("placeholder", `pregC${preguntasCerradasCount}Resp0`);
+    respuesta0.setAttribute("class", "respuesta");
+
+    const respuesta1 = document.createElement("input");
+    respuesta1.setAttribute("name", `pregC${preguntasCerradasCount}Resp1`)
+    respuesta1.setAttribute("placeholder", `pregC${preguntasCerradasCount}Resp1`)
+    respuesta1.setAttribute("class", "respuesta");
+
+    //create add-respuesta button
+    const addRespuestaBtn = document.createElement("button");
+    addRespuestaBtn.setAttribute("id", `pregC${preguntasCerradasCount}Btn`);
+    addRespuestaBtn.innerHTML = "Agregar Opción";
+    addRespuestaBtn.addEventListener("click", addRespuesta);
+
+    //append inputs to new div
+    preguntaCerradaDiv.appendChild(enunciado);
+    preguntaCerradaDiv.appendChild(respuestaCorrecta);
+    preguntaCerradaDiv.appendChild(addRespuestaBtn);
+    preguntaCerradaDiv.appendChild(respuesta0);
+    preguntaCerradaDiv.appendChild(respuesta1);
+
+    //append new div to preguntas-cerradas div
+    const cerradasDiv = document.getElementById('preguntas-cerradas');
+    cerradasDiv.appendChild(preguntaCerradaDiv);
+
+    function addRespuesta(event){
+        btnId = event.srcElement.id;
+        if(event)
+            event.preventDefault();
+        
+        parentDiv = document.getElementById(btnId).parentNode;
+        respuestaCount = parentDiv.getElementsByClassName("respuesta").length;
+
+        if(respuestaCount < LIMITE_OPCIONES){
+            //console.log(parentDiv); 
+            //console.log(respuestaCount);
+
+            //create new respuesta input field
+            const respuesta = document.createElement("input");
+            respuesta.setAttribute("name", `${parentDiv.id}Resp${respuestaCount}`);
+            respuesta.setAttribute("placeholder", `${parentDiv.id}Resp${respuestaCount}`);
+            respuesta.setAttribute("class", "respuesta");
+
+            parentDiv.appendChild(respuesta);
+        }
+    }
+
+    // let ceCount = currCerradas.length;
+    // let ceTarget = document.querySelector('.cerradas-list');//cerradaTarget
     //boton que agrega una nueva respuesta
     // const btn = document.createElement("button");
     // btn.innerHTML = "Añadir respuesta";
@@ -63,15 +129,15 @@ function createPregCerrada(){
     //     createRespCerrada();
     // })
     //copying the empty form for preguntaCerrada
-    const cpyEmptyCe = document.querySelector("#empty-ce").cloneNode(true);
-    cpyEmptyCe.setAttribute('class','pregCerrada');
-    cpyEmptyCe.setAttribute('id',`cerradas-${ceCount}`);
-    cpyEmptyCe.innerHTML = cpyEmptyCe.innerHTML.replace(regex,ceCount);
-    totalCeForms.setAttribute('value',ceCount+1);
+    // const cpyEmptyCe = document.querySelector("#empty-ce").cloneNode(true);
+    // cpyEmptyCe.setAttribute('class','pregCerrada');
+    // cpyEmptyCe.setAttribute('id',`cerradas-${ceCount}`);
+    // cpyEmptyCe.innerHTML = cpyEmptyCe.innerHTML.replace(regex,ceCount);
+    // totalCeForms.setAttribute('value',ceCount+1);
     
-    //apending all elements
-    ceTarget.append(cpyEmptyCe);
-    // ceTarget.append(btn);
+    // //apending all elements
+    // ceTarget.append(cpyEmptyCe);
+    // // ceTarget.append(btn);
 }
 
 //EVENT LISTENERS
@@ -90,5 +156,5 @@ addPregCerrada.addEventListener("click",(event)=>{
         event.preventDefault();
     }
     createPregCerrada();
-    console.log("Cerradaaaas lel");
+    //console.log("Cerradaaaas lel");
 });

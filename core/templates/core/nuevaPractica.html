@@ -11,6 +11,14 @@
 {% block body %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
+    <style>/*GET RID OF THIS LATER ::((*/
+        .pregunta-cerrada{
+            border: 1px solid black;
+            margin: 5%;
+            padding: 5%;
+        }
+    </style>
+
     <div class="form-container"> 
         <div class="form">
             <form method = 'POST' action="{% url 'core:nuevaPractica' %}">
@@ -58,6 +66,11 @@
                     <div id="empty-ab" class ="hidden">
                         {{abiertaFormset.empty_form}}
                     </div>
+
+                    <div id="preguntas-cerradas">
+                        
+                    </div>
+                    <!--
                     <div id="empty-ce" class="hidden">
                         <label for="id_cerradas-__prefix__-planteamiento">Planteamiento:</label>
                         <input type="text" name="cerradas-__prefix__-planteamiento" maxlength="100" id="id_cerradas-__prefix__-planteamiento">
@@ -88,7 +101,7 @@
                             </div>
                         </div>
                     </div>
-
+                -->
                
                 </div>
                 
@@ -122,5 +135,5 @@
     {% comment %} Tal vez cambiar esto por un archivo propio {% endcomment %}
 
     {% comment %} <script src={% static 'core/animacion.js' %}></script> {% endcomment %}
-    <script src={% static 'core/addPreguntas.js' %}></script>
+    <script defer src={% static 'core/addPreguntas.js' %}></script>
 {% endblock body %}
