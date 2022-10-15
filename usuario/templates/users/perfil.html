@@ -13,9 +13,7 @@
 {% block body %}
     <div class = "document-container">
         <div class="card">
-            <div class="card-top">
-
-            </div>
+            <div class="card-top"></div>
             <div class="card-image">
                 <img src="{{request.user.imagenPerfil.url}}"/>
             </div>
@@ -23,21 +21,20 @@
                 <h2><b>{{request.user.nombreCompleto}}</b></h2>
                 <h2>{{request.user.email}}</h2>
             </div>
-            
-            <a class="btn btn-outline-secondary" href="{%url 'usuario:misFlashcards'%}">
-                <h3>Mis Tarjetas</h3></a> 
         
-            <a class="btn btn-outline-secondary" href="{%url 'usuario:misPracticas'%}">
+            <a class="bubble-button" href="{%url 'usuario:misFlashcards'%}">
+                <h3>Mis Tarjetas</h3></a>
+    
+            <a class="bubble-button" href="{%url 'usuario:misPracticas'%}">
                 <h3>Mis Prácticas</h3></a> 
-        
-            <a class="btn btn-outline-secondary" href="{%url 'usuario:misLikes'%}">
+            
+            <a class="bubble-button" href="{%url 'usuario:misLikes'%}">
                     <h3>Mis Likes</h3></a> 
-              
-            <a class="btn btn-outline-danger" href="{%url 'usuario:modificarPerfil'%}">
-                    <h3>Modificar perfil</h3></a>
+                  
+            <a class="bubble-button" href="{%url 'usuario:modificarPerfil'%}">
+                <h3>Modificar perfil</h3></a>
+            
         </div>
-
-        
     </div> 
 
 {% endblock body %} 

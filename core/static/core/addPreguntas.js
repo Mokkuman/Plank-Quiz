@@ -23,7 +23,7 @@ function createPregAbierta(){
     let abTarget = document.querySelector('.abiertas-list');//abiertaTarget
     //copying the empty form for preguntaAbierta
     const cpyEmptyAb = document.querySelector("#empty-ab").cloneNode(true);
-    cpyEmptyAb.setAttribute('class','pregAbierta');
+    cpyEmptyAb.setAttribute('class','pregAbierta pregunta-container');
     cpyEmptyAb.setAttribute('id',`abiertas-${abCount}`);
     cpyEmptyAb.innerHTML = cpyEmptyAb.innerHTML.replace(regex,abCount);
     totalAbForms.setAttribute('value',abCount+1);
@@ -52,33 +52,34 @@ function createPregCerrada(){
     const preguntasCerradasCount = document.getElementsByClassName("pregunta-cerrada").length;
     const preguntaCerradaDiv = document.createElement("div"); // div for the new Pregunta-Cerrada
     preguntaCerradaDiv.setAttribute("id",`pregC${preguntasCerradasCount}`);
-    preguntaCerradaDiv.setAttribute("class", "pregunta-cerrada");
+    preguntaCerradaDiv.setAttribute("class", "pregunta-cerrada pregunta-container");
 
     //create input fields and then append to the new div
     //create enunciado input
     const enunciado = document.createElement("input");
     enunciado.setAttribute("name", `pregC${preguntasCerradasCount}`);
-    enunciado.setAttribute("placeholder", `pregC${preguntasCerradasCount}`);
+    enunciado.setAttribute("placeholder", `Planteamiento`);
 
     //create respuesta correcta input
     const respuestaCorrecta = document.createElement("input");
     respuestaCorrecta.setAttribute("name", `pregC${preguntasCerradasCount}RespC`);
-    respuestaCorrecta.setAttribute("placeholder", `pregC${preguntasCerradasCount}RespC`);
+    respuestaCorrecta.setAttribute("placeholder", `Respuesta Correcta`);
 
     //create respuestas (opciones) inputs (default = 2)
     const respuesta0 = document.createElement("input");
     respuesta0.setAttribute("name", `pregC${preguntasCerradasCount}Resp0`);
-    respuesta0.setAttribute("placeholder", `pregC${preguntasCerradasCount}Resp0`);
+    respuesta0.setAttribute("placeholder", `Opción 1`);
     respuesta0.setAttribute("class", "respuesta");
 
     const respuesta1 = document.createElement("input");
     respuesta1.setAttribute("name", `pregC${preguntasCerradasCount}Resp1`)
-    respuesta1.setAttribute("placeholder", `pregC${preguntasCerradasCount}Resp1`)
+    respuesta1.setAttribute("placeholder", `Opción 2`)
     respuesta1.setAttribute("class", "respuesta");
 
     //create add-respuesta button
     const addRespuestaBtn = document.createElement("button");
     addRespuestaBtn.setAttribute("id", `pregC${preguntasCerradasCount}Btn`);
+    addRespuestaBtn.setAttribute("class", "form-button")
     addRespuestaBtn.innerHTML = "Agregar Opción";
     addRespuestaBtn.addEventListener("click", addRespuesta);
 
@@ -108,7 +109,7 @@ function createPregCerrada(){
             //create new respuesta input field
             const respuesta = document.createElement("input");
             respuesta.setAttribute("name", `${parentDiv.id}Resp${respuestaCount}`);
-            respuesta.setAttribute("placeholder", `${parentDiv.id}Resp${respuestaCount}`);
+            respuesta.setAttribute("placeholder", `Opción ${respuestaCount + 1}`);
             respuesta.setAttribute("class", "respuesta");
 
             parentDiv.appendChild(respuesta);

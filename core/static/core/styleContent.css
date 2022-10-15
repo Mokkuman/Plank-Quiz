@@ -283,3 +283,7 @@ h1#titulo{
     margin: 5%;
     padding: 5%;
 }
+
+a{
+    text-decoration: none;
+}
