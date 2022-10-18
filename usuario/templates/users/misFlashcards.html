@@ -37,6 +37,8 @@
               </div>
             </div>
           </div>
+          <a href="{%url 'core:editFlashcard' pk=f.id %}" class="btn btn-primary my-2">Edit</a>
+          <a href="{% url 'core:dltFlashcard' f.id %}" class="btn btn-secondary">Eliminar</a>
         </div>
         {% endfor %}
       </div>

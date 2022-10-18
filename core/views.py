@@ -58,44 +58,7 @@ class editPractica(UpdateView):
     form_class = PracticaForm
     template_name = 'core/nuevaPractica.html'
     
-    # def get_context_data(self, **kwargs):
-    #     context = super(editPractica,self).get_context_data(**kwargs)
-    #     # context[]
-    #     if(self.object.user == self.request.user):
-    #         # poner luego las preguntas aca
-    #         #si el usuario del request es el mismo del objeto
-    #         return context
-    #     else:
-    #         return HttpResponseNotAllowed("Not allowed")
-        
-    # def post(self,request,*args,**kwargs):
-    #     self.object = None
-    #     form_class = self.get_form_class()
-    #     form = self.get_form(form_class)
-    #     if(form.is_valid() ):
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-    
-    # def form_valid(self,form):
-    #     self.object = form.save(commit=False)
-    #     self.object.user = User.objects.get(id=self.request.user.id)
-    #     self.object.save()
-    #     return redirect('core:practica',id=self.object.id)
-    # def form_invalid(self,form):
-    #     return self.render_to_response(form=form)
-    
-# PregCerradaFormset = nestedformset_factory(
-#     Practica,
-#     Cerrada,
-#     extra = 0,
-#     nested_formset = inlineformset_factory(
-#         Cerrada,
-#         RespuestaCerrada,
-#         fields = '__all__',
-#         extra = 0
-#     )
-# )
+
 class nuevaPractica(CreateView):
     model = Practica
     form_class = PracticaForm
@@ -245,3 +208,13 @@ def nuevaFlashcard(request):
             return render(request,'core/nuevaFlashcard.html',{'form':FlashcardForm()})
     form = FlashcardForm()
     return render(request,'core/nuevaFlashcard.html',{'form':form})
+
+class editFlashcard(UpdateView):
+    model = Flashcard
+    form_class = FlashcardForm
+    template_name = 'core/editFlashcard.html'
+    
+def dltFlashcard(request,id):
+    flashcard = Flashcard.objects.get(id=id)
+    flashcard.delete()
+    return redirect('usuario:misFlashcards')
