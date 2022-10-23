@@ -248,6 +248,15 @@ h1#titulo{
     .title{
         font-size: large;
     }
+    .formHeader{
+        font-size: 0.8em;
+    }
+    div.form-container, div.document-container{
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 3%;
+        padding: 2%;
+    }
 }
 
 .enunciado{

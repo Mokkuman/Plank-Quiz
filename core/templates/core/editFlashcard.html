@@ -4,13 +4,16 @@
     <link rel="stylesheet" href="{% static 'core/styleContent.css' %}" type="text/css"/>
 {% endblock cssPath %}
 
-{% block title %}Edit{% endblock title %}
+{% block title %}
+    Edit {{form.titulo.value}}
+{% endblock title %}
+
 {% block body %}
 <script src="https://cdn.tiny.cloud/1/tlb2vvjgok8d0upf68i3g01f0zqf8sj6a929e80kxqsj6shm/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
     selector: 'textarea',  
-    plugins: 'save print preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+    plugins: 'save print preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons autoresize',
     menubar: 'file edit view insert format tools table help',
     toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
     //toolbar_sticky: true,
@@ -18,6 +21,11 @@
     width: 1024,
     height: 720,
     image_title: true,    
+    resize: 'both',
+    min_height: 200,
+    max_height: 720,
+    min_width: 400,
+    min_width: 1024,
     });        
 </script>
 

@@ -3,6 +3,9 @@
 {% block cssPath %}
     <link rel="stylesheet" href="{% static 'core/styleContent.css' %}" type="text/css"/>
 {% endblock cssPath %}
+{% block title %}
+    Edit {{form.titulo.value}}
+{% endblock title %}
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
   rel="stylesheet"
