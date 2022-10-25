@@ -243,6 +243,9 @@ h1#titulo{
     font-size: xx-large;
     font-weight: bolder;
 }
+table.mceLayout, textarea.tinyMCE {
+    width: 100% !important;
+}
 
 @media screen and (max-width: 600px){
     .title{
@@ -252,10 +255,13 @@ h1#titulo{
         font-size: 0.8em;
     }
     div.form-container, div.document-container{
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-left: 1%;
+        margin-right: 1%;
         margin-top: 3%;
         padding: 2%;
+    }
+    table.mceLayout, textarea.richEditor {
+        width: 600px !important;
     }
 }
 
