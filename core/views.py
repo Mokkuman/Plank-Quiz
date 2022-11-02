@@ -52,13 +52,7 @@ def practicas(request):
     context['pract_page_obj'] = pract_page_obj
     
     return render(request,'core/practicas.html',context=context)
-
-class editPractica(UpdateView):
-    model = Practica
-    form_class = PracticaForm
-    template_name = 'core/nuevaPractica.html'
-    
-
+        
 class nuevaPractica(CreateView):
     model = Practica
     form_class = PracticaForm
@@ -144,7 +138,18 @@ class nuevaPractica(CreateView):
                                   abiertaFormset = abiertaFormset)
         )
 
-
+def dltPractica(request,id):
+    practica = Practica.objects.get(id=id)
+    cerradas = practica.get_preguntas_cerradas()
+    abiertas = practica.get_preguntas_abiertas()
+    #deleting instaces
+    if abiertas:
+        abiertas.delete()
+    if cerradas:
+        cerradas.delete()
+    practica.delete()
+    return redirect('usuario:misPracticas')
+    
 def practica(request, id):
     practica = Practica.objects.get(id=id)
     preguntasAbiertas = practica.get_preguntas_abiertas()

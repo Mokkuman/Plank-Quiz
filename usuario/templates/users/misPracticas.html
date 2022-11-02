@@ -45,9 +45,7 @@
               </div>
             </div>
           </div>
-          <a href="{%url 'core:editPractica' pk=p.id %}" class="btn btn-primary my-2">Edit</a>
-
-          <button>Eliminar</button>
+          <a href="{%url 'core:dltPractica' p.id %}" class="btn btn-secondary">Eliminar</a>
         </div>
         {% endfor %}
       </div>
