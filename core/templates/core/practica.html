@@ -168,7 +168,7 @@
         })   
         const agregarCalificacion = (json) =>{
             let porcentaje = (json.grade / json.total) * 100; // califcacion en porcentaje
-
+            porcentaje = parseFloat(porcentaje).toFixed(2);
             gradeContainer = document.getElementById("grade"); //div que contiene la calificacion
             gradeContainer.innerHTML = `<p><b>Calificación: ${json.grade}/${json.total}: ${porcentaje}%<b></p>`
             gradeContainer.classList.add('enunciado', 'my-3');
